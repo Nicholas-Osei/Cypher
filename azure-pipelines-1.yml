@@ -35,6 +35,6 @@ stages:
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
-        buildContext: '$(Build.SourcesDirectory)/Cypher/Cypher.Api'
+        buildContext: '$(Build.SourcesDirectory)'
         tags: |
           $(tag)
