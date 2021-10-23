@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '2278d0c6-1f1b-4a00-9028-c71aff1f4cec'
   imageRepository: 'cypher'
   containerRegistry: 'cyphercontainerreg.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Cypher/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/Cypher/Cypher.Api/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -33,6 +33,7 @@ stages:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
+        buildContext: '$(Build.SourcesDirectory)/Cypher/Cypher.Api'
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
