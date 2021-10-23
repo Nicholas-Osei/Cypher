@@ -33,7 +33,7 @@ stages:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
-        buildContext: '$(Build.Repository.LocalPath)'
+        buildContext: '$(Build.SourcesDirectory)/Cypher/Cypher.Api/'
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
