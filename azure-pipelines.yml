@@ -23,7 +23,8 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
+        buildContext: '$(Build.SourcesDirectory)/Cypher'
         command: build
-        dockerfile: '$(Build.SourcesDirectory)/Cypher/Cypher.Api/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/Cypher/Dockerfile'
         tags: |
           $(tag)
