@@ -40,4 +40,14 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    - task: AzureRmWebAppDeployment@4
+      displayName: 'Deploy Azure App Service'
+      inputs:
+        azureSubscription: 'Azure for Students (216548ee-a809-4b56-b77b-70a0ca104057)'
+        appType: webAppContainer
+        WebAppName: 'cypher-web-app'
+        DockerNamespace: $(containerRegistry)
+        DockerRepository: $(imageRepository)
+        DockerImageTag: '$(Build.BuildId)'
+
     - task: PublishBuildArtifacts@1
