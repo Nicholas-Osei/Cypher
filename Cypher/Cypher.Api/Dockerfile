@@ -24,4 +24,5 @@ RUN dotnet publish "Cypher.Api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY "Cypher.Api/appsettings.json" "/app/AppSettings.json"
 ENTRYPOINT ["dotnet", "Cypher.Api.dll"]
