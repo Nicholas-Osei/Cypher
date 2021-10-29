@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>GameScreen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="loginservice.isLoggedIn">
+    <h1>Welcome, {{loginservice.displayName}}!</h1>
+    <p>
+      Email: {{loginservice.email}}<br />
+      Family Name: {{loginservice.familyName}}<br />
+      Given Name: {{loginservice.givenName}}<br />
+      User ID: {{loginservice.userId}}
+    </p>
+    <p>
+      <ion-avatar item-left>
+        <img src="{{loginservice.imageUrl}}" />
+      </ion-avatar>
+    </p>
+
+    <button ion-button color="light" (click)="loginservice.logout()">
+      Log Out
+    </button>
+  </div>
+</ion-content>

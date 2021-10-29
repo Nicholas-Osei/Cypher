@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> LOG IN </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- <ion-content padding>
+  <div *ngIf="loginservice.isLoggedIn; else loginTemplate">
+    <h1>Welcome, {{displayName}}!</h1>
+    <p>
+      Email: {{email}}<br />
+      Family Name: {{familyName}}<br />
+      Given Name: {{givenName}}<br />
+      User ID: {{userId}}
+    </p>
+    <p>
+      <ion-avatar item-left>
+        <img src="{{imageUrl}}" />
+      </ion-avatar>
+    </p>
+
+    <button ion-button color="light" (click)="logout()">Log Out</button>
+  </div>
+
+  <ng-template #loginTemplate>
+    <h1>Please Login to see your Google Account Information</h1>
+    <p>
+      <button ion-button (click)="login()">Login With Google</button>
+    </p>
+  </ng-template>
+</ion-content> -->
+
+<ion-content padding>
+  <h1>Please Login to see your Google Account Information</h1>
+  <button ion-button (click)="login()">Login With Google</button>
+</ion-content>
