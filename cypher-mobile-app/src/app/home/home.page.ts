@@ -4,6 +4,8 @@ import { Router, RouterLink } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { LoginService } from '../Services/login.service';
 
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,8 @@ export class HomePage {
   userId: any;
   imageUrl: any;
   isLoggedIn = false;
-  constructor(public googlePlus: GooglePlus, private router: Router, public nav: NavController, public loginservice: LoginService) { }
+  constructor(public googlePlus: GooglePlus, private router: Router,
+    public nav: NavController, public loginservice: LoginService, public fb: Facebook) { }
 
   login() {
     // const gplusUser = this.googlePlus.login({
@@ -43,6 +46,17 @@ export class HomePage {
     // ;
     // return this.userData;
     this.loginservice.login();
+  }
+
+  loginfb() {
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+      .then((res: FacebookLoginResponse) =>
+        //console.log('Logged into Facebook!', res)
+        alert(JSON.stringify(res))
+      )
+      .catch(e => console.log('Error logging into Facebook', e));
+
+
   }
 
   // logout() {
