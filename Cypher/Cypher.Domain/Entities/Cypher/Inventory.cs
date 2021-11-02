@@ -9,8 +9,6 @@ namespace Cypher.Domain.Entities.Cypher
 {
     public class Inventory : BaseEntity
     {
-        public Player Owner { get; set; }
         public virtual ICollection<Item> Items { get; set; }
-
     }
 }
