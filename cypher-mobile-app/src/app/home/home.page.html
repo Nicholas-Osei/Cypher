@@ -6,33 +6,19 @@
 
 <ion-content padding>
   <ion-text color="dark">
-    <h2>Enter your Email and password to Login</h2></ion-text
-  >
-  <form>
+    <h2>Enter your Email and password to Login</h2>
+  </ion-text>
+  <form #UserLogin="ngForm" (submit)="checkUserCredential(UserLogin)">
     Email:
     <ion-item>
-      <ion-input
-        name="email"
-        type="email"
-        placeholder="your@email.com"
-        ngModel
-        required
-      ></ion-input>
+      <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
     </ion-item>
     Password:
     <ion-item>
-      <ion-input
-        name="password"
-        type="password"
-        placeholder="Password"
-        ngModel
-        required
-      ></ion-input>
+      <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
     </ion-item>
-    <ion-button size="small" type="submit" style="align-items: center"
-      >Log in</ion-button
-    >
+    <ion-button size="small" type="submit" style="align-items: center" [disabled]="!UserLogin.valid">Log in</ion-button>
     <p>No account ? <a href=""> Click here to register</a></p>
   </form>
-  <ion-button (click)="login()" size="small">Login With Google</ion-button>
+  <ion-button (click)="loginGoogle()" size="small">Login With Google</ion-button>
 </ion-content>

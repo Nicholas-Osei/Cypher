@@ -28,6 +28,8 @@ namespace Cypher.Infrastructure.DbContexts
 
         public bool HasChanges => ChangeTracker.HasChanges();
 
+        public DbSet<Credentials> Creds { get; set; }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<AuditableEntity>().ToList())

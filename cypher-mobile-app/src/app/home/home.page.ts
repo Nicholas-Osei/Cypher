@@ -3,6 +3,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Router, RouterLink } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { LoginService } from '../Services/login.service';
+import { Buffer } from 'buffer';
 
 
 @Component({
@@ -12,11 +13,29 @@ import { LoginService } from '../Services/login.service';
 })
 export class HomePage {
 
+  UserCredentials: Credentials[];
   isLoggedIn = false;
   constructor(public googlePlus: GooglePlus, private router: Router,
-    public nav: NavController, public loginservice: LoginService) { }
+    public nav: NavController, public loginservice: LoginService) {
+    this.loginservice.allCredentials.subscribe(c => this.UserCredentials = c);
+
+  }
+
+
 
   login() {
-    this.loginservice.login();
+    this.loginservice.loginGoogle();
+  }
+
+  checkUserCredential(form: { value: { email: any; password: any } }) {
+    console.log(form.value.email);
+    const toBAseAuthentication = Buffer.from(form.value.email + form.value.password).toString('base64');
+    //get all string from api and check
+    for (let index = 0; index < UserCredentials.length; index++) {
+      if (this.UserCredentials[index].credentials === toBAseAuthentication) {
+        this.router.navigate(['game-screen']);
+      }
+    }
+
   }
 }

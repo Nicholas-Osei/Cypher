@@ -3,6 +3,7 @@ using Cypher.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Cypher.Infrastructure;
 
 namespace Cypher.Api.Controllers
 {
@@ -11,6 +12,8 @@ namespace Cypher.Api.Controllers
     public class IdentityController : ControllerBase
     {
         private readonly IIdentityService _identityService;
+
+       
 
         public IdentityController(IIdentityService identityService)
         {
@@ -35,6 +38,7 @@ namespace Cypher.Api.Controllers
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
             var origin = Request.Headers["origin"];
+           
             return Ok(await _identityService.RegisterAsync(request, origin));
         }
 
@@ -59,6 +63,8 @@ namespace Cypher.Api.Controllers
         {
             return Ok(await _identityService.ResetPassword(model));
         }
+
+        
 
         private string GenerateIPAddress()
         {
