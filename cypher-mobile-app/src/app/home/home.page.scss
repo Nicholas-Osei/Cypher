@@ -25,3 +25,11 @@
 #container a {
   text-decoration: none;
 }
+
+ion-content {
+  --background: none;
+  background-image: url("./Images/GoogleMapTA.jpg");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
