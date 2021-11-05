@@ -30,14 +30,15 @@ namespace Cypher.Infrastructure.Repositories
             return await _repo.Entities.Where(p => p.Id == productId).FirstOrDefaultAsync();
         }
 
-        public Task<List<Player>> GetListAsync()
+        public async Task<List<Player>> GetListAsync()
         {
-            throw new NotImplementedException();
+            return await _repo.Entities.ToListAsync();
         }
 
-        public Task<int> InsertAsync(Player player)
+        public async Task<int> InsertAsync(Player player)
         {
-            throw new NotImplementedException();
+            await _repo.AddAsync(player);
+            return player.Id;
         }
 
         public Task UpdateAsync(Player player)
