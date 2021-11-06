@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AspNetCoreHero.EntityFrameworkCore.AuditTrail;
+using Cypher.API.Controllers;
+using Cypher.Application.Features.User_Credentials.Commands.Create;
+using Cypher.Application.Features.User_Credentials.Queries.GetAllCredentials;
 using Cypher.Application.Interfaces.Contexts;
 using Cypher.Domain.Entities.Catalog;
 using Cypher.Infrastructure.DbContexts;
@@ -9,27 +13,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cypher.Api.Controllers.v1
 {
-    [Route("api/v1/Login")]
-    public class Base64Controller:Controller
+   // [Route("api/v1/Login")]
+    public class UserCredentialsController: BaseApiController<UserCredentialsController>
     {
-        private readonly ApplicationDbContext context;
-        public Base64Controller()
+        public UserCredentialsController()
         {
         }
 
         [HttpGet]
-        public List<Credentials> GetAllCredentials()
+        public async Task<IActionResult> GetAll(int pageNumber, int pageSize)
         {
-            return context.Creds.ToList();
+            var usercredentials = await _mediator.Send(new GetAllUserCredentialsQuery(pageNumber, pageSize));
+            return Ok(usercredentials);
         }
+
         [HttpPost]
-        public IActionResult CreateCredential([FromBody] Credentials newcredentials)
+        public async Task<IActionResult> Post(CreateUserCredentialsComand command)
         {
-
-            context.Creds.Add(newcredentials);
-            context.SaveChanges();
-            return StatusCode(201, newcredentials);
-
+            return Ok(await _mediator.Send(command));
         }
     }
 }

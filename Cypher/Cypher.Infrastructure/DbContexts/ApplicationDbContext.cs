@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cypher.Domain.Entities.Cypher;
 
 namespace Cypher.Infrastructure.DbContexts
 {
@@ -28,7 +29,7 @@ namespace Cypher.Infrastructure.DbContexts
 
         public bool HasChanges => ChangeTracker.HasChanges();
 
-        public DbSet<Credentials> Creds { get; set; }
+        public DbSet<UserCredentials> UserCredentials { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

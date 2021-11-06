@@ -27,6 +27,11 @@
     <None Remove="Features\Credentials\Queries\GetallCredentials\" />
     <None Remove="Features\Credentials\Commands\" />
     <None Remove="Features\Credentials\Commands\Create\" />
+    <None Remove="Features\User_Credentials %28copy%29\" />
+    <None Remove="Features\User_Credentials\Commands\" />
+    <None Remove="Features\User_Credentials\Queries\" />
+    <None Remove="Features\User_Credentials\Commands\Create\" />
+    <None Remove="Features\User_Credentials\Queries\GetAllCredentials\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\CredentialsMap\" />
@@ -34,5 +39,10 @@
     <Folder Include="Features\CredentialsMap\Queries\GetallCredentials\" />
     <Folder Include="Features\CredentialsMap\Commands\" />
     <Folder Include="Features\CredentialsMap\Commands\Create\" />
+    <Folder Include="Features\User_Credentials\" />
+    <Folder Include="Features\User_Credentials\Commands\" />
+    <Folder Include="Features\User_Credentials\Queries\" />
+    <Folder Include="Features\User_Credentials\Commands\Create\" />
+    <Folder Include="Features\User_Credentials\Queries\GetAllUserCredentials\" />
   </ItemGroup>
 </Project>
