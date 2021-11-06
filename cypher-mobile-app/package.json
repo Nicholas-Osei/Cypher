@@ -75,7 +75,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "646712186754-93fiujqd1bdt8nqu7bmkok9lhtgphvsm.apps.googleusercontent.com"
+        "REVERSED_CLIENT_ID": "646712186754-93fiujqd1bdt8nqu7bmkok9lhtgphvsm.apps.googleusercontent.com",
+        "PLAY_SERVICES_VERSION": "15.0.1"
       },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
