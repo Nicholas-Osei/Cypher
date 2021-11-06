@@ -5,8 +5,6 @@ namespace Cypher.Application.Features.User_Credentials.Queries.GetAllUserCredent
     {
         public int Id { get; set; }
         public string Base64Credential { get; set; }
-        public GetAllUserCredentialsResponse()
-        {
-        }
+
     }
 }

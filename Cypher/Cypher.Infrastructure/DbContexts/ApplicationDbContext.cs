@@ -24,12 +24,13 @@ namespace Cypher.Infrastructure.DbContexts
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<UserCredentials> UserCredentials { get; set; }
 
         public IDbConnection Connection => Database.GetDbConnection();
 
         public bool HasChanges => ChangeTracker.HasChanges();
 
-        public DbSet<UserCredentials> UserCredentials { get; set; }
+       
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

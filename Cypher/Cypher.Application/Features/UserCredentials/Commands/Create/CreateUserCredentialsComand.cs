@@ -9,12 +9,11 @@ using MediatR;
 
 namespace Cypher.Application.Features.User_Credentials.Commands.Create
 {
-    public partial class CreateUserCredentialsComand: IRequest<Result<int>>
+    public partial class CreateUserCredentialsComand : IRequest<Result<int>>
     {
         public string Base64Credential { get; set; }
-        public CreateUserCredentialsComand()
-        {
-        }
+      
+    }
 
         public class CreateUserCredentialsCommandHandler : IRequestHandler<CreateUserCredentialsComand, Result<int>>
         {
@@ -38,5 +37,5 @@ namespace Cypher.Application.Features.User_Credentials.Commands.Create
                 return Result<int>.Success(player.Id);
             }
         }
-    }
+    
 }

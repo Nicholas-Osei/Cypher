@@ -34,11 +34,6 @@
     <None Remove="Features\User_Credentials\Queries\GetAllCredentials\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\CredentialsMap\" />
-    <Folder Include="Features\CredentialsMap\Queries\" />
-    <Folder Include="Features\CredentialsMap\Queries\GetallCredentials\" />
-    <Folder Include="Features\CredentialsMap\Commands\" />
-    <Folder Include="Features\CredentialsMap\Commands\Create\" />
     <Folder Include="Features\User_Credentials\" />
     <Folder Include="Features\User_Credentials\Commands\" />
     <Folder Include="Features\User_Credentials\Queries\" />
