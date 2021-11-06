@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Router, RouterLink } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,12 @@ export class LoginService {
   userData: any = {};
   constructor(public googlePlus: GooglePlus, private router: Router) { }
 
-  login() {
+
+  // get allCredentials(): Observable<Credentials[]> {
+  //   return this.http.get<Credentials[]>('https://localhost:5001/api/v1/orders');
+  // }
+
+  loginGoogle() {
     const gplusUser = this.googlePlus.login({
       webClientId: '646712186754-jlveohr7vqen6rl214hs3bsct3qf5ush.apps.googleusercontent.com',
       offline: true,
@@ -39,7 +45,7 @@ export class LoginService {
     return this.userData;
   }
 
-  logout() {
+  logoutGoogle() {
     this.googlePlus.logout()
       .then(res => {
         console.log(res);
@@ -55,4 +61,6 @@ export class LoginService {
       })
       .catch(err => console.error(err));
   }
+
+
 }

@@ -1,36 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> LOG IN </ion-title>
+    <ion-title> CYPHER LOGIN </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-content padding>
-  <div *ngIf="loginservice.isLoggedIn; else loginTemplate">
-    <h1>Welcome, {{displayName}}!</h1>
-    <p>
-      Email: {{email}}<br />
-      Family Name: {{familyName}}<br />
-      Given Name: {{givenName}}<br />
-      User ID: {{userId}}
-    </p>
-    <p>
-      <ion-avatar item-left>
-        <img src="{{imageUrl}}" />
-      </ion-avatar>
-    </p>
-
-    <button ion-button color="light" (click)="logout()">Log Out</button>
-  </div>
-
-  <ng-template #loginTemplate>
-    <h1>Please Login to see your Google Account Information</h1>
-    <p>
-      <button ion-button (click)="login()">Login With Google</button>
-    </p>
-  </ng-template>
-</ion-content> -->
-
 <ion-content padding>
-  <h1>Please Login to see your Google Account Information</h1>
-  <button ion-button (click)="login()">Login With Google</button>
+  <ion-text color="dark">
+    <h2>Enter your Email and password to Login</h2>
+  </ion-text>
+  <form #UserLogin="ngForm" (submit)="checkUserCredential(UserLogin)">
+    Email:
+    <ion-item>
+      <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+    </ion-item>
+    Password:
+    <ion-item>
+      <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+    </ion-item>
+    <ion-button size="small" type="submit" style="align-items: center" [disabled]="!UserLogin.valid">Log in</ion-button>
+    <p>No account ? <a href=""> Click here to register</a></p>
+  </form>
+  <ion-button (click)="login()" size="small">Login With Google</ion-button>
 </ion-content>
