@@ -21,4 +21,18 @@
   <ItemGroup>
     <ProjectReference Include="..\Cypher.Domain\Cypher.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Features\UserCredentials\" />
+    <None Remove="Features\UserCredentials\Commands\" />
+    <None Remove="Features\UserCredentials\Queries\" />
+    <None Remove="Features\UserCredentials\Commands\Create\" />
+    <None Remove="Features\UserCredentials\Queries\GetAllUserCredentials\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\UserCredentials\" />
+    <Folder Include="Features\UserCredentials\Commands\" />
+    <Folder Include="Features\UserCredentials\Queries\" />
+    <Folder Include="Features\UserCredentials\Commands\Create\" />
+    <Folder Include="Features\UserCredentials\Queries\GetAllUserCredentials\" />
+  </ItemGroup>
 </Project>
