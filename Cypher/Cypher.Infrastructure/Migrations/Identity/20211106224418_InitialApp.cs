@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Cypher.Infrastructure.Migrations.Identity
 {
-    public partial class InitialIdentity : Migration
+    public partial class InitialApp : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

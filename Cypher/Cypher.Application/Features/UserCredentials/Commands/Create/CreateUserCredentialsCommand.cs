@@ -14,9 +14,8 @@ namespace Cypher.Application.Features.UserCredentials.Commands.Create
 {
     public partial class CreateUserCredentialsCommand: IRequest<Result<int>>
     {
-        public CreateUserCredentialsCommand()
-        {
-        }
+        public string UserCredentials { get; set; }
+  
     }
     public class CreatePlayerCommandHandler : IRequestHandler<CreateUserCredentialsCommand, Result<int>>
     {

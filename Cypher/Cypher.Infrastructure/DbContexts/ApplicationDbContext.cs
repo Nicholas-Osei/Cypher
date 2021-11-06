@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cypher.Domain.Entities.Cypher;
 
 namespace Cypher.Infrastructure.DbContexts
 {
@@ -23,6 +24,8 @@ namespace Cypher.Infrastructure.DbContexts
         }
 
         public DbSet<Product> Products { get; set; }
+        //public DbSet<UserCredential> UserCredentials { get; set; }
+        //public DbSet<UserCredential> userCredentials { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public IDbConnection Connection => Database.GetDbConnection();
 
