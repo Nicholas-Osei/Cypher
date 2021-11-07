@@ -38,6 +38,7 @@ namespace Cypher.Api
                     .Build();
                 o.Filters.Add(new AuthorizeFilter(policy));
             });
+            //services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +56,7 @@ namespace Cypher.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            //app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {
