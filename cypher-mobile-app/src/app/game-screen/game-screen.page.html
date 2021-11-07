@@ -8,12 +8,12 @@
   <div *ngIf="loginservice.isLoggedIn">
     <h1>Welcome, {{loginservice.displayName}}!</h1>
     <p>
-      Email: {{loginservice.email}}<br />
-      Family Name: {{loginservice.familyName}}<br />
-      Given Name: {{loginservice.givenName}}<br />
-      User ID: {{loginservice.userId}}
+      <span *ngIf="loginservice.email">Email: {{loginservice.email}}</span><br />
+      <span *ngIf="loginservice.familyName">Family Name: {{loginservice.familyName}}</span><br />
+      <span *ngIf="loginservice.givenName">Given Name: {{loginservice.givenName}}</span><br />
+      <span *ngIf="loginservice.userId">User ID: {{loginservice.userId}}</span>
     </p>
-    <p>
+    <p *ngIf="loginservice.imageUrl">
       <ion-avatar item-left>
         <img src="{{loginservice.imageUrl}}" />
       </ion-avatar>

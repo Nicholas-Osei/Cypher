@@ -20,19 +20,19 @@ export class LoginService {
   userData: any = {};
   gebruikerCredentials = [];
   // eslint-disable-next-line max-len
-  authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwianRpIjoiYjRkYmU3MjUtNjliMi00MWEwLTk2YjItMTYyNDg0Yzc3YzhkIiwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInVpZCI6IjJlN2FkMzVhLTliYTctNGQzOS04ZGQxLTc3ZmI0N2U0YzVkZiIsImZpcnN0X25hbWUiOiJNdWtlc2giLCJsYXN0X25hbWUiOiJNdXJ1Z2FuIiwiZnVsbF9uYW1lIjoiTXVrZXNoIE11cnVnYW4iLCJpcCI6IjAuMC4wLjEiLCJyb2xlcyI6WyJBZG1pbiIsIk1vZGVyYXRvciIsIkJhc2ljIiwiU3VwZXJBZG1pbiJdLCJuYmYiOjE2MzYyNDg4NDUsImV4cCI6MTYzNjI1MjQ0NSwiaXNzIjoiQ3lwaGVyLkFwaSIsImF1ZCI6IkN5cGhlci5BcGkuVXNlciJ9.Z-hQbPe_-QoIg7qqu3RyWZJxTZKtE7kuVAyEJ7UtWP4';
+  authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwianRpIjoiNGVkOGYzYWItMDY5Zi00NTkyLTg5ZDctZDkwZGE0YjgyNzliIiwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInVpZCI6IjJlN2FkMzVhLTliYTctNGQzOS04ZGQxLTc3ZmI0N2U0YzVkZiIsImZpcnN0X25hbWUiOiJNdWtlc2giLCJsYXN0X25hbWUiOiJNdXJ1Z2FuIiwiZnVsbF9uYW1lIjoiTXVrZXNoIE11cnVnYW4iLCJpcCI6IjAuMC4wLjEiLCJyb2xlcyI6WyJBZG1pbiIsIk1vZGVyYXRvciIsIkJhc2ljIiwiU3VwZXJBZG1pbiJdLCJuYmYiOjE2MzYyOTQ2ODgsImV4cCI6MTYzNjI5ODI4OCwiaXNzIjoiQ3lwaGVyLkFwaSIsImF1ZCI6IkN5cGhlci5BcGkuVXNlciJ9.mRd9Vvn7wwPtIIbtJul---IspwdG4Po8NFViokRDDvA';
 
   constructor(public googlePlus: GooglePlus, private router: Router, private http: HttpClient) { }
 
 
-  get allCredentials(): Observable<UserCredentials[]> {
+  get allCredentials(): Observable<RootObject> {
     const httpHeaders = new HttpHeaders({
       'content-type': 'application/json',
       // eslint-disable-next-line quote-props
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.authToken}`
     });
-    return this.http.get<UserCredentials[]>('https://localhost:5001/api/v1/UserCredential', { headers: httpHeaders });
+    return this.http.get<RootObject>('https://localhost:5001/api/v1/UserCredential', { headers: httpHeaders });
   }
 
   loginGoogle() {
@@ -68,10 +68,12 @@ export class LoginService {
         this.userId = '';
         this.imageUrl = '';
 
-        this.isLoggedIn = false;
-        this.router.navigate(['home']);
+        // this.isLoggedIn = false;
+        // this.router.navigate(['home']);
       })
       .catch(err => console.error(err));
+    this.isLoggedIn = false;
+    this.router.navigate(['home']);
   }
 
 

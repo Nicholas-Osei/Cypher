@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Router, RouterLink } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { LoginService, UserCredentials } from '../Services/login.service';
+import { LoginService, RootObject, UserCredentials } from '../Services/login.service';
 import { Buffer } from 'buffer';
 
 
@@ -13,17 +13,17 @@ import { Buffer } from 'buffer';
 })
 export class HomePage implements OnInit {
 
-  gebruikerCredentials: UserCredentials[];
+  gebruikerCredentials: RootObject;
   isLoggedIn = false;
   constructor(public googlePlus: GooglePlus, private router: Router,
     public nav: NavController, public loginservice: LoginService) {
     //this.loginservice.allCredentials.subscribe(c => this.gebruikerCredentials = c);
     //this.loginservice.allCredentials.subscribe(c => this.loginservice.gebruikerCredentials = c);
-    console.log(this.gebruikerCredentials[0].base64Credential);
+    console.log(this.gebruikerCredentials);
   }
   ngOnInit(): void {
     this.loginservice.allCredentials.subscribe(c => this.gebruikerCredentials = c);
-    console.log(this.gebruikerCredentials[0].base64Credential);
+    console.log(this.gebruikerCredentials);
   }
 
   login(): void {
@@ -33,19 +33,16 @@ export class HomePage implements OnInit {
   checkUserCredential(form: { value: { email: any; password: any } }) {
     console.log(form.value.email);
     const toBAseAuthentication = Buffer.from(form.value.email + form.value.password).toString('base64');
-    //get all string from api and check
-    // for (let index = 0; index < this.gebruikerCredentials.length; index++) {
-    //   if (this.gebruikerCredentials[index].base64Credential === toBAseAuthentication) {
-    //     this.router.navigate(['game-screen']);
-    //   }
-    // }
 
-    for (const x of this.gebruikerCredentials) {
+    for (const x of this.gebruikerCredentials.data) {
       if (x.base64Credential === toBAseAuthentication) {
+        this.loginservice.isLoggedIn = true;
         this.router.navigate(['game-screen']);
       }
-      console.log(x.base64Credential);
+      // console.log(x.base64Credential);
+      // console.log(toBAseAuthentication);
     }
+    this.loginservice.displayName = form.value.email;
 
   }
 }
