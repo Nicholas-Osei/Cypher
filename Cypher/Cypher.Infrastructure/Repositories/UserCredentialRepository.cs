@@ -20,9 +20,9 @@ namespace Cypher.Infrastructure.Repositories
 
         public IQueryable<UserCredential> UserCredential => _repo.Entities;
 
-        public async Task DeleteAsync(UserCredential usercrfedential)
+        public async Task DeleteAsync(UserCredential usercredential)
         {
-            await _repo.DeleteAsync(usercrfedential);
+            await _repo.DeleteAsync(usercredential);
         }
 
         public async Task<UserCredential> GetByIdAsync(int productId)

@@ -12,8 +12,8 @@ namespace Cypher.Api.Controllers.v1
         [HttpGet]
         public async Task<IActionResult> GetAll(int pageNumber, int pageSize)
         {
-            var players = await _mediator.Send(new GetAllUserCredentialsQuery(pageNumber, pageSize));
-            return Ok(players);
+            var usercredentials = await _mediator.Send(new GetAllUserCredentialsQuery(pageNumber, pageSize));
+            return Ok(usercredentials);
         }
 
         [HttpPost]

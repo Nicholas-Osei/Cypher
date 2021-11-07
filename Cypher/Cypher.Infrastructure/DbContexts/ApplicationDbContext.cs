@@ -24,8 +24,7 @@ namespace Cypher.Infrastructure.DbContexts
         }
 
         public DbSet<Product> Products { get; set; }
-        //public DbSet<UserCredential> UserCredentials { get; set; }
-        //public DbSet<UserCredential> userCredentials { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public DbSet<UserCredential> Base64Credential { get; set; }
 
         public IDbConnection Connection => Database.GetDbConnection();
 
@@ -60,6 +59,7 @@ namespace Cypher.Infrastructure.DbContexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             foreach (var property in builder.Model.GetEntityTypes()
             .SelectMany(t => t.GetProperties())
             .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))

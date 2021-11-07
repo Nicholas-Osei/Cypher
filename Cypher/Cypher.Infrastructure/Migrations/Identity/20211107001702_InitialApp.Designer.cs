@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cypher.Infrastructure.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20211106224418_InitialApp")]
+    [Migration("20211107001702_InitialApp")]
     partial class InitialApp
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
