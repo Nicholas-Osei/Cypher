@@ -11,7 +11,7 @@ import { Buffer } from 'buffer';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
   gebruikerCredentials: RootObject;
   isLoggedIn = false;
@@ -19,12 +19,13 @@ export class HomePage implements OnInit {
     public nav: NavController, public loginservice: LoginService) {
     //this.loginservice.allCredentials.subscribe(c => this.gebruikerCredentials = c);
     //this.loginservice.allCredentials.subscribe(c => this.loginservice.gebruikerCredentials = c);
-    console.log(this.gebruikerCredentials);
-  }
-  ngOnInit(): void {
+    //console.log(this.gebruikerCredentials);
     this.loginservice.allCredentials.subscribe(c => this.gebruikerCredentials = c);
-    console.log(this.gebruikerCredentials);
+    console.log('work:', this.gebruikerCredentials);
   }
+  // ngOnInit(): void {
+
+  // }
 
   login(): void {
     this.loginservice.loginGoogle();
@@ -37,10 +38,13 @@ export class HomePage implements OnInit {
     for (const x of this.gebruikerCredentials.data) {
       if (x.base64Credential === toBAseAuthentication) {
         this.loginservice.isLoggedIn = true;
-        this.router.navigate(['game-screen']);
+        console.log('check this', x.base64Credential);
+        console.log(toBAseAuthentication);
       }
-      // console.log(x.base64Credential);
-      // console.log(toBAseAuthentication);
+
+    }
+    if (this.loginservice.isLoggedIn) {
+      this.router.navigate(['game-screen']);
     }
     this.loginservice.displayName = form.value.email;
 

@@ -6,11 +6,9 @@ import { LoginService } from '../Services/login.service';
   templateUrl: './game-screen.page.html',
   styleUrls: ['./game-screen.page.scss'],
 })
-export class GameScreenPage implements OnInit {
+export class GameScreenPage {
 
   constructor(public loginservice: LoginService) { }
 
-  ngOnInit() {
-  }
 
 }

@@ -27,6 +27,7 @@
     "@ionic-native/google-plus": "^5.36.0",
     "@ionic/angular": "^5.5.2",
     "buffer": "^6.0.3",
+    "cordova-ios": "6.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
@@ -55,7 +56,7 @@
     "cordova-plugin-ionic-webview": "^4.0.0",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",
-    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-plugin-whitelist": "^1.3.5",
     "eslint": "^7.6.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
@@ -79,14 +80,14 @@
         "REVERSED_CLIENT_ID": "646712186754-93fiujqd1bdt8nqu7bmkok9lhtgphvsm.apps.googleusercontent.com",
         "PLAY_SERVICES_VERSION": "15.0.1"
       },
-      "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-whitelist": {}
     },
     "platforms": [
       "android"
