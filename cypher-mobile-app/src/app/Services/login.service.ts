@@ -25,7 +25,7 @@ export class LoginService {
   constructor(public googlePlus: GooglePlus, private router: Router, private http: HttpClient) { }
 
 
-  get allCredentials(): Observable<RootObject> {
+  allCredentials(): Observable<RootObject> {
     const httpHeaders = new HttpHeaders({
       'content-type': 'application/json',
       // eslint-disable-next-line quote-props
@@ -33,10 +33,26 @@ export class LoginService {
       'Authorization': `Bearer ${this.authToken}`
     });
     //return this.http.get<RootObject>('https://api.genderize.io/?name=luc');
-    return this.http.get<RootObject>('https://localhost:5001/api/v1/UserCredential', { headers: httpHeaders });
+    return this.http.get<RootObject>('https://localhost:5001/api/v1/UserCredential',
+      { headers: httpHeaders });
   }
 
-  loginGoogle() {
+  postCredential(credential): Observable<RootObject> {
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.authToken}`
+    });
+    //return this.http.get<RootObject>('https://api.genderize.io/?name=luc');
+    return this.http.post<RootObject>('https://localhost:5001/api/v1/UserCredential', credential, { headers: httpHeaders });
+  }
+
+  async getToken(gegevens) {
+    return this.http.post<Tokens>('https://localhost:5001/api/identity/token', gegevens).toPromise();
+  }
+
+  login() {
     const gplusUser = this.googlePlus.login({
       webClientId: '646712186754-jlveohr7vqen6rl214hs3bsct3qf5ush.apps.googleusercontent.com',
       offline: true,
@@ -58,7 +74,7 @@ export class LoginService {
     return this.userData;
   }
 
-  logoutGoogle() {
+  logout() {
     this.googlePlus.logout()
       .then(res => {
         console.log(res);
@@ -94,4 +110,8 @@ export interface RootObject {
   failed: boolean;
   message?: any;
   succeeded: boolean;
+}
+export interface Tokens {
+  data: any;
+
 }
