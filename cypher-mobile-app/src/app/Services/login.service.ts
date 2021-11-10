@@ -20,7 +20,7 @@ export class LoginService {
   userData: any = {};
   gebruikerCredentials = [];
   // eslint-disable-next-line max-len
-  authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwianRpIjoiM2FlYzVkZWMtOThjMS00NWQ3LTlmN2EtYjM2YjE5YzhkODk0IiwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInVpZCI6IjJlN2FkMzVhLTliYTctNGQzOS04ZGQxLTc3ZmI0N2U0YzVkZiIsImZpcnN0X25hbWUiOiJNdWtlc2giLCJsYXN0X25hbWUiOiJNdXJ1Z2FuIiwiZnVsbF9uYW1lIjoiTXVrZXNoIE11cnVnYW4iLCJpcCI6IjAuMC4wLjEiLCJyb2xlcyI6WyJBZG1pbiIsIk1vZGVyYXRvciIsIkJhc2ljIiwiU3VwZXJBZG1pbiJdLCJuYmYiOjE2MzYzMDQwNjksImV4cCI6MTYzNjMwNzY2OSwiaXNzIjoiQ3lwaGVyLkFwaSIsImF1ZCI6IkN5cGhlci5BcGkuVXNlciJ9.UJh6W9QK69BcRH2KKazYaXBl_4Pl2gfDWGH8uRpVR0Q';
+  authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwianRpIjoiNjk3YWRhMTYtZDEyMy00ODQ3LWI2NDYtMWJhMTcwM2E5ODBmIiwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInVpZCI6IjJlN2FkMzVhLTliYTctNGQzOS04ZGQxLTc3ZmI0N2U0YzVkZiIsImZpcnN0X25hbWUiOiJNdWtlc2giLCJsYXN0X25hbWUiOiJNdXJ1Z2FuIiwiZnVsbF9uYW1lIjoiTXVrZXNoIE11cnVnYW4iLCJpcCI6IjAuMC4wLjEiLCJyb2xlcyI6WyJBZG1pbiIsIk1vZGVyYXRvciIsIkJhc2ljIiwiU3VwZXJBZG1pbiJdLCJuYmYiOjE2MzY1MDQ1MjgsImV4cCI6MTYzNjUwODEyOCwiaXNzIjoiQ3lwaGVyLkFwaSIsImF1ZCI6IkN5cGhlci5BcGkuVXNlciJ9.YiRORwI3j6dpXiZbrsuAe3XbznULh_jxw49RhMwMwVA';
 
   constructor(public googlePlus: GooglePlus, private router: Router, private http: HttpClient) { }
 
@@ -32,6 +32,7 @@ export class LoginService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.authToken}`
     });
+    //return this.http.get<RootObject>('https://api.genderize.io/?name=luc');
     return this.http.get<RootObject>('https://localhost:5001/api/v1/UserCredential', { headers: httpHeaders });
   }
 

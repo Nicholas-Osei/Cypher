@@ -40,13 +40,21 @@ export class HomePage {
         this.loginservice.isLoggedIn = true;
         console.log('check this', x.base64Credential);
         console.log(toBAseAuthentication);
+        this.loginservice.displayName = form.value.email;
+        this.router.navigate(['game-screen']);
       }
 
     }
-    if (this.loginservice.isLoggedIn) {
-      this.router.navigate(['game-screen']);
-    }
-    this.loginservice.displayName = form.value.email;
+    // if (this.loginservice.isLoggedIn) {
+    //   this.router.navigate(['game-screen']);
+    // }
 
+
+    //this works with different not localhost api
+    // this.loginservice.isLoggedIn = true;
+    // this.router.navigate(['game-screen']);
+    // this.loginservice.displayName = form.value.email;
+    // //this.loginservice.familyName = this.gebruikerCredentials.activity;
+    // this.loginservice.familyName = this.gebruikerCredentials.name;
   }
 }
