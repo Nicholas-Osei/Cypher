@@ -1,5 +1,6 @@
 ﻿using Cypher.API.Controllers;
 using Cypher.Application.Features.Players.Commands.Create;
+using Cypher.Application.Features.Players.Commands.Delete;
 using Cypher.Application.Features.Players.Queries.GetAllPaged;
 using Cypher.Application.Features.Players.Queries.GetById;
 using MediatR;
@@ -31,6 +32,12 @@ namespace Cypher.Api.Controllers.v1
         public async Task<IActionResult> Post(CreatePlayerCommand command)
         {
             return Ok(await _mediator.Send(command));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok(await _mediator.Send(new DeletePlayerCommand { Id = id }));
         }
     }
 }
