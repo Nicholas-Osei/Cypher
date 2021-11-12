@@ -1,6 +1,7 @@
 ﻿using Cypher.API.Controllers;
 using Cypher.Application.Features.Players.Commands.Create;
 using Cypher.Application.Features.Players.Queries.GetAllPaged;
+using Cypher.Application.Features.Players.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,6 +18,13 @@ namespace Cypher.Api.Controllers.v1
         {
             var players = await _mediator.Send(new GetAllPlayersQuery(pageNumber, pageSize));
             return Ok(players);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var player = await _mediator.Send(new GetPlayerByIdQuery() { Id = id });
+            return Ok(player);
         }
 
         [HttpPost]
