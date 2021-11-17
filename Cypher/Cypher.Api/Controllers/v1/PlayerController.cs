@@ -1,6 +1,7 @@
 ﻿using Cypher.API.Controllers;
 using Cypher.Application.Features.Players.Commands.Create;
 using Cypher.Application.Features.Players.Commands.Delete;
+using Cypher.Application.Features.Players.Commands.Update;
 using Cypher.Application.Features.Players.Queries.GetAllPaged;
 using Cypher.Application.Features.Players.Queries.GetById;
 using MediatR;
@@ -31,6 +32,17 @@ namespace Cypher.Api.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> Post(CreatePlayerCommand command)
         {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, UpdatePlayerCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
             return Ok(await _mediator.Send(command));
         }
 
