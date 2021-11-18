@@ -25,9 +25,11 @@
     "@capacitor/keyboard": "1.1.2",
     "@capacitor/status-bar": "1.0.5",
     "@ionic-native/google-plus": "^5.36.0",
+    "@ionic-native/in-app-browser": "^5.36.0",
     "@ionic/angular": "^5.5.2",
     "buffer": "^6.0.3",
     "cordova-ios": "6.2.0",
+    "creditcardpayments": "^1.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
@@ -50,8 +52,10 @@
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
     "cordova-android": "^9.1.0",
+    "cordova-plugin-cleartext": "^1.0.0",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-googleplus": "^8.5.2",
+    "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^4.0.0",
     "cordova-plugin-splashscreen": "5.0.2",
@@ -88,7 +92,8 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-cleartext": {}
+      "cordova-plugin-cleartext": {},
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "android"

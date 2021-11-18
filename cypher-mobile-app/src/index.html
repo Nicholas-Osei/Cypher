@@ -11,7 +11,7 @@
   <meta name="viewport"
     content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' * data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline';  media-src *;  script-src 'self' 'unsafe-eval' 'unsafe-inline';">
+    content="default-src * self blob: data: gap:; style-src * self 'unsafe-inline' blob: data: gap:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; object-src * 'self' blob: data: gap:; img-src * self 'unsafe-inline' blob: data: gap:; connect-src self * 'unsafe-inline' blob: data: gap:; frame-src * self blob: data: gap:;">
   <meta name="format-detection" content="telephone=no" />
   <meta name="msapplication-tap-highlight" content="no" />
 
@@ -24,6 +24,8 @@
 </head>
 
 <body>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=AYfQYDzbH0v-G12fL-RsUrIAcekJNpli743xyJ664-mfVA4a4s1c1N4M5y7NvJG2ycvaHYJMwGMR80XY"></script>
   <app-root></app-root>
 </body>
 

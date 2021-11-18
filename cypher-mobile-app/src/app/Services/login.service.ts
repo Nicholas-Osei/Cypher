@@ -74,6 +74,7 @@ export class LoginService {
     return this.userData;
   }
 
+
   logout() {
     this.googlePlus.logout()
       .then(res => {

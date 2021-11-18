@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { LoginService, RootObject, UserCredentials } from '../Services/login.service';
 import { Buffer } from 'buffer';
+import { render } from 'creditcardpayments/creditCardPayments';
 
 
 @Component({
@@ -18,20 +19,24 @@ export class HomePage {
   toRegister = false;
   passwordcheck = '';
   teller = 0;
+  mybalance = 0;
+  moneyToPay = 10;
+
   constructor(public googlePlus: GooglePlus, private router: Router,
     public nav: NavController, public loginservice: LoginService) {
-    //this.loginservice.allCredentials.subscribe(c => this.gebruikerCredentials = c);
-    //this.loginservice.allCredentials.subscribe(c => this.loginservice.gebruikerCredentials = c);
-    //console.log(this.gebruikerCredentials);
-    // const newtoken =
-    // {
-    //   email: 'superadmin@gmail.com',
-    //   password: '123Pa$$word!'
-    // };
     this.getToken();
-    // this.loginservice.getToken(newtoken).then(t => { console.log('Got it', this.loginservice.authToken = t.data.jwToken); });
-    // this.loginservice.allCredentials().subscribe(c => { this.gebruikerCredentials = c; console.log('eeeeeh'); });
-    //console.log('work:', this.gebruikerCredentials);
+
+    render({
+      id: '#myPaypalButtons',
+      currency: 'EUR',
+      value: this.moneyToPay.toString(),
+      onApprove: (details) => {
+        alert('Transaction succesfull');
+        this.mybalance += this.moneyToPay;
+      }
+
+    });
+
   }
 
   async getToken() {
@@ -74,17 +79,6 @@ export class HomePage {
       }
 
     }
-    // if (this.loginservice.isLoggedIn) {
-    //   this.router.navigate(['game-screen']);
-    // }
-
-
-    //this works with different not localhost api
-    // this.loginservice.isLoggedIn = true;
-    // this.router.navigate(['game-screen']);
-    // this.loginservice.displayName = form.value.email;
-    // //this.loginservice.familyName = this.gebruikerCredentials.activity;
-    // this.loginservice.familyName = this.gebruikerCredentials.name;
   }
   registerUser(form: { value: { email: any; password: any; confirmpassword: any } }) {
     if (form.value.confirmpassword === form.value.password) {
@@ -110,5 +104,7 @@ export class HomePage {
 
 
   }
+
+
 
 }
