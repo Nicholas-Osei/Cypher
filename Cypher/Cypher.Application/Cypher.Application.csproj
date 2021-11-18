@@ -21,4 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Cypher.Domain\Cypher.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\Items\Queries\" />
+  </ItemGroup>
 </Project>

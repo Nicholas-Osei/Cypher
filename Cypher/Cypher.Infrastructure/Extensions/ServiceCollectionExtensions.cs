@@ -26,6 +26,8 @@ namespace Cypher.Infrastructure.Extensions
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(RepositoryAsync<>));
             services.AddTransient<IPlayerRepository, PlayerRepository>();
             services.AddTransient<IPlayerCacheRepository, PlayerCacheRepository>();
+            services.AddTransient<IItemRepository, ItemRepository>();
+
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IProductCacheRepository, ProductCacheRepository>();
             services.AddTransient<IBrandRepository, BrandRepository>();

@@ -69,6 +69,9 @@ namespace Cypher.Infrastructure.DbContexts
         {
             builder.Entity<MessagePlayer>().HasKey(mp => new { mp.MessageId, mp.PlayerId });
             builder.Entity<PlayerLobby>().HasKey(pl => new { pl.PlayerId, pl.LobbyId });
+            builder.Entity<Item>()
+                .Property(i => i.ItemType)
+                .HasConversion<string>();
 
             foreach (var property in builder.Model.GetEntityTypes()
             .SelectMany(t => t.GetProperties())
