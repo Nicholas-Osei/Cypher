@@ -1,5 +1,6 @@
 ﻿using Cypher.API.Controllers;
 using Cypher.Application.Features.Items.Commands.Create;
+using Cypher.Application.Features.Items.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ namespace Cypher.Api.Controllers.v1
 {
     public class ItemController : BaseApiController<ItemController>
     {
-        //[HttpGet]
-        //public async Task<IActionResult> GetAll(int pageNumber, int pageSize)
-        //{
-        //    var items = await _mediator.Send(new GetAllItemsQuery(pageNumber, pageSize));
-        //    return Ok(items);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetAll(int pageNumber, int pageSize)
+        {
+            var items = await _mediator.Send(new GetAllItemsQuery(pageNumber, pageSize));
+            return Ok(items);
+        }
 
         //[HttpGet("{id}")]
         //public async Task<IActionResult> GetById(int id)
