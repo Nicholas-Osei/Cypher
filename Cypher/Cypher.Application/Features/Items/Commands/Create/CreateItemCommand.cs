@@ -15,7 +15,7 @@ namespace Cypher.Application.Features.Items.Commands.Create
     public class CreateItemCommand : IRequest<Result<int>>
     {
         public string Name { get; set; }
-        public string Type { get; set; }
+        public string ItemType { get; set; }
         
         // Does not have to be linked to an inventory on creation
 
