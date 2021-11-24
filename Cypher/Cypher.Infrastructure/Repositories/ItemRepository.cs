@@ -1,5 +1,6 @@
 ﻿using Cypher.Application.Interfaces.Repositories;
 using Cypher.Domain.Entities.Cypher;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,16 @@ namespace Cypher.Infrastructure.Repositories
         }
 
         public IQueryable<Item> Items => _repo.Entities;
+
+        public async Task DeleteAsync(Item item)
+        {
+            await _repo.DeleteAsync(item);
+        }
+
+        public async Task<Item> GetByIdAsync(int itemId)
+        {
+            return await _repo.Entities.Where(i => i.Id == itemId).FirstOrDefaultAsync();
+        }
 
         public async Task<int> InsertAsync(Item item)
         {

@@ -1,5 +1,6 @@
 ﻿using Cypher.API.Controllers;
 using Cypher.Application.Features.Items.Commands.Create;
+using Cypher.Application.Features.Items.Commands.Delete;
 using Cypher.Application.Features.Items.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -42,10 +43,10 @@ namespace Cypher.Api.Controllers.v1
         //    return Ok(await _mediator.Send(command));
         //}
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    return Ok(await _mediator.Send(new DeleteItemCommand { Id = id }));
-        //}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok(await _mediator.Send(new DeleteItemCommand { Id = id }));
+        }
     }
 }

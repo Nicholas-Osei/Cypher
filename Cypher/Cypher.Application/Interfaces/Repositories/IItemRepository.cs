@@ -11,5 +11,7 @@ namespace Cypher.Application.Interfaces.Repositories
     {
         IQueryable<Item> Items { get; }
         Task<int> InsertAsync(Item item);
+        Task<Item> GetByIdAsync(int itemId);
+        Task DeleteAsync(Item item);
     }
 }
