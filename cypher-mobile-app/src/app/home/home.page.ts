@@ -24,18 +24,17 @@ export class HomePage {
 
   constructor(public googlePlus: GooglePlus, private router: Router,
     public nav: NavController, public loginservice: LoginService) {
-    this.getToken();
 
-    render({
-      id: '#myPaypalButtons',
-      currency: 'EUR',
-      value: this.moneyToPay.toString(),
-      onApprove: (details) => {
-        alert('Transaction succesfull');
-        this.mybalance += this.moneyToPay;
-      }
+    // render({
+    //   id: '#myPaypalButtons',
+    //   currency: 'EUR',
+    //   value: this.moneyToPay.toString(),
+    //   onApprove: (details) => {
+    //     alert('Transaction succesfull');
+    //     this.mybalance += this.moneyToPay;
+    //   }
 
-    });
+    // });
 
   }
 
@@ -66,6 +65,7 @@ export class HomePage {
 
 
   checkUserCredential(form: { value: { email: any; password: any } }) {
+    this.getToken();
     console.log(form.value.email);
     const toBAseAuthentication = Buffer.from(form.value.email + form.value.password).toString('base64');
     console.log(toBAseAuthentication);

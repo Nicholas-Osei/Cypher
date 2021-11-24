@@ -30,6 +30,7 @@
     "buffer": "^6.0.3",
     "cordova-ios": "6.2.0",
     "creditcardpayments": "^1.0.3",
+    "paypal-checkout": "^4.0.331",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
@@ -80,10 +81,6 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "646712186754-93fiujqd1bdt8nqu7bmkok9lhtgphvsm.apps.googleusercontent.com",
-        "PLAY_SERVICES_VERSION": "15.0.1"
-      },
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
@@ -93,10 +90,12 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-cleartext": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "646712186754-93fiujqd1bdt8nqu7bmkok9lhtgphvsm.apps.googleusercontent.com",
+        "PLAY_SERVICES_VERSION": "15.0.1"
+      }
     },
-    "platforms": [
-      "android"
-    ]
+    "platforms": []
   }
 }

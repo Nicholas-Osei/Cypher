@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cypher.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211124153356_UserCredentialMigration")]
+    [Migration("20211124162818_UserCredentialMigration")]
     partial class UserCredentialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -382,6 +382,33 @@ namespace Cypher.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Puzzles");
+                });
+
+            modelBuilder.Entity("Cypher.Domain.Entities.Cypher.UserCredential", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Base64Credential")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserCredentials");
                 });
 
             modelBuilder.Entity("Cypher.Domain.Entities.Catalog.Product", b =>

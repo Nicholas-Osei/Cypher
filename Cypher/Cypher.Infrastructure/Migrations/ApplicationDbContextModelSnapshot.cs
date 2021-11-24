@@ -382,6 +382,33 @@ namespace Cypher.Infrastructure.Migrations
                     b.ToTable("Puzzles");
                 });
 
+            modelBuilder.Entity("Cypher.Domain.Entities.Cypher.UserCredential", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Base64Credential")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserCredentials");
+                });
+
             modelBuilder.Entity("Cypher.Domain.Entities.Catalog.Product", b =>
                 {
                     b.HasOne("Cypher.Domain.Entities.Catalog.Brand", "Brand")

@@ -32,6 +32,7 @@ namespace Cypher.Infrastructure.DbContexts
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessagePlayer> MessagePlayers { get; set; }
         public DbSet<Puzzle> Puzzles { get; set; }
+        public DbSet<UserCredential> UserCredentials { get; set; }
 
 
         public IDbConnection Connection => Database.GetDbConnection();

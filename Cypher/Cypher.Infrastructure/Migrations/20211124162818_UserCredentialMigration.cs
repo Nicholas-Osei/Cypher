@@ -4,12 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Cypher.Infrastructure.Migrations
 {
-    public partial class UserCredentialsMigration : Migration
+    public partial class UserCredentialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Base64Credential",
+                name: "UserCredentials",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -22,14 +22,14 @@ namespace Cypher.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Base64Credential", x => x.Id);
+                    table.PrimaryKey("PK_UserCredentials", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Base64Credential");
+                name: "UserCredentials");
         }
     }
 }
