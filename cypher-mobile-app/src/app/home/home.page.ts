@@ -33,7 +33,7 @@ export class HomePage {
     //     alert('Transaction succesfull');
     //     this.mybalance += this.moneyToPay;
     //   }
-
+    this.getToken();
     // });
 
   }
@@ -65,7 +65,7 @@ export class HomePage {
 
 
   checkUserCredential(form: { value: { email: any; password: any } }) {
-    this.getToken();
+
     console.log(form.value.email);
     const toBAseAuthentication = Buffer.from(form.value.email + form.value.password).toString('base64');
     console.log(toBAseAuthentication);
@@ -81,6 +81,7 @@ export class HomePage {
     }
   }
   registerUser(form: { value: { email: any; password: any; confirmpassword: any } }) {
+    console.log(this.gebruikerCredentials.data);
     if (form.value.confirmpassword === form.value.password) {
       const toBAseAuthentication = Buffer.from(form.value.email + form.value.confirmpassword).toString('base64');
       const newCredential = {
@@ -88,10 +89,11 @@ export class HomePage {
       };
       for (const x of this.gebruikerCredentials.data) {
         this.teller++;
+        console.log(this.gebruikerCredentials.data.length - 1, this.teller);
         if (x.base64Credential === toBAseAuthentication) {
           this.passwordcheck = 'User Already Exist! Please Go back and Log in';
         }
-        else if ((this.gebruikerCredentials.data.length - 1) === this.teller) {
+        else if (this.gebruikerCredentials.data.length > 1 || (this.gebruikerCredentials.data.length - 1) === this.teller) {
           console.log('not found');
           this.loginservice.postCredential(newCredential).subscribe(d => { console.log('Added'); this.toRegister = false; });
         }
