@@ -15,7 +15,7 @@ namespace Cypher.Api.Controllers.v1
     public class ItemController : BaseApiController<ItemController>
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll(int pageNumber, int pageSize)
+        public async Task<IActionResult> GetAll(int? pageNumber, int? pageSize)
         {
             var items = await _mediator.Send(new GetAllItemsQuery(pageNumber, pageSize));
             return Ok(items);
