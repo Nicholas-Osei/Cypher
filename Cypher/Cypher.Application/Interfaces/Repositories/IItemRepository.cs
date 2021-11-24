@@ -13,5 +13,6 @@ namespace Cypher.Application.Interfaces.Repositories
         Task<int> InsertAsync(Item item);
         Task<Item> GetByIdAsync(int itemId);
         Task DeleteAsync(Item item);
+        Task UpdateAsync(Item item);
     }
 }

@@ -36,5 +36,10 @@ namespace Cypher.Infrastructure.Repositories
 
             return item.Id;
         }
+
+        public async Task UpdateAsync(Item item)
+        {
+            await _repo.UpdateAsync(item);
+        }
     }
 }

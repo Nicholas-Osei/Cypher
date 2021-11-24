@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Cypher.Application.Features.Items.Commands.Create;
+using Cypher.Application.Features.Items.Queries.GetById;
+using Cypher.Application.Features.Players.Queries.GetById;
 using Cypher.Domain.Entities.Cypher;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace Cypher.Application.Mappings
         public ItemProfile()
         {
             CreateMap<CreateItemCommand, Item>().ReverseMap();
+            CreateMap<GetItemByIdResponse, Item>().ReverseMap();
         }
     }
 }
