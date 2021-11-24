@@ -18,10 +18,10 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
 
-        public GetAllPlayersQuery(int pageNr, int pageSize)
+        public GetAllPlayersQuery(int? pageNr, int? pageSize)
         {
-            PageNumber = pageNr;
-            PageSize = pageSize;
+            PageNumber = pageNr ?? 0;
+            PageSize = pageSize ?? 10;
         }
 
         public class GetAllPlayersQueryHandler : IRequestHandler<GetAllPlayersQuery, PaginatedResult<GetAllPlayersResponse>>

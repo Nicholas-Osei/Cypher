@@ -10,11 +10,15 @@ namespace Cypher.Domain.Entities.Cypher
     public class Item : AuditableEntity
     {
         public string Name { get; set; }
-        public enum Type
-        {
-            type1, type2, type3
-        }
+        public string ItemType { get; set; }
 
         public virtual Inventory Inventory { get; set; }       
     }
+
+    //public enum ItemType
+    //{
+    //    type1,
+    //    type2,
+    //    type3
+    //}
 }

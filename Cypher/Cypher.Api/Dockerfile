@@ -25,4 +25,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY "Cypher.Api/appsettings.json" "/app/AppSettings.json"
+COPY "Cypher.Api/appsettings.Development.json" "/app/AppSettings.Development.json"
 ENTRYPOINT ["dotnet", "Cypher.Api.dll"]
