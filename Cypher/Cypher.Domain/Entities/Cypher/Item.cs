@@ -12,7 +12,7 @@ namespace Cypher.Domain.Entities.Cypher
         public string Name { get; set; }
         public string ItemType { get; set; }
 
-        public virtual Inventory Inventory { get; set; }       
+        public virtual Inventory Inventory { get; set; }
     }
 
     //public enum ItemType

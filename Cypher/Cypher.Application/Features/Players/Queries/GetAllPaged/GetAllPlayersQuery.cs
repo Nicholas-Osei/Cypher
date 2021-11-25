@@ -1,15 +1,19 @@
 ﻿using AspNetCoreHero.Results;
 using Cypher.Application.Extensions;
+using Cypher.Application.Features.Items.Queries;
 using Cypher.Application.Interfaces.Repositories;
 using Cypher.Domain.Entities.Cypher;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Cypher.Application.Features.Items.Queries.GetAllItemsQuery;
 
 namespace Cypher.Application.Features.Players.Queries.GetAllPaged
 {
@@ -17,14 +21,15 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
-
+       
         public GetAllPlayersQuery(int? pageNr, int? pageSize)
         {
             PageNumber = pageNr ?? 0;
             PageSize = pageSize ?? 10;
         }
 
-        public class GetAllPlayersQueryHandler : IRequestHandler<GetAllPlayersQuery, PaginatedResult<GetAllPlayersResponse>>
+
+        public class GetAllPlayersQueryHandler : DbContext,IRequestHandler<GetAllPlayersQuery, PaginatedResult<GetAllPlayersResponse>>
         {
             private readonly IPlayerRepository _repo;
             public GetAllPlayersQueryHandler(IPlayerRepository repository)
@@ -38,10 +43,17 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                 {
                     Id = e.Id,
                     Name = e.Name,
-                    IsAdmin = e.IsAdmin
+                    //inventory = e.Inventory,
+
+                    IsAdmin = e.IsAdmin,
+                    check = e.Inventory.Items.Count,
+                    //Items = e.Inventory.Items,
+                    Messages = e.MessagePlayers,
+                    PlayerLobbies = e.PlayerLobbies
+
                 };
                 var paginatedList = await _repo.Players
-                    .Select(expression)
+                    .Include(i=>i.Inventory.Items).Select(expression)
                     .ToPaginatedListAsync(request.PageNumber, request.PageSize);
                 return paginatedList;
             }
