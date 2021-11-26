@@ -14,7 +14,7 @@ variables:
   imageRepository: 'cypher'
   containerRegistry: 'cyphercontainerreg.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Cypher/Cypher.Api/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: 'latest'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
