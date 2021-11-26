@@ -29,6 +29,17 @@ namespace Cypher.Api.Controllers.v1
             return Ok(player);
         }
 
+        [HttpPut("{id}/friends")]
+        public async Task<IActionResult> Put(int id, UpdateFriendsCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            return Ok(await _mediator.Send(command));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(CreatePlayerCommand command)
         {

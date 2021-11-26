@@ -30,7 +30,11 @@ namespace Cypher.Api
             services.AddRepositories();
             services.AddSharedInfrastructure(_configuration);
             services.AddEssentials();
-            services.AddControllers();
+            //services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddMvc(o =>
             {
                 var policy = new AuthorizationPolicyBuilder()
