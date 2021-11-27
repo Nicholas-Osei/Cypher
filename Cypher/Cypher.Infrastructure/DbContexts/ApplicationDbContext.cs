@@ -21,6 +21,7 @@ namespace Cypher.Infrastructure.DbContexts
         {
             _dateTime = dateTime;
             _authenticatedUser = authenticatedUser;
+            
         }
 
         public DbSet<Product> Products { get; set; }
@@ -68,12 +69,16 @@ namespace Cypher.Infrastructure.DbContexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Player>().HasOne(u => u.Inventory);
             builder.Entity<MessagePlayer>().HasKey(mp => new { mp.MessageId, mp.PlayerId });
             builder.Entity<PlayerLobby>().HasKey(pl => new { pl.PlayerId, pl.LobbyId });
-            builder.Entity<Item>()
-                .Property(i => i.ItemType)
-                .HasConversion<string>();
-
+           
+            //builder.Entity<Item>()
+            //    .Property(i => i.ItemType)
+            //    .HasConversion<string>();
+            builder.Entity<Inventory>().HasMany(i => i.Items).WithOne(e=>e.Inventory);
+            
+            //builder.Entity<Item>().HasOne(p => p.Inventory);
             foreach (var property in builder.Model.GetEntityTypes()
             .SelectMany(t => t.GetProperties())
             .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))

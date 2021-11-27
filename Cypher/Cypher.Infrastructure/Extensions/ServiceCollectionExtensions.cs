@@ -33,6 +33,7 @@ namespace Cypher.Infrastructure.Extensions {
             services.AddTransient<IPlayerRepository, PlayerRepository> ();
             services.AddTransient<IPlayerCacheRepository, PlayerCacheRepository> ();
             services.AddTransient<IItemRepository, ItemRepository> ();
+            services.AddTransient<IInventoryRepository, InventoryRepository>();
 
             services.AddTransient<IProductRepository, ProductRepository> ();
             services.AddTransient<IProductCacheRepository, ProductCacheRepository> ();

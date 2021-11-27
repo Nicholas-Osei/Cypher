@@ -18,6 +18,7 @@ namespace Cypher.Application.Interfaces.Contexts
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
         DbSet<Product> Products { get; set; }
-       // DbSet<UserCredential> userCredentials{ get; set; }
+       // DbSet<Inventory> Inventories { get; set; }
+        // DbSet<UserCredential> userCredentials{ get; set; }
     }
 }

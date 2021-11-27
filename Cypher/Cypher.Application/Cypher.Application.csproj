@@ -16,7 +16,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -34,6 +33,14 @@
     <None Remove="Features\UserCredentials\Queries\GetAllUserCredentials\" />
     <None Remove="Npgsql.EntityFrameworkCore.PostgreSQL.Design" />
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Features\Inventory\" />
+    <None Remove="Features\Inventory\Command\" />
+    <None Remove="Features\Inventory\Query\" />
+    <None Remove="Features\Inventory\Commands\Create\" />
+    <None Remove="Features\Inventorys\Commands\Delete\" />
+    <None Remove="Features\Inventorys\Commands\Update\" />
+    <None Remove="Features\Inventorys\Queries\GetAll\" />
+    <None Remove="Features\Inventorys\Queries\GetById\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\UserCredentials\" />
@@ -41,5 +48,13 @@
     <Folder Include="Features\UserCredentials\Queries\" />
     <Folder Include="Features\UserCredentials\Commands\Create\" />
     <Folder Include="Features\UserCredentials\Queries\GetAllUserCredentials\" />
+    <Folder Include="Features\Inventorys\" />
+    <Folder Include="Features\Inventorys\Commands\" />
+    <Folder Include="Features\Inventorys\Queries\" />
+    <Folder Include="Features\Inventorys\Commands\Create\" />
+    <Folder Include="Features\Inventorys\Commands\Delete\" />
+    <Folder Include="Features\Inventorys\Commands\Update\" />
+    <Folder Include="Features\Inventorys\Queries\GetAll\" />
+    <Folder Include="Features\Inventorys\Queries\GetById\" />
   </ItemGroup>
 </Project>

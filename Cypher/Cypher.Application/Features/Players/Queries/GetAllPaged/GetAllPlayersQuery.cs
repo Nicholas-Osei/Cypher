@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static Cypher.Application.Features.Items.Queries.GetAllItemsQuery;
 
+
 namespace Cypher.Application.Features.Players.Queries.GetAllPaged
 {
     public class GetAllPlayersQuery : IRequest<PaginatedResult<GetAllPlayersResponse>>
@@ -29,7 +30,7 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
         }
 
 
-        public class GetAllPlayersQueryHandler : DbContext,IRequestHandler<GetAllPlayersQuery, PaginatedResult<GetAllPlayersResponse>>
+        public class GetAllPlayersQueryHandler : IRequestHandler<GetAllPlayersQuery, PaginatedResult<GetAllPlayersResponse>>
         {
             private readonly IPlayerRepository _repo;
             public GetAllPlayersQueryHandler(IPlayerRepository repository)
@@ -43,17 +44,17 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                 {
                     Id = e.Id,
                     Name = e.Name,
-                    //inventory = e.Inventory,
+                    inventory = e.Inventory,
 
                     IsAdmin = e.IsAdmin,
-                    check = e.Inventory.Items.Count,
+                    //check = e.Inventory.Items.Count,
                     //Items = e.Inventory.Items,
                     Messages = e.MessagePlayers,
                     PlayerLobbies = e.PlayerLobbies
 
                 };
-                var paginatedList = await _repo.Players
-                    .Include(i=>i.Inventory.Items).Select(expression)
+                var paginatedList = await _repo.Players.Include(p => p.Inventory)
+                    .Select(expression)
                     .ToPaginatedListAsync(request.PageNumber, request.PageSize);
                 return paginatedList;
             }

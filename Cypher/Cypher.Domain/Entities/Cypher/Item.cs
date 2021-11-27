@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Cypher.Domain.Entities.Cypher
@@ -11,6 +12,7 @@ namespace Cypher.Domain.Entities.Cypher
     {
         public string Name { get; set; }
         public string ItemType { get; set; }
+        [JsonIgnore]
 
         public virtual Inventory Inventory { get; set; }
     }

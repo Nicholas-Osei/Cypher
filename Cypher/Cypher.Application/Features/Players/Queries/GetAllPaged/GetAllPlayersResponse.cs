@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cypher.Domain.Entities.Cypher;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cypher.Application.Features.Players.Queries.GetAllPaged
 {
@@ -15,7 +16,7 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
         public string Name { get; set; }
         public bool IsAdmin { get; set; }
         public Inventory inventory { get; set; }
-        public ICollection<Item> Items { get; set; } = new List<Item>();
+        //public ICollection<Item> Items { get; set; } = new List<Item>();
         public ICollection<MessagePlayer> Messages { get; set; }
         public ICollection<PlayerLobby> PlayerLobbies { get; set; }
         
