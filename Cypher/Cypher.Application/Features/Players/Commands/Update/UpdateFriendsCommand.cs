@@ -39,10 +39,15 @@ namespace Cypher.Application.Features.Players.Commands.Update
                 else
                 {
                     if (player.Friends == null)
+                        player.Friends = new List<PlayerFriend>();
+
+                    var pf = new PlayerFriend()
                     {
-                        player.Friends = new List<Player>();
-                    }
-                    player.Friends.Add(friend);
+                        Player = player,
+                        Friend = friend
+                    };
+                    player.Friends.Add(pf);
+
                     await _playerRepo.UpdateAsync(player);
                     await _unitOfWork.Commit(cancellationToken);
                     return Result<int>.Success(player.Id);

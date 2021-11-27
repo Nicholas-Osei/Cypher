@@ -13,8 +13,7 @@ namespace Cypher.Domain.Entities.Cypher
         public bool IsAdmin { get; set; }
         public virtual ICollection<MessagePlayer> MessagePlayers { get; set; }
         public virtual ICollection<PlayerLobby> PlayerLobbies { get; set; }
-        public virtual ICollection<Player> Friends { get; set; }
+        public virtual ICollection<PlayerFriend> Friends { get; set; }
         public virtual Inventory Inventory { get; set; }
-
     }
 }
