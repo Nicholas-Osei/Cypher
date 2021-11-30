@@ -15,6 +15,7 @@ namespace Cypher.Domain.Entities.Cypher
         [JsonIgnore]
 
         public virtual Inventory Inventory { get; set; }
+
     }
 
     //public enum ItemType

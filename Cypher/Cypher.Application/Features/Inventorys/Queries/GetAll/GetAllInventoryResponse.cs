@@ -8,7 +8,7 @@ namespace Cypher.Application.Features.Inventorys.Queries.GetAll
     public class GetAllInventoryResponse
     {
         public int Id { get; set; }
-        public virtual IEnumerable<Item> Items { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
         public GetAllInventoryResponse()
         {
         }

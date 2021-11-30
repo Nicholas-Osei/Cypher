@@ -51,9 +51,9 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                     //Items = e.Inventory.Items,
                     Messages = e.MessagePlayers,
                     PlayerLobbies = e.PlayerLobbies
-
+                    
                 };
-                var paginatedList = await _repo.Players.Include(p => p.Inventory)
+                var paginatedList = await _repo.Players
                     .Select(expression)
                     .ToPaginatedListAsync(request.PageNumber, request.PageSize);
                 return paginatedList;

@@ -17,7 +17,6 @@ namespace Cypher.Domain.Entities.Cypher
         [JsonIgnore]
         public virtual ICollection<PlayerLobby> PlayerLobbies { get; set; }
         [JsonIgnore]
-        public virtual Inventory Inventory { get; set; }
-
+        public  Inventory Inventory { get; set; }
     }
 }

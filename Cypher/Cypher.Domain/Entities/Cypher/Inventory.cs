@@ -12,6 +12,6 @@ namespace Cypher.Domain.Entities.Cypher
     {
         [JsonIgnore]
 
-        public virtual IEnumerable<Item> Items { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Cypher.Infrastructure.Repositories
 {
-    public class PlayerRepository :DbContext, IPlayerRepository
+    public class PlayerRepository : IPlayerRepository
     {
         private readonly IRepositoryAsync<Player> _repo;
         private readonly IDistributedCache _distributedCache;
@@ -32,12 +32,12 @@ namespace Cypher.Infrastructure.Repositories
 
         public async Task<Player> GetByIdAsync(int productId)
         {
-            return await _repo.Entities.Include(i=>i.Inventory). Where(p => p.Id == productId).FirstOrDefaultAsync();
+            return await _repo.Entities. Where(p => p.Id == productId).FirstOrDefaultAsync();
         }
 
         public async Task<List<Player>> GetListAsync()
         {
-            return await _repo.Entities.Include(r=>r.Inventory).ToListAsync();
+            return await _repo.Entities.ToListAsync();
         }
 
         public async Task<int> InsertAsync(Player player)
