@@ -19,7 +19,6 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
         //public ICollection<Item> Items { get; set; } = new List<Item>();
         public ICollection<MessagePlayer> Messages { get; set; }
         public ICollection<PlayerLobby> PlayerLobbies { get; set; }
-        public virtual ICollection<Item> ItemsPlayers { get; set; }
 
     }
 }

@@ -18,7 +18,8 @@ export class LoginService {
   imageUrl: any;
   isLoggedIn = false;
   userData: any = {};
-  gebruikerCredentials = [];
+  // gebruikerCredentials = [];
+  gebruikerCredentials: RootObject;
   // eslint-disable-next-line max-len
   authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwianRpIjoiOGVhMDYxMTQtZTcxYi00MTljLTlhYmMtYWFiMjgwMzcxNzRmIiwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInVpZCI6IjJlN2FkMzVhLTliYTctNGQzOS04ZGQxLTc3ZmI0N2U0YzVkZiIsImZpcnN0X25hbWUiOiJNdWtlc2giLCJsYXN0X25hbWUiOiJNdXJ1Z2FuIiwiZnVsbF9uYW1lIjoiTXVrZXNoIE11cnVnYW4iLCJpcCI6IjAuMC4wLjEiLCJyb2xlcyI6WyJBZG1pbiIsIk1vZGVyYXRvciIsIkJhc2ljIiwiU3VwZXJBZG1pbiJdLCJuYmYiOjE2MzY1NDQ2NjUsImV4cCI6MTYzNjU0ODI2NSwiaXNzIjoiQ3lwaGVyLkFwaSIsImF1ZCI6IkN5cGhlci5BcGkuVXNlciJ9.fdBujUAYnruEO4uNhW6j7Vsb2BD6KC-ZCz6hNxrDPgQ';
 
@@ -33,7 +34,7 @@ export class LoginService {
       'Authorization': `Bearer ${this.authToken}`
     });
     //return this.http.get<RootObject>('https://api.genderize.io/?name=luc');
-    return this.http.get<RootObject>('https://localhost:5001/api/v1/UserCredential',
+    return this.http.get<RootObject>('https://localhost:5001/api/v1/UserCredential?pageSize=100500',
       { headers: httpHeaders });
   }
 
