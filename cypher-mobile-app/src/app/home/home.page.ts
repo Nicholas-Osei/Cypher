@@ -26,15 +26,15 @@ export class HomePage implements OnInit {
   constructor(public googlePlus: GooglePlus, private router: Router,
     public nav: NavController, public loginservice: LoginService) {
 
-    render({
-      id: '#myPaypalButtons',
-      currency: 'EUR',
-      value: this.moneyToPay.toString(),
-      onApprove: (details) => {
-        alert('Transaction succesfull');
-        this.mybalance += this.moneyToPay;
-      }
-    });
+    // render({
+    //   id: '#myPaypalButtons',
+    //   currency: 'EUR',
+    //   value: this.moneyToPay.toString(),
+    //   onApprove: (details) => {
+    //     alert('Transaction succesfull');
+    //     this.mybalance += this.moneyToPay;
+    //   }
+    // });
 
   }
 
@@ -94,25 +94,36 @@ export class HomePage implements OnInit {
 
   }
   registerUser(form: { value: { email: any; password: any; confirmpassword: any } }) {
-    // console.log(this.gebruikerCredentials.data);
+    console.log(this.loginservice.gebruikerCredentials.data);
     if (form.value.confirmpassword === form.value.password) {
       const toBAseAuthentication = Buffer.from(form.value.email + form.value.password).toString('base64');
       const newCredential = {
         base64Credential: toBAseAuthentication
       };
-      for (const x of this.loginservice.gebruikerCredentials.data) {
-        this.teller++;
-        console.log(this.loginservice.gebruikerCredentials.data.length - 1, this.teller);
-        if (x.base64Credential === toBAseAuthentication) {
-          this.passwordcheck = 'User Already Exist! Please Go back and Log in';
-        }
-        else if (this.loginservice.gebruikerCredentials.data.length - 1 === this.teller) {
-          console.log('not found');
-          console.log(this.loginservice.gebruikerCredentials.data);
+      if (this.loginservice.gebruikerCredentials.data.length === 0) {
+        console.log('null');
+        // eslint-disable-next-line max-len
+        this.loginservice.postCredential(newCredential).subscribe(d => { console.log('Added', toBAseAuthentication); this.toRegister = false; this.teller = 0; });
+        this.ngOnInit();
+      }
+      else {
+        for (const x of this.loginservice.gebruikerCredentials.data) {
+          this.teller++;
+          console.log(this.loginservice.gebruikerCredentials.data.length - 1, this.teller);
+          console.log(this.loginservice.gebruikerCredentials.data.length);
+          if (x.base64Credential === toBAseAuthentication) {
+            this.passwordcheck = 'User Already Exist! Please Go back and Log in';
+          }
           // eslint-disable-next-line max-len
-          this.loginservice.postCredential(newCredential).subscribe(d => { console.log('Added', toBAseAuthentication); this.toRegister = false; this.teller = 0; });
-          this.ngOnInit();
+          else if ((this.loginservice.gebruikerCredentials.data.length - 1 === this.teller) || this.loginservice.gebruikerCredentials.data.length === 1) {
+            console.log('not found');
+            console.log(this.loginservice.gebruikerCredentials.data);
+            // eslint-disable-next-line max-len
+            this.loginservice.postCredential(newCredential).subscribe(d => { console.log('Added', toBAseAuthentication); this.toRegister = false; this.teller = 0; });
+            this.ngOnInit();
+          }
         }
+
       }
 
     }
