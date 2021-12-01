@@ -42,6 +42,7 @@ namespace Cypher.Application.Features.Items.Commands.Update
                 }
                 else
                 {
+                    
                     item.Name = request.Name ?? item.Name;
                     item.ItemType = request.ItemType ?? item.ItemType;
                     item.Inventory = request.Inventory ?? item.Inventory;

@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> CYPHER LOGIN </ion-title>
+    <ion-buttons slot="start" *ngIf="toRegister;">
+      <ion-back-button defaultHref="" (click)="makeRegisterFalse()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="!toRegister; else Register">
+    <ion-text color="dark">
+      <h2>Enter your Email and password to Login</h2>
+    </ion-text>
+    <form #UserLogin="ngForm" (submit)="checkUserCredential(UserLogin)">
+      Email:
+      <ion-item>
+        <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+      </ion-item>
+      Password:
+      <ion-item>
+        <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+      </ion-item>
+      <ion-button size="small" type="submit" style="align-items: center" [disabled]="!UserLogin.valid">Log in
+      </ion-button>
+      <p>No account ? <ion-button (click)="makeRegisterTrue()" size="small" color="success">REGISTER</ion-button>
+      </p>
+    </form>
+    <ion-button (click)="login()" size="small">Login With Google</ion-button>
+  </div>
+  <ng-template #Register>
+    <form #UserRegister="ngForm" (submit)="registerUser(UserRegister)">
+      Email:
+      <ion-item>
+        <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+      </ion-item>
+      Password:
+      <ion-item>
+        <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+      </ion-item>
+      Confirm Password:
+      <ion-item>
+        <ion-input name="confirmpassword" type="password" placeholder="Confirm Password" ngModel required></ion-input>
+      </ion-item>
+      <ion-button size="small" type="submit" style="align-items: center" [disabled]="!UserRegister.valid">REGISTER !
+      </ion-button>
+      <h2>{{passwordcheck}}</h2>
+    </form>
+  </ng-template>
+  <ion-button onclick="window.open('https://34b1-81-11-219-174.ngrok.io','_system', 'location=yes');">
+    Pay with Google Pay</ion-button>
+
+  <div id="myPaypalButtons"></div>
+  <p> BALANCE : {{mybalance}}€</p>
+
+</ion-content>

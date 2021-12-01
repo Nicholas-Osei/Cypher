@@ -1,26 +1,24 @@
-﻿using AspNetCoreHero.Abstractions.Domain;
-using Cypher.Application.Interfaces.Contexts;
-using Cypher.Application.Interfaces.Shared;
-using Cypher.Domain.Entities.Catalog;
-using AspNetCoreHero.EntityFrameworkCore.AuditTrail;
-using Microsoft.EntityFrameworkCore;
-using System.Data;
+﻿using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AspNetCoreHero.Abstractions.Domain;
+using AspNetCoreHero.EntityFrameworkCore.AuditTrail;
+using Cypher.Application.Interfaces.Contexts;
+using Cypher.Application.Interfaces.Shared;
+using Cypher.Domain.Entities.Catalog;
 using Cypher.Domain.Entities.Cypher;
+using Microsoft.EntityFrameworkCore;
 
-namespace Cypher.Infrastructure.DbContexts
-{
-    public class ApplicationDbContext : AuditableContext, IApplicationDbContext
-    {
+namespace Cypher.Infrastructure.DbContexts {
+    public class ApplicationDbContext : AuditableContext, IApplicationDbContext {
         private readonly IDateTimeService _dateTime;
         private readonly IAuthenticatedUserService _authenticatedUser;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTimeService dateTime, IAuthenticatedUserService authenticatedUser) : base(options)
-        {
+        public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options, IDateTimeService dateTime, IAuthenticatedUserService authenticatedUser) : base (options) {
             _dateTime = dateTime;
             _authenticatedUser = authenticatedUser;
+
         }
 
         public DbSet<Product> Products { get; set; }
@@ -32,18 +30,15 @@ namespace Cypher.Infrastructure.DbContexts
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessagePlayer> MessagePlayers { get; set; }
         public DbSet<Puzzle> Puzzles { get; set; }
+        public DbSet<UserCredential> UserCredentials { get; set; }
 
+        public IDbConnection Connection => Database.GetDbConnection ();
 
-        public IDbConnection Connection => Database.GetDbConnection();
+        public bool HasChanges => ChangeTracker.HasChanges ();
 
-        public bool HasChanges => ChangeTracker.HasChanges();
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-        {
-            foreach (var entry in ChangeTracker.Entries<AuditableEntity>().ToList())
-            {
-                switch (entry.State)
-                {
+        public override async Task<int> SaveChangesAsync (CancellationToken cancellationToken = new CancellationToken ()) {
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity> ().ToList ()) {
+                switch (entry.State) {
                     case EntityState.Added:
                         entry.Entity.CreatedOn = _dateTime.NowUtc;
                         entry.Entity.CreatedBy = _authenticatedUser.UserId;
@@ -55,13 +50,10 @@ namespace Cypher.Infrastructure.DbContexts
                         break;
                 }
             }
-            if (_authenticatedUser.UserId == null)
-            {
-                return await base.SaveChangesAsync(cancellationToken);
-            }
-            else
-            {
-                return await base.SaveChangesAsync(_authenticatedUser.UserId);
+            if (_authenticatedUser.UserId == null) {
+                return await base.SaveChangesAsync (cancellationToken);
+            } else {
+                return await base.SaveChangesAsync (_authenticatedUser.UserId);
             }
         }
 
@@ -86,13 +78,12 @@ namespace Cypher.Infrastructure.DbContexts
                 .HasForeignKey(pf => pf.PlayerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            foreach (var property in builder.Model.GetEntityTypes()
-            .SelectMany(t => t.GetProperties())
-            .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
-            {
-                property.SetColumnType("decimal(18,2)");
+            foreach (var property in builder.Model.GetEntityTypes ()
+                    .SelectMany (t => t.GetProperties ())
+                    .Where (p => p.ClrType == typeof (decimal) || p.ClrType == typeof (decimal?))) {
+                property.SetColumnType ("decimal(18,2)");
             }
-            base.OnModelCreating(builder);
+            base.OnModelCreating (builder);
         }
     }
 }
