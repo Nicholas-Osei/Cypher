@@ -72,17 +72,19 @@ namespace Cypher.Infrastructure.DbContexts
 
             builder.Entity<PlayerFriend>()
                 .HasKey(pf => new { pf.PlayerId, pf.FriendId });
+            //builder.Entity<Player>()
+            //    .HasMany(p => p.Friends)
+            //    .WithOne(pf => pf.Friend);
             builder.Entity<PlayerFriend>()
                 .HasOne(pf => pf.Player)
                 .WithMany(p => p.Friends)
                 .HasForeignKey(pf => pf.FriendId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            //builder.Entity<Player>()
-            //    .HasMany<Player>(x => x.Friends);
-            //builder.Entity<Item>()
-            //    .Property(i => i.ItemType)
-            //    .HasConversion<string>();
+            builder.Entity<PlayerFriend>()
+                .HasOne(pf => pf.Friend)
+                .WithMany(p => p.Players)
+                .HasForeignKey(pf => pf.PlayerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             foreach (var property in builder.Model.GetEntityTypes()
             .SelectMany(t => t.GetProperties())

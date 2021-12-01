@@ -14,6 +14,7 @@ namespace Cypher.Domain.Entities.Cypher
         public virtual ICollection<MessagePlayer> MessagePlayers { get; set; }
         public virtual ICollection<PlayerLobby> PlayerLobbies { get; set; }
         public virtual ICollection<PlayerFriend> Friends { get; set; }
+        public virtual ICollection<PlayerFriend> Players { get; set; }
         public virtual Inventory Inventory { get; set; }
     }
 }
