@@ -29,10 +29,10 @@ namespace Cypher.Api.Controllers.v1
             return Ok(player);
         }
 
-        [HttpPut("{id}/friends")]
-        public async Task<IActionResult> Put(int id, UpdateFriendsCommand command)
+        [HttpPut("{playerId}/friends")]
+        public async Task<IActionResult> Put(int playerId, UpdateFriendsCommand command)
         {
-            if (id != command.Id)
+            if (playerId != command.PlayerId)
             {
                 return BadRequest();
             }

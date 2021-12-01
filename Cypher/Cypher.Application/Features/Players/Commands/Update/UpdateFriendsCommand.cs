@@ -13,8 +13,8 @@ namespace Cypher.Application.Features.Players.Commands.Update
 {
     public class UpdateFriendsCommand : IRequest<Result<int>>
     {
-        public int Id { get; set; }
         public int PlayerId { get; set; }
+        public int FriendId { get; set; }
 
         public class UpdateFriendsCommandHandler : IRequestHandler<UpdateFriendsCommand, Result<int>>
         {
@@ -29,8 +29,8 @@ namespace Cypher.Application.Features.Players.Commands.Update
 
             public async Task<Result<int>> Handle(UpdateFriendsCommand request, CancellationToken cancellationToken)
             {
-                var player = await _playerRepo.GetByIdAsync(request.Id);
-                var friend = await _playerRepo.GetByIdAsync(request.PlayerId);
+                var player = await _playerRepo.GetByIdAsync(request.PlayerId);
+                var friend = await _playerRepo.GetByIdAsync(request.FriendId);
 
                 if (player == null)
                     return Result<int>.Fail($"Player Not Found.");
