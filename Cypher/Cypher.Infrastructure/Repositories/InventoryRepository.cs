@@ -29,7 +29,7 @@ namespace Cypher.Infrastructure.Repositories
 
         public async Task<Inventory> GetByIdAsync(int inventoryId)
         {
-            return await _repo.Entities.Where(i => i.Id == inventoryId).FirstOrDefaultAsync();
+            return await _repo.Entities.Include(p=>p.Items).Where(i => i.Id == inventoryId).FirstOrDefaultAsync();
         }
 
         public async Task<int> InsertAsync(Inventory inventory)

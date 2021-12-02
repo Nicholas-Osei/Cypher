@@ -12,9 +12,9 @@ namespace Cypher.Domain.Entities.Cypher
     {
         public string Name { get; set; }
         public string ItemType { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
 
-        public virtual Inventory Inventory { get; set; }
+        //public virtual Inventory Inventory { get; set; }
 
     }
 

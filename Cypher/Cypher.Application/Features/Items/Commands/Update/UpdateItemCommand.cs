@@ -45,7 +45,7 @@ namespace Cypher.Application.Features.Items.Commands.Update
                     
                     item.Name = request.Name ?? item.Name;
                     item.ItemType = request.ItemType ?? item.ItemType;
-                    item.Inventory = request.Inventory ?? item.Inventory;
+                    //item.Inventory = request.Inventory ?? item.Inventory;
 
                     await _itemRepo.UpdateAsync(item);
                     await _uow.Commit(cancellationToken);

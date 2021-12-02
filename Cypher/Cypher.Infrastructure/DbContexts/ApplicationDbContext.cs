@@ -65,7 +65,8 @@ namespace Cypher.Infrastructure.DbContexts {
             //builder.Entity<Item>()
             //    .Property(i => i.ItemType)
             //    .HasConversion<string>();
-            builder.Entity<Inventory> ().HasMany (i => i.Items).WithOne (e => e.Inventory);
+            //builder.Entity<Inventory> ().HasMany (i => i.Items).WithOne (e => e.Inventory);
+            builder.Entity<Inventory>().HasMany(i => i.Items);
 
             //builder.Entity<Item>().HasOne(p => p.Inventory);
             builder.Entity<Player> ()
