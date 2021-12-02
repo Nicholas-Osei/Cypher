@@ -43,7 +43,9 @@ namespace Cypher.Application.Features.Players.Commands.Update
 
                     var pf = new PlayerFriend()
                     {
+                        PlayerId = player.Id,
                         Player = player,
+                        FriendId = friend.Id,
                         Friend = friend
                     };
                     player.Friends.Add(pf);

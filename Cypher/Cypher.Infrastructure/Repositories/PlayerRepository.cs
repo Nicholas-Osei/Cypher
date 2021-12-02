@@ -32,7 +32,10 @@ namespace Cypher.Infrastructure.Repositories
 
         public async Task<Player> GetByIdAsync(int productId)
         {
-            return await _repo.Entities. Where(p => p.Id == productId).FirstOrDefaultAsync();
+            return await _repo.Entities
+                .Where(p => p.Id == productId)
+                .Include(p => p.Friends)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<Player>> GetListAsync()
