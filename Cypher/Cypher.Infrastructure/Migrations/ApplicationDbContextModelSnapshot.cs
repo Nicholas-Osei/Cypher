@@ -516,14 +516,14 @@ namespace Cypher.Infrastructure.Migrations
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.PlayerFriend", b =>
                 {
-                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Player")
-                        .WithMany("Friends")
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Friend")
+                        .WithMany("Players")
                         .HasForeignKey("FriendId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Friend")
-                        .WithMany("Players")
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Player")
+                        .WithMany("Friends")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

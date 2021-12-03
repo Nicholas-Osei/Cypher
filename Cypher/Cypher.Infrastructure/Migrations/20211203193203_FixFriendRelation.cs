@@ -7,6 +7,18 @@ namespace Cypher.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Players_Players_PlayerId",
+                table: "Players");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Players_PlayerId",
+                table: "Players");
+
+            migrationBuilder.DropColumn(
+                name: "PlayerId",
+                table: "Players");
+
             migrationBuilder.CreateTable(
                 name: "PlayerFriend",
                 columns: table => new
@@ -46,6 +58,25 @@ namespace Cypher.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "PlayerFriend");
+
+            migrationBuilder.AddColumn<int>(
+                name: "PlayerId",
+                table: "Players",
+                type: "integer",
+                nullable: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Players_PlayerId",
+                table: "Players",
+                column: "PlayerId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Players_Players_PlayerId",
+                table: "Players",
+                column: "PlayerId",
+                principalTable: "Players",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }

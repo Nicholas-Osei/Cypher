@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cypher.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211201200417_FixFriendRelation")]
+    [Migration("20211203193203_FixFriendRelation")]
     partial class FixFriendRelation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -518,14 +518,14 @@ namespace Cypher.Infrastructure.Migrations
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.PlayerFriend", b =>
                 {
-                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Player")
-                        .WithMany("Friends")
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Friend")
+                        .WithMany("Players")
                         .HasForeignKey("FriendId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Friend")
-                        .WithMany("Players")
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Player")
+                        .WithMany("Friends")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

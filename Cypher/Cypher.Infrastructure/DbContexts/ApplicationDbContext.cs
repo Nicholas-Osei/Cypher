@@ -70,12 +70,12 @@ namespace Cypher.Infrastructure.DbContexts {
             builder.Entity<PlayerFriend>()
                 .HasOne(pf => pf.Player)
                 .WithMany(p => p.Friends)
-                .HasForeignKey(pf => pf.FriendId)
+                .HasForeignKey(pf => pf.PlayerId)
                 .OnDelete(DeleteBehavior.Restrict);
             builder.Entity<PlayerFriend>()
                 .HasOne(pf => pf.Friend)
                 .WithMany(p => p.Players)
-                .HasForeignKey(pf => pf.PlayerId)
+                .HasForeignKey(pf => pf.FriendId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             foreach (var property in builder.Model.GetEntityTypes ()
