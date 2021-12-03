@@ -19,6 +19,21 @@
       </ion-avatar>
     </p>
 
+
+    <div *ngIf="players">
+      <!-- <div *ngFor="let all of players.data">
+        {{players.data[0].name}}
+        {{all.name}}
+
+      </div> -->
+
+      {{getUserItems()}}
+      <div *ngFor="let all of inventory">
+        <li>Name:{{all.name}}</li>
+        <li>Type:{{all.itemType}}</li>
+      </div>
+
+    </div>
     <button ion-button color="light" (click)="loginservice.logout()">
       Log Out
     </button>
