@@ -1,5 +1,4 @@
-﻿using Cypher.Application.DTOs.Player;
-using Cypher.Domain.Entities.Cypher;
+﻿using Cypher.Domain.Entities.Cypher;
 using System.Collections.Generic;
 
 namespace Cypher.Application.Features.Players.Queries.GetById

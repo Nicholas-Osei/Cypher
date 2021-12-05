@@ -1,5 +1,4 @@
-﻿using Cypher.Application.DTOs.Player;
-using Cypher.Application.Interfaces.Repositories;
+﻿using Cypher.Application.Interfaces.Repositories;
 using Cypher.Domain.Entities.Cypher;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
@@ -35,12 +34,6 @@ namespace Cypher.Infrastructure.Repositories
         {
             return await _repo.Entities
                 .Where(p => p.Id == playerId)
-                //.Include(pf => (pf as Player).Friends.Select(
-                //    f => new PlayerEssentials
-                //    {
-                //        Id = f.PlayerId,
-                //        Name = f.Player.Name
-                //    }))
                 .Include(p => p.Friends)
                 .ThenInclude(pf => pf.Friend)
                 .FirstOrDefaultAsync();
