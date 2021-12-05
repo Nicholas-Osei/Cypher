@@ -1,4 +1,5 @@
-﻿using Cypher.Application.Interfaces.Repositories;
+﻿using Cypher.Application.DTOs.Player;
+using Cypher.Application.Interfaces.Repositories;
 using Cypher.Domain.Entities.Cypher;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
@@ -30,11 +31,18 @@ namespace Cypher.Infrastructure.Repositories
             await _distributedCache.RemoveAsync(CacheKeys.PlayerCacheKeys.GetKey(player.Id));
         }
 
-        public async Task<Player> GetByIdAsync(int productId)
+        public async Task<Player> GetByIdAsync(int playerId)
         {
             return await _repo.Entities
-                .Where(p => p.Id == productId)
+                .Where(p => p.Id == playerId)
+                //.Include(pf => (pf as Player).Friends.Select(
+                //    f => new PlayerEssentials
+                //    {
+                //        Id = f.PlayerId,
+                //        Name = f.Player.Name
+                //    }))
                 .Include(p => p.Friends)
+                .ThenInclude(pf => pf.Friend)
                 .FirstOrDefaultAsync();
         }
 
