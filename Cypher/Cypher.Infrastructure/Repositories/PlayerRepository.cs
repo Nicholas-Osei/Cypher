@@ -30,9 +30,15 @@ namespace Cypher.Infrastructure.Repositories
             await _distributedCache.RemoveAsync(CacheKeys.PlayerCacheKeys.GetKey(player.Id));
         }
 
-        public async Task<Player> GetByIdAsync(int productId)
+        public async Task<Player> GetByIdAsync(int playerId)
         {
-            return await _repo.Entities.Include(i=>i.Inventory).ThenInclude(e=>e.Items).Where(p => p.Id == productId).FirstOrDefaultAsync();
+            return await _repo.Entities
+                .Where(p => p.Id == playerId)
+                .Include(p => p.Friends)
+                .ThenInclude(pf => pf.Friend)
+                .Include(i => i.Inventory)
+                .ThenInclude(e => e.Items)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<Player>> GetListAsync()

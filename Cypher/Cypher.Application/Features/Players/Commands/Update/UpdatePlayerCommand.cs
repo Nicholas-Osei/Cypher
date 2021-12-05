@@ -37,7 +37,7 @@ namespace Cypher.Application.Features.Players.Commands.Update
 
                 if (player == null)
                 {
-                    return Result<int>.Fail($"Brand Not Found.");
+                    return Result<int>.Fail($"Player Not Found.");
                 }
                 else
                 {
