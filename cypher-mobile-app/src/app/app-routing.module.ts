@@ -11,10 +11,19 @@ const routes: Routes = [
     loadChildren: () => import('./game-screen/game-screen.module').then(m => m.GameScreenPageModule)
   },
   {
+    path: 'map-screen',
+    loadChildren: () => import('./map-screen/map-screen.module').then(m => m.MapScreenPageModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'map-screen',
+    loadChildren: () => import('./map-screen/map-screen.module').then( m => m.MapScreenPageModule)
+  },
+
 ];
 
 @NgModule({
