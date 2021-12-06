@@ -2,10 +2,19 @@
   <ion-toolbar>
     <ion-title>GameScreen</ion-title>
   </ion-toolbar>
+  <span id="mySidenav" class="sidenav">
+    <a class="closebtn" (click)="closeNav()">&times;</a>
+    <a (click)="renderPage('inventory')">Inventory</a>
+    <a (click)="renderPage('friends')">Friends</a>
+    <a (click)="renderPage('lobby')">Lobby</a>
+    <a (click)="renderPage('messages')">Messages</a>
+  </span>
 </ion-header>
-
 <ion-content>
+
+  <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
   <div *ngIf="loginservice.isLoggedIn">
+
     <h1>Welcome, {{loginservice.displayName}}!</h1>
     <p>
       <span *ngIf="loginservice.email">Email: {{loginservice.email}}</span><br />
@@ -19,6 +28,50 @@
       </ion-avatar>
     </p>
 
+
+    <div *ngIf="players">
+      <!-- <div *ngFor="let all of players.data">
+        {{players.data[0].name}}
+        {{all.name}}
+
+      </div> -->
+
+      {{getUserItems()}}
+      <div *ngIf="showPage === 'inventory'">
+        <div *ngFor="let all of inventory">
+          <li>Name:{{all.name}}</li>
+          <li>Type:{{all.itemType}}</li>
+        </div>
+      </div>
+      <div *ngIf="showPage === 'friends'">
+
+
+        <!-- <div *ngFor="let all of inventory">
+          <li>Name:{{all.name}}</li>
+          <li>Type:{{all.itemType}}</li>
+        </div> -->
+        <p>Friends</p>
+      </div>
+      <div *ngIf="showPage === 'lobby'">
+
+
+        <!-- <div *ngFor="let all of inventory">
+          <li>Name:{{all.name}}</li>
+          <li>Type:{{all.itemType}}</li>
+        </div> -->
+        <p>Lobby</p>
+      </div>
+      <div *ngIf="showPage === 'messages'">
+
+
+        <!-- <div *ngFor="let all of inventory">
+          <li>Name:{{all.name}}</li>
+          <li>Type:{{all.itemType}}</li>
+        </div> -->
+        <p>Messages</p>
+      </div>
+
+    </div>
     <button ion-button color="light" (click)="loginservice.logout()">
       Log Out
     </button>

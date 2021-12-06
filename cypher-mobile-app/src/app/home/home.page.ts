@@ -5,6 +5,7 @@ import { NavController } from '@ionic/angular';
 import { LoginService, RootObject, UserCredentials } from '../Services/login.service';
 import { Buffer } from 'buffer';
 import { render } from 'creditcardpayments/creditCardPayments';
+import { PlayerService } from '../Services/player.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class HomePage implements OnInit {
   moneyToPay = 10;
 
   constructor(public googlePlus: GooglePlus, private router: Router,
-    public nav: NavController, public loginservice: LoginService) {
+    public nav: NavController, public loginservice: LoginService, public playerservice: PlayerService) {
 
     // render({
     //   id: '#myPaypalButtons',
@@ -54,7 +55,6 @@ export class HomePage implements OnInit {
   }
   makeRegisterTrue(): void {
     this.toRegister = true;
-
   }
 
   makeRegisterFalse(): void {
@@ -86,6 +86,7 @@ export class HomePage implements OnInit {
         console.log(toBAseAuthentication);
         this.loginservice.displayName = form.value.email;
         this.router.navigate(['game-screen']);
+
       }
       console.log('doesnt exist');
 
@@ -120,6 +121,18 @@ export class HomePage implements OnInit {
             console.log(this.loginservice.gebruikerCredentials.data);
             // eslint-disable-next-line max-len
             this.loginservice.postCredential(newCredential).subscribe(d => { console.log('Added', toBAseAuthentication); this.toRegister = false; this.teller = 0; });
+            const credentials =
+            {
+              name: form.value.email,
+              isAdmin: false,
+              inventory: {
+                items: []
+              },
+              messages: [],
+              playerLobbies: []
+
+            };
+            this.playerservice.postPlayer(credentials).subscribe(a => console.log('Player Added'));
             this.ngOnInit();
           }
         }
