@@ -11,9 +11,10 @@ namespace Cypher.Application.Interfaces.Repositories
     {
         IQueryable<Player> Players { get; }
         Task<List<Player>> GetListAsync();
-        Task<Player> GetByIdAsync(int productId);
+        Task<Player> GetByIdAsync(int playerId);
         Task<int> InsertAsync(Player player);
         Task UpdateAsync(Player player);
         Task DeleteAsync(Player player);
+        Task RemoveFriendAsync(Player player, Player friend);
     }
 }

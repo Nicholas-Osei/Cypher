@@ -331,36 +331,6 @@ namespace Cypher.Infrastructure.Migrations
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("Cypher.Domain.Entities.Cypher.PlayerFriend", b =>
-                {
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("FriendId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("PlayerId", "FriendId");
-
-                    b.HasIndex("FriendId");
-
-                    b.ToTable("PlayerFriend");
-                });
-
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.PlayerLobby", b =>
                 {
                     b.Property<int>("PlayerId")
@@ -439,6 +409,21 @@ namespace Cypher.Infrastructure.Migrations
                     b.ToTable("UserCredentials");
                 });
 
+            modelBuilder.Entity("PlayerPlayer", b =>
+                {
+                    b.Property<int>("FriendsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("FriendsId", "PlayersId");
+
+                    b.HasIndex("PlayersId");
+
+                    b.ToTable("PlayerPlayer");
+                });
+
             modelBuilder.Entity("Cypher.Domain.Entities.Catalog.Product", b =>
                 {
                     b.HasOne("Cypher.Domain.Entities.Catalog.Brand", "Brand")
@@ -461,11 +446,9 @@ namespace Cypher.Infrastructure.Migrations
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.Item", b =>
                 {
-                    b.HasOne("Cypher.Domain.Entities.Cypher.Inventory", "Inventory")
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Inventory", null)
                         .WithMany("Items")
                         .HasForeignKey("InventoryId");
-
-                    b.Navigation("Inventory");
                 });
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.Lobby", b =>
@@ -514,25 +497,6 @@ namespace Cypher.Infrastructure.Migrations
                     b.Navigation("Inventory");
                 });
 
-            modelBuilder.Entity("Cypher.Domain.Entities.Cypher.PlayerFriend", b =>
-                {
-                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Friend")
-                        .WithMany("Players")
-                        .HasForeignKey("FriendId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", "Player")
-                        .WithMany("Friends")
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Friend");
-
-                    b.Navigation("Player");
-                });
-
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.PlayerLobby", b =>
                 {
                     b.HasOne("Cypher.Domain.Entities.Cypher.Lobby", "Lobby")
@@ -552,6 +516,21 @@ namespace Cypher.Infrastructure.Migrations
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("PlayerPlayer", b =>
+                {
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", null)
+                        .WithMany()
+                        .HasForeignKey("FriendsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.Inventory", b =>
                 {
                     b.Navigation("Items");
@@ -569,13 +548,9 @@ namespace Cypher.Infrastructure.Migrations
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.Player", b =>
                 {
-                    b.Navigation("Friends");
-
                     b.Navigation("MessagePlayers");
 
                     b.Navigation("PlayerLobbies");
-
-                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.Puzzle", b =>
