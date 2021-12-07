@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cypher.Infrastructure.Migrations
 {
@@ -20,44 +19,39 @@ namespace Cypher.Infrastructure.Migrations
                 table: "Players");
 
             migrationBuilder.CreateTable(
-                name: "PlayerFriend",
+                name: "PlayerPlayer",
                 columns: table => new
                 {
-                    PlayerId = table.Column<int>(type: "integer", nullable: false),
-                    FriendId = table.Column<int>(type: "integer", nullable: false),
-                    Id = table.Column<int>(type: "integer", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModifiedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    FriendsId = table.Column<int>(type: "integer", nullable: false),
+                    PlayersId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerFriend", x => new { x.PlayerId, x.FriendId });
+                    table.PrimaryKey("PK_PlayerPlayer", x => new { x.FriendsId, x.PlayersId });
                     table.ForeignKey(
-                        name: "FK_PlayerFriend_Players_FriendId",
-                        column: x => x.FriendId,
+                        name: "FK_PlayerPlayer_Players_FriendsId",
+                        column: x => x.FriendsId,
                         principalTable: "Players",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PlayerFriend_Players_PlayerId",
-                        column: x => x.PlayerId,
+                        name: "FK_PlayerPlayer_Players_PlayersId",
+                        column: x => x.PlayersId,
                         principalTable: "Players",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayerFriend_FriendId",
-                table: "PlayerFriend",
-                column: "FriendId");
+                name: "IX_PlayerPlayer_PlayersId",
+                table: "PlayerPlayer",
+                column: "PlayersId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PlayerFriend");
+                name: "PlayerPlayer");
 
             migrationBuilder.AddColumn<int>(
                 name: "PlayerId",

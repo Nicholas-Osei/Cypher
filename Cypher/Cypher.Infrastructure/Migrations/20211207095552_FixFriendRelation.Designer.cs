@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cypher.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211207093957_SimplifiedFriendRelation")]
-    partial class SimplifiedFriendRelation
+    [Migration("20211207095552_FixFriendRelation")]
+    partial class FixFriendRelation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
