@@ -18,6 +18,7 @@ export class LoginService {
   imageUrl: any;
   isLoggedIn = false;
   userData: any = {};
+  stayLoggedIn: boolean;
   // gebruikerCredentials = [];
   gebruikerCredentials: RootObject;
   // eslint-disable-next-line max-len
@@ -92,6 +93,7 @@ export class LoginService {
       })
       .catch(err => console.error(err));
     this.isLoggedIn = false;
+    localStorage.clear();
     this.router.navigate(['home']);
   }
 

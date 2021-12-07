@@ -32,6 +32,17 @@ export class PlayerService {
       { headers: httpHeaders });
   }
 
+
+  updateInventoryItems(id: number, gegevens: any): Observable<Inventory> {
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    return this.http.put<Inventory>('https://localhost:5001/api/v1/inventory/' + id + '?pageSize=500', gegevens, { headers: httpHeaders });
+  }
+
   postPlayer(gegevens): Observable<Player> {
     const httpHeaders = new HttpHeaders({
       'content-type': 'application/json',

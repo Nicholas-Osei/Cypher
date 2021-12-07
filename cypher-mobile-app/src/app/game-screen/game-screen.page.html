@@ -42,6 +42,18 @@
           <li>Name:{{all.name}}</li>
           <li>Type:{{all.itemType}}</li>
         </div>
+        <form #addItem="ngForm" (submit)="addItemToInventory(addItem)">
+          <span class="p-float-label" style="margin-top: 5%;">
+            <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="naam" required ngModel>
+            <label for="float-input">Naam</label>
+          </span>
+          <span class="p-float-label" style="margin-top: 5%;">
+            <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="itemType" required ngModel>
+            <label for="float-input">Type</label>
+          </span>
+          <ion-button type="submit">Add Item</ion-button>
+        </form>
+
       </div>
       <div *ngIf="showPage === 'friends'">
 

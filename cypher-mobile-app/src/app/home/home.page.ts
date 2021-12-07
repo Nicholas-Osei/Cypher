@@ -85,6 +85,9 @@ export class HomePage implements OnInit {
         console.log('check this', x.base64Credential);
         console.log(toBAseAuthentication);
         this.loginservice.displayName = form.value.email;
+        localStorage.setItem('token', this.loginservice.authToken);
+        localStorage.setItem('Isloggedin', JSON.stringify(this.loginservice.isLoggedIn));
+        localStorage.setItem('Displayname', JSON.stringify(this.loginservice.displayName));
         this.router.navigate(['game-screen']);
 
       }
@@ -146,6 +149,8 @@ export class HomePage implements OnInit {
 
 
   }
+
+
 
 
 

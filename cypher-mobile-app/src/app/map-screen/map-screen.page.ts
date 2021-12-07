@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
 
-declare var google: any;
+declare let google: any;
 
 @Component({
   selector: 'app-map-screen',
@@ -14,23 +14,24 @@ export class MapScreenPage implements OnInit {
   coords: any;
   infoWindow: any;
 
-  @ViewChild('map', {read: ElementRef, static: false}) mapRef: ElementRef;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  async locate(){
+  async locate() {
     const coordinates = await Geolocation.getCurrentPosition();
     this.coords = coordinates.coords;
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.showMap();
   }
 
-  async showMap(){
+  async showMap() {
     if (!this.coords) {
       const coordinates = await Geolocation.getCurrentPosition();
       this.coords = coordinates.coords;
@@ -40,18 +41,18 @@ export class MapScreenPage implements OnInit {
       center: location,
       zoom: 15,
       disableDefaultUI: true
-    }
+    };
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
     this.infoWindow = new google.maps.InfoWindow();
 
-    const locationButton = document.createElement("button");
+    const locationButton = document.createElement('button');
 
-    locationButton.textContent = "Pan to Current Location";
-    locationButton.classList.add("custom-map-control-button");
+    locationButton.textContent = 'Pan to Current Location';
+    locationButton.classList.add('custom-map-control-button');
 
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 
-    locationButton.addEventListener("click", () => {
+    locationButton.addEventListener('click', () => {
       // Try HTML5 geolocation.
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -62,16 +63,18 @@ export class MapScreenPage implements OnInit {
             };
 
             this.infoWindow.setPosition(pos);
-            this.infoWindow.setContent("Location found.");
+            this.infoWindow.setContent('Location found.');
             this.infoWindow.open(this.map);
             this.map.setCenter(pos);
           },
           () => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             handleLocationError(true, this.infoWindow, this.map.getCenter()!);
           }
         );
       } else {
         // Browser doesn't support Geolocation
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         handleLocationError(false, this.infoWindow, this.map.getCenter()!);
       }
       function handleLocationError(
@@ -82,8 +85,8 @@ export class MapScreenPage implements OnInit {
         infoWindow.setPosition(pos);
         infoWindow.setContent(
           browserHasGeolocation
-            ? "Error: The Geolocation service failed."
-            : "Error: Your browser doesn't support geolocation."
+            ? 'Error: The Geolocation service failed.'
+            : 'Error: Your browser doesn\'t support geolocation.'
         );
         infoWindow.open(this.map);
       }
