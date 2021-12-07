@@ -52,6 +52,15 @@ export class PlayerService {
     });
     return this.http.post<Player>('https://localhost:5001/api/v1/player?pageSize=500', gegevens, { headers: httpHeaders });
   }
+  deleteInventoryItem(id: number) {
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    return this.http.delete<Inventory>('https://localhost:5001/api/v1/item/' + id + '?pageSize=500', { headers: httpHeaders });
+  }
 }
 
 

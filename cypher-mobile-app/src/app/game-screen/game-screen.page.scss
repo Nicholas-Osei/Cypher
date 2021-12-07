@@ -45,3 +45,21 @@ body {
     font-size: 18px;
   }
 }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 90%;
+  text-align: center;
+  margin: 5%;
+}
+
+td,
+th {
+  border: 1px solid #413f3fb6;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #8aa2e4;
+}

@@ -89,4 +89,12 @@ export class GameScreenPage implements OnInit {
     this.showPage = page;
     this.closeNav();
   }
+
+  deleteItem(id: any) {
+    console.log(id);
+    const todelete = confirm('Are you sure you want to delete');
+    if (todelete) {
+      this.speler.deleteInventoryItem(id).subscribe(d => { console.log('Deleted'); this.ngOnInit(); });
+    }
+  }
 }
