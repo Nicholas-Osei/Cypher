@@ -30,15 +30,28 @@ namespace Cypher.Infrastructure.Repositories
             await _distributedCache.RemoveAsync(CacheKeys.PlayerCacheKeys.GetKey(player.Id));
         }
 
+        public async Task RemoveFriendAsync(Player player, Player friend)
+        {
+            //foreach (var pf in player.Friends.ToList())
+            //{
+            //    if (pf.Friend == friend)
+            //    {
+            //        //player.Friends.Remove(pf);
+            //        await _repo.DeleteAsync(-f)
+            //    }
+            //}
+        }
+
         public async Task<Player> GetByIdAsync(int playerId)
         {
             return await _repo.Entities
                 .Where(p => p.Id == playerId)
                 .Include(p => p.Friends)
-                .ThenInclude(pf => pf.Friend)
+                //.ThenInclude(pf => pf.Friend)
                 .Include(i => i.Inventory)
                 .ThenInclude(e => e.Items)
                 .FirstOrDefaultAsync();
+            
         }
 
         public async Task<List<Player>> GetListAsync()

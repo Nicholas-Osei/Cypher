@@ -62,18 +62,21 @@ namespace Cypher.Infrastructure.DbContexts {
             builder.Entity<MessagePlayer>().HasKey(mp => new { mp.MessageId, mp.PlayerId });
             builder.Entity<PlayerLobby>().HasKey(pl => new { pl.PlayerId, pl.LobbyId });
 
-            builder.Entity<PlayerFriend>()
-                .HasKey(pf => new { pf.PlayerId, pf.FriendId });
-            builder.Entity<PlayerFriend>()
-                .HasOne(pf => pf.Player)
-                .WithMany(p => p.Friends)
-                .HasForeignKey(pf => pf.PlayerId)
-                .OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<PlayerFriend>()
-                .HasOne(pf => pf.Friend)
-                .WithMany(p => p.Players)
-                .HasForeignKey(pf => pf.FriendId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<PlayerFriend>()
+            //    .HasKey(pf => new { pf.PlayerId, pf.FriendId });
+            //builder.Entity<PlayerFriend>()
+            //    .HasOne(pf => pf.Player)
+            //    .WithMany(p => p.Friends)
+            //    .HasForeignKey(pf => pf.PlayerId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<PlayerFriend>()
+            //    .HasOne(pf => pf.Friend)
+            //    .WithMany(p => p.Players)
+            //    .HasForeignKey(pf => pf.FriendId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<Player>()
+            //    .HasMany(p => p.Friends)
+            //    .WithMany(f => f.Players);
 
             foreach (var property in builder.Model.GetEntityTypes ()
                     .SelectMany (t => t.GetProperties ())

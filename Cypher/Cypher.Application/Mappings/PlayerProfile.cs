@@ -15,8 +15,8 @@ namespace Cypher.Application.Mappings
         public PlayerProfile()
         {
             CreateMap<CreatePlayerCommand, Player>().ReverseMap();
-            CreateMap<Player, GetPlayerByIdResponse>()
-                .ForMember(dto => dto.Friends, opt => opt.MapFrom(x => x.Friends.Select(y => y.Friend)));
+            CreateMap<Player, GetPlayerByIdResponse>().ReverseMap();
+                //.ForMember(dto => dto.Friends, opt => opt.MapFrom(x => x.Friends.Select(y => y.Friend)));
         }
     }
 }
