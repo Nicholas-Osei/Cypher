@@ -20,11 +20,13 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
 {
     public class GetAllPlayersQuery : IRequest<PaginatedResult<GetAllPlayersResponse>>
     {
+        public string NameQuery { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
        
-        public GetAllPlayersQuery(int? pageNr, int? pageSize)
+        public GetAllPlayersQuery(string playerName, int? pageNr, int? pageSize)
         {
+            NameQuery = playerName;
             PageNumber = pageNr ?? 0;
             PageSize = pageSize ?? 10;
         }
@@ -53,10 +55,17 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                     PlayerLobbies = e.PlayerLobbies
                     
                 };
-                var paginatedList = await _repo.Players.Include(p => p.Inventory)
+
+                var playerList = _repo.Players.Include(p => p.Inventory)
                     .ThenInclude(i => i.Items)
-                    .Select(expression)
+                    .Select(expression);
+
+                if (!string.IsNullOrWhiteSpace(request.NameQuery))
+                    playerList = playerList.Where(p => p.Name == request.NameQuery);
+
+                var paginatedList = await playerList
                     .ToPaginatedListAsync(request.PageNumber, request.PageSize);
+
                 return paginatedList;
             }
         }
