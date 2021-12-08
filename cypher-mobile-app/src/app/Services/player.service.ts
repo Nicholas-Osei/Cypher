@@ -61,6 +61,16 @@ export class PlayerService {
     });
     return this.http.put<Player>('https://localhost:5001/api/v1/Player/' + id + '/friends', gegevens, { headers: httpHeaders });
   }
+  deleteFriend(playerid, friendid): Observable<Player> {
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    // eslint-disable-next-line max-len
+    return this.http.delete<Player>('https://localhost:5001/api/v1/Player/' + playerid + '/friends' + '/' + friendid, { headers: httpHeaders });
+  }
 
   updateInventoryItems(id: number, gegevens: any): Observable<Inventory> {
     const httpHeaders = new HttpHeaders({

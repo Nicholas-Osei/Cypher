@@ -74,6 +74,10 @@ export class GameScreenPage implements OnInit {
       subscribe(s => { this.playerSearchResults = s.data; console.log(this.playerSearchResults); });
   }
 
+  deleteFriend(id: number) {
+    this.speler.deleteFriend(this.id, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
+  }
+
   addFriend(id: number) {
     console.log(this.id);
     const newFriend = {
