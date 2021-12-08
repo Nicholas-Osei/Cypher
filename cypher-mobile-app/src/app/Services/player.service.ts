@@ -32,6 +32,35 @@ export class PlayerService {
       { headers: httpHeaders });
   }
 
+  getPlayerById(id): Observable<Player> {
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    return this.http.get<Player>('https://localhost:5001/api/v1/player/' + id, { headers: httpHeaders });
+  }
+
+  searchForFriends(name): Observable<Player> {
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    return this.http.get<Player>('https://localhost:5001/api/v1/player?playername=' + name, { headers: httpHeaders });
+  }
+
+  addToPlayerFriends(id, gegevens: any): Observable<Player> {
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    return this.http.put<Player>('https://localhost:5001/api/v1/Player/' + id + '/friends', gegevens, { headers: httpHeaders });
+  }
 
   updateInventoryItems(id: number, gegevens: any): Observable<Inventory> {
     const httpHeaders = new HttpHeaders({
@@ -88,6 +117,7 @@ export interface Speler {
   inventory: Inventory;
   messages: any[];
   playerLobbies: any[];
+  friends: any[];
 }
 export interface Player {
   data: Speler[];

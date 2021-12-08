@@ -51,7 +51,7 @@ export class LoginService {
   }
 
   async getToken(gegevens) {
-    return this.http.post<Tokens>('https://cypher-web-app.azurewebsites.net/api/identity/token', gegevens).toPromise();
+    return this.http.post<Tokens>('https://localhost:5001/api/identity/token', gegevens).toPromise();
   }
 
   login() {

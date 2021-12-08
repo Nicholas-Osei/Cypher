@@ -16,6 +16,10 @@ export class GameScreenPage implements OnInit {
   lobbies: any;
   friends: any;
   messages: any;
+  playerbyId: any;
+  id: number;
+  playerSearchResults: any;
+  playername = '';
 
   constructor(public loginservice: LoginService, public speler: PlayerService) {
     // this.speler.getAllPlayers().subscribe(p => {
@@ -30,7 +34,10 @@ export class GameScreenPage implements OnInit {
       this.players = p; console
         .log('Got all players');
       console.log(this.players.data[0].name);
+      this.getUserItems();
+      this.getPlayerbyId();
     });
+
   }
 
   getUserItems() {
@@ -39,12 +46,42 @@ export class GameScreenPage implements OnInit {
         this.inventory = m.inventory.items;
         this.messages = m.messages;
         this.lobbies = m.playerLobbies;
-
+        this.id = m.id;
       }
     });
   }
+  getPlayerbyId() {
+    this.speler.getPlayerById(this.id).subscribe(
+      u => {
+        console.log('Got friends'); this.playerbyId = u;
+        console.log(this.playerbyId.data.friends);
+        this.friends = this.playerbyId.data.friends;
+        // this.lol();
+      });
+    //   if (condition) {
 
+    //   }
+  }
+  // GetF() {
+  //   this.playerbyId.data.friends.forEach(m => {
+  //     console.log(m.name);
+  //   });
+  // }
+  search() {
+    console.log(this.playername);
+    // console.log(this.)
+    this.speler.searchForFriends(this.playername).
+      subscribe(s => { this.playerSearchResults = s.data; console.log(this.playerSearchResults); });
+  }
 
+  addFriend(id: number) {
+    console.log(this.id);
+    const newFriend = {
+      playerId: this.id,
+      friendId: id
+    };
+    this.speler.addToPlayerFriends(this.id, newFriend).subscribe(f => { console.log('Friend Added'); this.ngOnInit(); });
+  }
   addItemToInventory(form) {
     let newItems: any = [];
     const item = [];
@@ -87,6 +124,7 @@ export class GameScreenPage implements OnInit {
   }
   renderPage(page: any) {
     this.showPage = page;
+
     this.closeNav();
   }
 

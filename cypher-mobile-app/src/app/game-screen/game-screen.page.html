@@ -40,7 +40,7 @@
 
       </div> -->
 
-      {{getUserItems()}}
+      <!-- {{getUserItems()}} -->
       <div *ngIf="showPage === 'inventory'">
         <h2 style="text-align: center;">Inventory</h2>
         <table>
@@ -75,13 +75,30 @@
 
       </div>
       <div *ngIf="showPage === 'friends'">
-
-
-        <!-- <div *ngFor="let all of inventory">
+        <h2 style="text-align: center;">Friends</h2>
+        <div *ngFor="let all of friends">
           <li>Name:{{all.name}}</li>
-          <li>Type:{{all.itemType}}</li>
-        </div> -->
-        <p>Friends</p>
+          <!-- <li>Type:{{all.itemType}}</li> -->
+        </div>
+        <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%;" required
+          [(ngModel)]="playername" (ngModelChange)="search(playername)">
+        <div *ngFor="let all of playerSearchResults">
+          <span *ngIf="playername">
+            <span *ngFor="let lol of friends">
+              <span *ngIf="playername !== loginservice.displayName && playername !== lol.name">
+                <!-- <span *ngIf="playername !== lol.name"> -->
+                <span style="font-size: 20px; margin-left: 30%;">{{all.name}}
+                </span>
+                <button size="small" (click)="addFriend(all.id)">Add Friend
+                </button>
+                <!-- </span> -->
+              </span>
+
+            </span>
+
+          </span>
+        </div>
+        <!-- <p>Friends</p> -->
       </div>
       <div *ngIf="showPage === 'lobby'">
 
