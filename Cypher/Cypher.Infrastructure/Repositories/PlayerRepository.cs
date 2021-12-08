@@ -32,7 +32,13 @@ namespace Cypher.Infrastructure.Repositories
 
         public async Task RemoveFriendAsync(Player player, Player friend)
         {
-            await _repo.DeleteAsync(player.Friends.Where(f => f.Id == friend.Id).FirstOrDefault());
+            //await _repo.DeleteAsync(player.Friends.Where(f => f.Id == friend.Id).FirstOrDefault());
+        }
+
+        public void RemoveFriend(Player player, Player friend)
+        {
+            var friendToRemove = player.Friends.Where(f => f.Id == friend.Id).FirstOrDefault();
+            player.Friends.Remove(friendToRemove);
         }
 
         public async Task<Player> GetByIdAsync(int playerId)
