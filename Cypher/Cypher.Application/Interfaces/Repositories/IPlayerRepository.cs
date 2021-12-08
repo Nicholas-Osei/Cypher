@@ -16,5 +16,6 @@ namespace Cypher.Application.Interfaces.Repositories
         Task UpdateAsync(Player player);
         Task DeleteAsync(Player player);
         Task RemoveFriendAsync(Player player, Player friend);
+        void RemoveFriend(Player player, Player friend);
     }
 }

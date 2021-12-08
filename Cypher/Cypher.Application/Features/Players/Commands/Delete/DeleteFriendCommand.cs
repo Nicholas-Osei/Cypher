@@ -28,10 +28,10 @@ namespace Cypher.Application.Features.Players.Commands.Delete
 
             public async Task<Result<int>> Handle(DeleteFriendCommand request, CancellationToken cancellationToken)
             {
-                var player = _playerRepo.GetByIdAsync(request.PlayerId);
-                var friend = _playerRepo.GetByIdAsync(request.FriendId);
+                var player = await _playerRepo.GetByIdAsync(request.PlayerId);
+                var friend = await _playerRepo.GetByIdAsync(request.FriendId);
 
-                //await _playerRepo.RemoveFriendAsync(player, friend);
+                _playerRepo.RemoveFriend(player, friend);
                 await _uow.Commit(cancellationToken);
 
                 return Result<int>.Success(player.Id);
