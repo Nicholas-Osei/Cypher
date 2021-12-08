@@ -29,19 +29,8 @@ namespace Cypher.Infrastructure.Extensions {
             services.AddTransient<IBrandCacheRepository, BrandCacheRepository> ();
             services.AddTransient<ILogRepository, LogRepository> ();
             services.AddTransient<IUnitOfWork, UnitOfWork> ();
-            services.AddTransient (typeof (IRepositoryAsync<>), typeof (RepositoryAsync<>));
-            services.AddTransient<IPlayerRepository, PlayerRepository> ();
-            services.AddTransient<IPlayerCacheRepository, PlayerCacheRepository> ();
             services.AddTransient<IItemRepository, ItemRepository> ();
             services.AddTransient<IInventoryRepository, InventoryRepository>();
-
-            services.AddTransient<IProductRepository, ProductRepository> ();
-            services.AddTransient<IProductCacheRepository, ProductCacheRepository> ();
-            services.AddTransient<IBrandRepository, BrandRepository> ();
-            services.AddTransient<IBrandCacheRepository, BrandCacheRepository> ();
-            services.AddTransient<ILogRepository, LogRepository> ();
-            services.AddTransient<IUnitOfWork, UnitOfWork> ();
-
             #endregion Repositories
         }
     }
