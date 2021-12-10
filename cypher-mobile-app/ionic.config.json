@@ -1,0 +1,8 @@
+{
+  "name": "cypher-mobile-app",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

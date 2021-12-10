@@ -1,9 +1,10 @@
-﻿using AspNetCoreHero.Abstractions.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using AspNetCoreHero.Abstractions.Domain;
 
 namespace Cypher.Domain.Entities.Cypher
 {
@@ -13,7 +14,12 @@ namespace Cypher.Domain.Entities.Cypher
         public bool IsAdmin { get; set; }
         public virtual ICollection<MessagePlayer> MessagePlayers { get; set; }
         public virtual ICollection<PlayerLobby> PlayerLobbies { get; set; }
-        public virtual Inventory Inventory { get; set; }
 
+        [JsonIgnore]
+        public virtual ICollection<Player> Friends { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Player> Players { get; set; }
+        public virtual Inventory Inventory { get; set; }
     }
 }

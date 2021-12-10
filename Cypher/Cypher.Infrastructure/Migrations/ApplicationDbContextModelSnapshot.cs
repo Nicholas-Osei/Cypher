@@ -15,16 +15,16 @@ namespace Cypher.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.10");
+                .HasAnnotation("ProductVersion", "5.0.11")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("AspNetCoreHero.EntityFrameworkCore.AuditTrail.Models.Audit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("AffectedColumns")
                         .HasColumnType("text");
@@ -60,7 +60,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -93,7 +93,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Barcode")
                         .HasColumnType("text");
@@ -137,7 +137,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -175,7 +175,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.HasKey("Id");
 
@@ -187,7 +187,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -197,6 +197,9 @@ namespace Cypher.Infrastructure.Migrations
 
                     b.Property<int?>("InventoryId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ItemType")
+                        .HasColumnType("text");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
@@ -219,7 +222,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -251,7 +254,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -298,7 +301,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -348,7 +351,7 @@ namespace Cypher.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -379,6 +382,48 @@ namespace Cypher.Infrastructure.Migrations
                     b.ToTable("Puzzles");
                 });
 
+            modelBuilder.Entity("Cypher.Domain.Entities.Cypher.UserCredential", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Base64Credential")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserCredentials");
+                });
+
+            modelBuilder.Entity("PlayerPlayer", b =>
+                {
+                    b.Property<int>("FriendsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("FriendsId", "PlayersId");
+
+                    b.HasIndex("PlayersId");
+
+                    b.ToTable("PlayerPlayer");
+                });
+
             modelBuilder.Entity("Cypher.Domain.Entities.Catalog.Product", b =>
                 {
                     b.HasOne("Cypher.Domain.Entities.Catalog.Brand", "Brand")
@@ -401,11 +446,9 @@ namespace Cypher.Infrastructure.Migrations
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.Item", b =>
                 {
-                    b.HasOne("Cypher.Domain.Entities.Cypher.Inventory", "Inventory")
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Inventory", null)
                         .WithMany("Items")
                         .HasForeignKey("InventoryId");
-
-                    b.Navigation("Inventory");
                 });
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.Lobby", b =>
@@ -471,6 +514,21 @@ namespace Cypher.Infrastructure.Migrations
                     b.Navigation("Lobby");
 
                     b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("PlayerPlayer", b =>
+                {
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", null)
+                        .WithMany()
+                        .HasForeignKey("FriendsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Cypher.Domain.Entities.Cypher.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Cypher.Domain.Entities.Cypher.Inventory", b =>

@@ -30,7 +30,11 @@ namespace Cypher.Api
             services.AddRepositories();
             services.AddSharedInfrastructure(_configuration);
             services.AddEssentials();
-            services.AddControllers();
+            //services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddMvc(o =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -38,6 +42,7 @@ namespace Cypher.Api
                     .Build();
                 o.Filters.Add(new AuthorizeFilter(policy));
             });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +60,10 @@ namespace Cypher.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+            // TO DO: Make more secure
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {

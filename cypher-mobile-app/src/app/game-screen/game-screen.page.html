@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>GameScreen</ion-title>
+  </ion-toolbar>
+  <span id="mySidenav" class="sidenav">
+    <a class="closebtn" (click)="closeNav()">&times;</a>
+    <a (click)="renderPage('inventory')">Inventory</a>
+    <a (click)="renderPage('friends')">Friends</a>
+    <a (click)="renderPage('lobby')">Lobby</a>
+    <a (click)="renderPage('messages')">Messages</a>
+  </span>
+</ion-header>
+<ion-content>
+
+  <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+  <ion-button i color="light" (click)="loginservice.logout()" style="float: right;">
+    Log Out
+  </ion-button>
+  <div *ngIf="loginservice.isLoggedIn">
+
+    <h1>Welcome, {{loginservice.displayName}}!
+    </h1>
+    <p>
+      <span *ngIf="loginservice.email">Email: {{loginservice.email}}</span><br />
+      <span *ngIf="loginservice.familyName">Family Name: {{loginservice.familyName}}</span><br />
+      <span *ngIf="loginservice.givenName">Given Name: {{loginservice.givenName}}</span><br />
+      <span *ngIf="loginservice.userId">User ID: {{loginservice.userId}}</span>
+    </p>
+    <p *ngIf="loginservice.imageUrl">
+      <ion-avatar item-left>
+        <img src="{{loginservice.imageUrl}}" />
+      </ion-avatar>
+    </p>
+
+
+    <div *ngIf="players">
+      <!-- <div *ngFor="let all of players.data">
+        {{players.data[0].name}}
+        {{all.name}}
+
+      </div> -->
+
+      <!-- {{getUserItems()}} -->
+      <div *ngIf="showPage === 'inventory'">
+        <h2 style="text-align: center;">Inventory</h2>
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Item Type</th>
+          </tr>
+          <tr *ngFor="let all of inventory">
+            <td><input type="radio" name="id">{{all.id}}</td>
+            <td>{{all.name}}</td>
+            <td>{{all.itemType}}</td>
+            <td style=" color: red;"><button (click)="deleteItem(all.id)">&times;</button></td>
+          </tr>
+        </table>
+        <!-- <div *ngFor="let all of inventory">
+          <input type="radio"> Name: {{all.name}}
+          Type: {{all.itemType}} <br>
+        </div> -->
+        <p style="margin: 5%; text-align: center;">Add new Item</p>
+        <form #addItem="ngForm" (submit)="addItemToInventory(addItem)">
+          <span>
+            <label for="float-input" style="margin-right: 13%;">Naam</label>
+            <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="naam" required ngModel><br>
+          </span>
+          <span>
+            <label for="float-input" style="margin-right: 5%;">Item Type</label>
+            <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="itemType" required ngModel>
+          </span>
+          <ion-button type="submit" style="margin-left: 40%;">Add Item</ion-button>
+        </form>
+
+      </div>
+      <div *ngIf="showPage === 'friends'">
+        <h2 style="text-align: center;">Friends</h2>
+        <div *ngFor="let all of friends">
+          <li>Name: {{all.name}} <button (click)="deleteFriend(all.id)">&times;</button></li>
+          <!-- <li>Type:{{all.itemType}}</li> -->
+        </div>
+        <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%;" required
+          [(ngModel)]="playername" (ngModelChange)="search(playername)">
+        <div *ngFor="let all of playerSearchResults">
+          <span *ngIf="playername">
+            <span *ngFor="let fr of friends">
+              <span *ngIf="playername !== loginservice.displayName && playername !== fr.name">
+                <!-- <span *ngIf="playername !== lol.name"> -->
+                <span style="font-size: 20px; margin-left: 30%;">{{all.name}}
+                </span>
+                <button size="small" (click)="addFriend(all.id)">Add Friend
+                </button>
+                <!-- </span> -->
+              </span>
+
+            </span>
+
+          </span>
+        </div>
+        <!-- <p>Friends</p> -->
+      </div>
+      <div *ngIf="showPage === 'lobby'">
+
+
+        <!-- <div *ngFor="let all of inventory">
+          <li>Name:{{all.name}}</li>
+          <li>Type:{{all.itemType}}</li>
+        </div> -->
+        <p>Lobby</p>
+      </div>
+      <div *ngIf="showPage === 'messages'">
+
+
+        <!-- <div *ngFor="let all of inventory">
+          <li>Name:{{all.name}}</li>
+          <li>Type:{{all.itemType}}</li>
+        </div> -->
+        <p>Messages</p>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

@@ -16,9 +16,9 @@ namespace Cypher.Api.Controllers.v1
     public class PlayerController : BaseApiController<PlayerController>
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll(int pageNumber, int pageSize)
+        public async Task<IActionResult> GetAll(string playerName, int? pageNumber, int? pageSize)
         {
-            var players = await _mediator.Send(new GetAllPlayersQuery(pageNumber, pageSize));
+            var players = await _mediator.Send(new GetAllPlayersQuery(playerName, pageNumber, pageSize));
             return Ok(players);
         }
 
@@ -46,10 +46,31 @@ namespace Cypher.Api.Controllers.v1
             return Ok(await _mediator.Send(command));
         }
 
+        [HttpPut("{playerId}/friends")]
+        public async Task<IActionResult> Put(int playerId, UpdateFriendsCommand command)
+        {
+            if (playerId != command.PlayerId)
+            {
+                return BadRequest();
+            }
+
+            return Ok(await _mediator.Send(command));
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(await _mediator.Send(new DeletePlayerCommand { Id = id }));
+        }
+
+        [HttpDelete("{playerId}/friends/{friendId}")]
+        public async Task<IActionResult> Delete(int playerId, int friendId)
+        {
+            return Ok(await _mediator.Send(new DeleteFriendCommand
+            {
+                PlayerId = playerId,
+                FriendId = friendId
+            }));
         }
     }
 }

@@ -1,7 +1,7 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
-ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_ENVIRONMENT=Production
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -25,4 +25,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY "Cypher.Api/appsettings.json" "/app/AppSettings.json"
+#COPY "Cypher.Api/appsettings.Development.json" "/app/AppSettings.Development.json"
 ENTRYPOINT ["dotnet", "Cypher.Api.dll"]

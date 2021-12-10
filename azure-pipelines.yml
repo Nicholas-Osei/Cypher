@@ -1,5 +1,5 @@
 # Docker
-# Build a Docker image
+# Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
@@ -9,23 +9,35 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '2278d0c6-1f1b-4a00-9028-c71aff1f4cec'
+  imageRepository: 'cypher'
+  containerRegistry: 'cyphercontainerreg.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Cypher/Cypher.Api/Dockerfile'
+  tag: 'latest'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
-  displayName: Build image
+  displayName: Build and push stage
   jobs:
   - job: Build
     displayName: Build
     pool:
-      vmImage: ubuntu-latest
+      vmImage: $(vmImageName)
     steps:
+    - checkout: self
+      lfs: true
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build and push an image to container registry
       inputs:
         buildContext: '$(Build.SourcesDirectory)/Cypher'
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Cypher/Dockerfile'
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
     - task: PublishBuildArtifacts@1

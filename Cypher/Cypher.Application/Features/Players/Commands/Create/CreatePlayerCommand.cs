@@ -17,6 +17,7 @@ namespace Cypher.Application.Features.Players.Commands.Create
         public string Name { get; set; }
         // Rest of properties should be initiated when needed?
         // A player should be linked to a account
+        public virtual Inventory Inventory { get; set; }
     }
 
     public class CreatePlayerCommandHandler : IRequestHandler<CreatePlayerCommand, Result<int>>

@@ -1,4 +1,5 @@
 ﻿using Cypher.Domain.Entities.Catalog;
+using Cypher.Domain.Entities.Cypher;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Data;
@@ -17,5 +18,7 @@ namespace Cypher.Application.Interfaces.Contexts
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
         DbSet<Product> Products { get; set; }
+       // DbSet<Inventory> Inventories { get; set; }
+        // DbSet<UserCredential> userCredentials{ get; set; }
     }
 }

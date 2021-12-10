@@ -30,9 +30,20 @@ namespace Cypher.Infrastructure.Repositories
             await _distributedCache.RemoveAsync(CacheKeys.PlayerCacheKeys.GetKey(player.Id));
         }
 
-        public async Task<Player> GetByIdAsync(int productId)
+        public void RemoveFriend(Player player, Player friend)
         {
-            return await _repo.Entities.Where(p => p.Id == productId).FirstOrDefaultAsync();
+            var friendToRemove = player.Friends.Where(f => f.Id == friend.Id).FirstOrDefault();
+            player.Friends.Remove(friendToRemove);
+        }
+
+        public async Task<Player> GetByIdAsync(int playerId)
+        {
+            return await _repo.Entities
+                .Where(p => p.Id == playerId)
+                .Include(p => p.Friends)
+                .Include(i => i.Inventory)
+                .ThenInclude(e => e.Items)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<Player>> GetListAsync()
@@ -52,6 +63,11 @@ namespace Cypher.Infrastructure.Repositories
             await _repo.UpdateAsync(player);
             await _distributedCache.RemoveAsync(CacheKeys.BrandCacheKeys.ListKey);
             await _distributedCache.RemoveAsync(CacheKeys.BrandCacheKeys.GetKey(player.Id));
+        }
+
+        public Task RemoveFriendAsync(Player player, Player friend)
+        {
+            throw new NotImplementedException();
         }
     }
 }
