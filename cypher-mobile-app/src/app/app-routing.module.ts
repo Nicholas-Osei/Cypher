@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'map-screen',
     loadChildren: () => import('./map-screen/map-screen.module').then( m => m.MapScreenPageModule)
+  },  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
   },
+
 
 ];
 
