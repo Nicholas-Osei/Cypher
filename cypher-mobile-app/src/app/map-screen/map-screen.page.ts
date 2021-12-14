@@ -91,5 +91,38 @@ export class MapScreenPage implements OnInit {
         infoWindow.open(this.map);
       }
     });
+
+    const regionCircle = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+      map: this.map,
+      center: { lat: 51.221814, lng: 4.413618 },
+      radius: 250
+    })
+
+    const regionCircle2 = new google.maps.Circle({
+      strokeColor: "#FFF300",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FFF300",
+      fillOpacity: 0.35,
+      map: this.map,
+      center: { lat: 51.233345, lng: 4.411115 },
+      radius: 200
+    })
+
+    const regionCircle3 = new google.maps.Circle({
+      strokeColor: "#27FF00",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#27FF00",
+      fillOpacity: 0.35,
+      map: this.map,
+      center: { lat: 51.218094, lng: 4.408774 },
+      radius: 220
+    })
   }
 }
