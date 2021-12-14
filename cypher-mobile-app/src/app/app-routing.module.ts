@@ -20,8 +20,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'map-screen',
-    loadChildren: () => import('./map-screen/map-screen.module').then( m => m.MapScreenPageModule)
+    path: 'inventory',
+    loadChildren: () => import('./inventory/inventory.module').then( m => m.InventoryPageModule)
   },
 
 ];
