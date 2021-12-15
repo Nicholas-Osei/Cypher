@@ -9,7 +9,8 @@ import { LoginService } from './login.service';
 })
 export class PlayerService {
 
-
+  inventory: any;
+  players: Player;
 
   constructor(private http: HttpClient, public loginservice: LoginService) {
     // const newtoken =
