@@ -21,7 +21,7 @@ namespace Cypher.Infrastructure.Repositories
         }
 
 
-        public Task DeleteAsync(Lobby lobby)
+        public async Task DeleteAsync(Lobby lobby)
         {
             throw new NotImplementedException();
         }
@@ -31,17 +31,18 @@ namespace Cypher.Infrastructure.Repositories
             return await _repo.Entities.ToListAsync();
         }
 
-        public Task<Lobby> GetByIdAsync(int lobbyId)
+        public async Task<Lobby> GetByIdAsync(int lobbyId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> InsertAsync(Lobby lobby)
+        public async Task<int> InsertAsync(Lobby lobby)
         {
-            throw new NotImplementedException();
+            await _repo.AddAsync(lobby);
+            return lobby.Id;
         }
 
-        public Task UpdateAsync(Lobby lobby)
+        public async Task UpdateAsync(Lobby lobby)
         {
             throw new NotImplementedException();
         }

@@ -28,7 +28,7 @@ namespace Cypher.Api.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> Post(CreateLobbyCommand command)
         {
-            throw new NotImplementedException();
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpPut("{id}")]
