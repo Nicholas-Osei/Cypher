@@ -10,7 +10,8 @@ namespace Cypher.Application.Features.Lobbies.Queries
     public class GetAllLobbiesResponse
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public Player LobbyAdmin { get; set; }
-        public ICollection<PlayerLobby> PlayerLobbies { get; set; }
+        public ICollection<Player> Players{ get; set; }
     }
 }

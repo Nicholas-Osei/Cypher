@@ -39,8 +39,9 @@ namespace Cypher.Application.Features.Lobbies.Queries
                 Expression<Func<Lobby, GetAllLobbiesResponse>> expression = e => new GetAllLobbiesResponse
                 {
                     Id = e.Id,
+                    Name = e.Name,
                     LobbyAdmin = e.LobbyAdmin,
-                    PlayerLobbies = e.PlayerLobbies
+                    Players = e.Players
                 };
 
                 var paginatedList = await _repo.Lobbies

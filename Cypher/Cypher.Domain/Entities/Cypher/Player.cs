@@ -11,9 +11,10 @@ namespace Cypher.Domain.Entities.Cypher
     public class Player : AuditableEntity
     {
         public string Name { get; set; }
-        public bool IsAdmin { get; set; }
+        //public bool IsAdmin { get; set; }
         public virtual ICollection<MessagePlayer> MessagePlayers { get; set; }
-        public virtual ICollection<PlayerLobby> PlayerLobbies { get; set; }
+        public virtual ICollection<Lobby> LobbiesAdmin { get; set; }
+        public virtual ICollection<Lobby> LobbiesJoined { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Player> Friends { get; set; }

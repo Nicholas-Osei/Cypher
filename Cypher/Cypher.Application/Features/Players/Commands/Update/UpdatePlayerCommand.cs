@@ -42,7 +42,8 @@ namespace Cypher.Application.Features.Players.Commands.Update
                 else
                 {
                     player.Name = cmd.Name ?? player.Name;
-                    player.IsAdmin = cmd.IsAdmin;
+                    // For lobby admin: Needs to be added to list
+                    //player.IsAdmin = cmd.IsAdmin;
                     player.Inventory = cmd.Inventory ?? player.Inventory;
 
                     await _playerRepo.UpdateAsync(player);
