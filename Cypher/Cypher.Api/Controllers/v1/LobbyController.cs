@@ -1,4 +1,6 @@
 ﻿using Cypher.API.Controllers;
+using Cypher.Application.Features.Lobbies.CMDs.Create;
+using Cypher.Application.Features.Lobbies.CMDs.Update;
 using Cypher.Application.Features.Lobbies.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,31 +22,25 @@ namespace Cypher.Api.Controllers.v1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var player = await _mediator.Send(new GetPlayerByIdQuery() { Id = id });
-            return Ok(player);
+            throw new NotImplementedException();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreatePlayerCommand command)
+        public async Task<IActionResult> Post(CreateLobbyCommand command)
         {
-            return Ok(await _mediator.Send(command));
+            throw new NotImplementedException();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, UpdatePlayerCommand command)
+        public async Task<IActionResult> Put(int id, UpdateLobbyCommand command)
         {
-            if (id != command.Id)
-            {
-                return BadRequest();
-            }
-
-            return Ok(await _mediator.Send(command));
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return Ok(await _mediator.Send(new DeletePlayerCommand { Id = id }));
+            throw new NotImplementedException();
         }
     }
 }

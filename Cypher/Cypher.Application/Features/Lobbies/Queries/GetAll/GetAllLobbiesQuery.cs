@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Cypher.Application.Features.Lobbies.Queries
 {
-    public class GetAllLobbiesQuery : IRequest<PaginatedResult<GetAllLobbiesQuery>>
+    public class GetAllLobbiesQuery : IRequest<PaginatedResult<GetAllLobbiesResponse>>
     {
         public int PageNumber { get; set; }
 
