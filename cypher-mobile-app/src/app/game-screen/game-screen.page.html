@@ -3,18 +3,11 @@
     <ion-title>GameScreen</ion-title>
   </ion-toolbar>
   <span id="mySidenav" class="sidenav">
-    <a class="closebtn" (click)="closeNav()">&#9776;</a>
-    <!-- <a (click)="renderPage('inventory')">Inventory</a>
+    <a class="closebtn" (click)="closeNav()">&times;</a>
+    <a (click)="renderPage('inventory')">Inventory</a>
     <a (click)="renderPage('friends')">Friends</a>
     <a (click)="renderPage('lobby')">Lobby</a>
-    <a (click)="renderPage('messages')">Messages</a> -->
-    <!-- <a (click)="renderPage('inventory')">Inventory</a> -->
-    <a (click)="renderPage('lobby')">Game Lobbies</a>
     <a (click)="renderPage('messages')">Messages</a>
-    <a (click)="renderPage('friends')">Friends</a>
-    <a (click)="renderPage('teams')">Teams</a>
-    <a (click)="renderPage('settings')">Settings</a>
-
   </span>
 </ion-header>
 <ion-content>
@@ -25,7 +18,7 @@
   </ion-button>
   <div *ngIf="loginservice.isLoggedIn">
 
-    <h1>{{titel}}
+    <h1>Welcome, {{loginservice.displayName}}!
     </h1>
     <p>
       <span *ngIf="loginservice.email">Email: {{loginservice.email}}</span><br />
@@ -40,7 +33,7 @@
     </p>
 
 
-    <div *ngIf="speler.players">
+    <div *ngIf="players">
       <!-- <div *ngFor="let all of players.data">
         {{players.data[0].name}}
         {{all.name}}
@@ -48,9 +41,9 @@
       </div> -->
 
       <!-- {{getUserItems()}} -->
-      <!-- <div *ngIf="showPage === 'inventory'">
+      <div *ngIf="showPage === 'inventory'">
         <h2 style="text-align: center;">Inventory</h2>
-        <table class="InventoryTable">
+        <table>
           <tr>
             <th>ID</th>
             <th>Name</th>
@@ -63,11 +56,11 @@
             <td style=" color: red;"><button (click)="deleteItem(all.id)">&times;</button></td>
           </tr>
         </table>
-         <div *ngFor="let all of inventory">
+        <!-- <div *ngFor="let all of inventory">
           <input type="radio"> Name: {{all.name}}
           Type: {{all.itemType}} <br>
         </div> -->
-      <!-- <p style="margin: 5%; text-align: center;">Add new Item</p>
+        <p style="margin: 5%; text-align: center;">Add new Item</p>
         <form #addItem="ngForm" (submit)="addItemToInventory(addItem)">
           <span>
             <label for="float-input" style="margin-right: 13%;">Naam</label>
@@ -80,7 +73,7 @@
           <ion-button type="submit" style="margin-left: 40%;">Add Item</ion-button>
         </form>
 
-      </div>  -->
+      </div>
       <div *ngIf="showPage === 'friends'">
         <h2 style="text-align: center;">Friends</h2>
         <div *ngFor="let all of friends">
@@ -109,29 +102,11 @@
       </div>
       <div *ngIf="showPage === 'lobby'">
 
-        <table class="LobbyTable">
-          <tr *ngFor="let fr of lol" (click)="goToMap()">
-            <td style="border-right:0px solid ;">
-              Lord of the rings
-            </td>
-            <td style="border-left:0px solid ;border-right:0px solid ;">
-              -public-
-            </td>
-            <td style="border-left:0px solid ;">
-              <i class="fa fa-bookmark" aria-hidden="true"></i> <span style="margin-left:25% ;">15</span>
-            </td>
-          </tr>
 
-        </table>
-
-        <!-- <div *ngFor="let all of lobbies"> -->
-        <!-- <li>Name:{{all.name}}</li>
-          <li>Type:{{all.itemType}}</li> -->
-
-        <!-- <a (click)="goToMap()">the holy gray</a>
-        <li>the holy gray 2</li> -->
-
-        <!-- </div> -->
+        <!-- <div *ngFor="let all of inventory">
+          <li>Name:{{all.name}}</li>
+          <li>Type:{{all.itemType}}</li>
+        </div> -->
         <p>Lobby</p>
       </div>
       <div *ngIf="showPage === 'messages'">

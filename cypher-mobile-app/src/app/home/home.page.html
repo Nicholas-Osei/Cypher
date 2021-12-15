@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title> CYPHER LOGIN </ion-title>
     <ion-buttons slot="start" *ngIf="toRegister;">
-      <ion-back-button defaultHref="" (click)="registerBoolean()"></ion-back-button>
+      <ion-back-button defaultHref="" (click)="makeRegisterFalse()"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -23,7 +23,7 @@
       </ion-item>
       <ion-button size="small" type="submit" style="align-items: center" [disabled]="!UserLogin.valid">Log in
       </ion-button>
-      <p>No account ? <ion-button (click)="registerBoolean()" size="small" color="success">REGISTER</ion-button>
+      <p>No account ? <ion-button (click)="makeRegisterTrue()" size="small" color="success">REGISTER</ion-button>
       </p>
     </form>
     <ion-button (click)="login()" size="small">Login With Google</ion-button>

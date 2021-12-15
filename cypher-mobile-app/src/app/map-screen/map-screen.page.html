@@ -3,30 +3,9 @@
     <ion-title>
       Cypher Game #1
     </ion-title>
-    <ion-buttons slot="start" *ngIf="inMapScreen;">
-      <ion-back-button defaultHref="" (click)="goToGamescreen()"></ion-back-button>
-    </ion-buttons>
   </ion-toolbar>
-  <span id="mySidenav" class="sidenav">
-    <a class="closebtn" (click)="closeNav()">&#9776;</a>
-    <a (click)="renderPage('inventory')">Inventory</a>
-    <a (click)="renderPage('messages')">Messages</a>
-    <a (click)="renderPage('teams')">Teams</a>
-    <a (click)="renderPage('settings')">Settings</a>
-  </span>
 </ion-header>
-
+ 
 <ion-content>
-
-  <div id="map" #map>
-    <span style="margin-left: 30%; margin-top: 50%;">Loading please wait ...</span>
-  </div>
-  <a class="menu">
-    <span class="posMenu" (click)="openNav()">&#9776;</span>
-  </a>
-
-
-  <a class="float">
-    <i class="fas fa-terminal my-float"></i>
-  </a>
+  <div id="map" #map></div>
 </ion-content>

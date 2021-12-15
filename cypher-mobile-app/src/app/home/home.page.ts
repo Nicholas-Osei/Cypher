@@ -6,7 +6,6 @@ import { LoginService, RootObject, UserCredentials } from '../Services/login.ser
 import { Buffer } from 'buffer';
 import { render } from 'creditcardpayments/creditCardPayments';
 import { PlayerService } from '../Services/player.service';
-import { ThisReceiver } from '@angular/compiler';
 
 
 @Component({
@@ -54,11 +53,14 @@ export class HomePage implements OnInit {
     // eslint-disable-next-line max-len
     return this.loginservice.allCredentials().subscribe(c => { this.loginservice.gebruikerCredentials = c; console.log('Got all credentials'); });
   }
-  registerBoolean(): void {
-    // this.toRegister = true;
-    this.toRegister = !this.toRegister;
+  makeRegisterTrue(): void {
+    this.toRegister = true;
   }
 
+  makeRegisterFalse(): void {
+    this.toRegister = false;
+
+  }
 
 
 

@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 
 declare let google: any;
@@ -14,18 +13,13 @@ export class MapScreenPage implements OnInit {
   map: any;
   coords: any;
   infoWindow: any;
-  showPage: any;
-  inMapScreen = true;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(public router: Router) {
-
-  }
+  constructor() { }
 
   ngOnInit() {
-
   }
 
   async locate() {
@@ -37,10 +31,6 @@ export class MapScreenPage implements OnInit {
     this.showMap();
   }
 
-  goToGamescreen() {
-    this.router.navigate(['game-screen']).then(() => window.location.reload());
-    this.inMapScreen = false;
-  }
   async showMap() {
     if (!this.coords) {
       const coordinates = await Geolocation.getCurrentPosition();
@@ -101,25 +91,5 @@ export class MapScreenPage implements OnInit {
         infoWindow.open(this.map);
       }
     });
-  }
-
-
-  openNav() {
-
-    document.getElementById('mySidenav').style.width = '250px';
-    console.log('hmmm');
-  }
-
-  closeNav() {
-    document.getElementById('mySidenav').style.width = '0';
-  }
-  renderPage(page: any) {
-    if (page === 'inventory') {
-      this.router.navigate(['inventory']
-      );
-    }
-    this.showPage = page;
-
-    this.closeNav();
   }
 }

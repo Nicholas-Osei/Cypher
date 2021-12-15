@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LoginService } from '../Services/login.service';
 import { Inventory, Player, PlayerService } from '../Services/player.service';
-
 
 
 @Component({
@@ -12,8 +10,8 @@ import { Inventory, Player, PlayerService } from '../Services/player.service';
 })
 export class GameScreenPage implements OnInit {
 
-  // players: Player;
-  // inventory: any;
+  players: Player;
+  inventory: any;
   showPage: any;
   lobbies: any;
   friends: any;
@@ -23,37 +21,29 @@ export class GameScreenPage implements OnInit {
   playerSearchResults: any;
   playername = '';
 
-  lol = Array(5);
-  titel = '';
-
-  constructor(public loginservice: LoginService, public speler: PlayerService, public router: Router) {
+  constructor(public loginservice: LoginService, public speler: PlayerService) {
     // this.speler.getAllPlayers().subscribe(p => {
     //   this.players = p; console
     //     .log('Got all players');
     //   console.log(this.players.data[0].name);
     // });
-    this.titel = 'Welcome, ' + loginservice.displayName + '!';
+
   }
   ngOnInit(): void {
     this.speler.getAllPlayers().subscribe(p => {
-      this.speler.players = p; console
+      this.players = p; console
         .log('Got all players');
-      console.log(this.speler.players.data[0].name);
+      console.log(this.players.data[0].name);
       this.getUserItems();
       this.getPlayerbyId();
-      console.log(this.speler.inventory);
     });
 
   }
 
-  goToMap() {
-    this.router.navigate(['map-screen'],
-    ).then(() => { window.location.reload(); });
-  }
   getUserItems() {
-    this.speler.players.data.forEach(m => {
+    this.players.data.forEach(m => {
       if (m.name === this.loginservice.displayName) {
-        this.speler.inventory = m.inventory.items;
+        this.inventory = m.inventory.items;
         this.messages = m.messages;
         this.lobbies = m.playerLobbies;
         this.id = m.id;
@@ -96,38 +86,38 @@ export class GameScreenPage implements OnInit {
     };
     this.speler.addToPlayerFriends(this.id, newFriend).subscribe(f => { console.log('Friend Added'); this.ngOnInit(); });
   }
-  // addItemToInventory(form) {
-  //   let newItems: any = [];
-  //   const item = [];
-  //   console.log('clicked');
-  //   this.players.data.forEach(m => {
-  //     if (m.name === this.loginservice.displayName) {
-  //       // eslint-disable-next-line @typescript-eslint/prefer-for-of
-  //       for (let index = 0; index < m.inventory.items.length; index++) {
-  //         item.push(
-  //           {
-  //             name: m.inventory.items[index].name,
-  //             itemType: m.inventory.items[index].itemType
-  //           },
-  //         );
-  //       }
-  //       item.push(
-  //         {
-  //           name: form.value.naam,
-  //           itemType: form.value.itemType
-  //         }
-  //       );
-  //       newItems = {
-  //         id: m.inventory.id,
-  //         items: item
-  //       };
-  //       return this.speler.updateInventoryItems(m.inventory.id, newItems).
-  //         subscribe(l => { console.log('added'); form.value.naam = ''; form.value.itemType = ''; this.ngOnInit(); });
-  //     }
+  addItemToInventory(form) {
+    let newItems: any = [];
+    const item = [];
+    console.log('clicked');
+    this.players.data.forEach(m => {
+      if (m.name === this.loginservice.displayName) {
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
+        for (let index = 0; index < m.inventory.items.length; index++) {
+          item.push(
+            {
+              name: m.inventory.items[index].name,
+              itemType: m.inventory.items[index].itemType
+            },
+          );
+        }
+        item.push(
+          {
+            name: form.value.naam,
+            itemType: form.value.itemType
+          }
+        );
+        newItems = {
+          id: m.inventory.id,
+          items: item
+        };
+        return this.speler.updateInventoryItems(m.inventory.id, newItems).
+          subscribe(l => { console.log('added'); form.value.naam = ''; form.value.itemType = ''; this.ngOnInit(); });
+      }
 
-  //   });
+    });
 
-  // }
+  }
 
   openNav() {
     document.getElementById('mySidenav').style.width = '250px';
@@ -138,7 +128,7 @@ export class GameScreenPage implements OnInit {
   }
   renderPage(page: any) {
     this.showPage = page;
-    console.log(this.showPage);
+
     this.closeNav();
   }
 
