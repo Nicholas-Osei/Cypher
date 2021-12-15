@@ -1,5 +1,6 @@
 ﻿using Cypher.Application.Interfaces.Repositories;
 using Cypher.Domain.Entities.Cypher;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,27 @@ namespace Cypher.Infrastructure.Repositories
 {
     public class LobbyRepository : ILobbyRepository
     {
-        public IQueryable<Lobby> Lobbies => throw new NotImplementedException();
+        private readonly IRepositoryAsync<Lobby> _repo;
+
+        public IQueryable<Lobby> Lobbies => _repo.Entities;
+
+        public LobbyRepository(IRepositoryAsync<Lobby> repo)
+        {
+            _repo = repo;
+        }
+
 
         public Task DeleteAsync(Lobby lobby)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Lobby> GetByIdAsync(int lobbyId)
+        public async Task<List<Lobby>> GetListAsync()
         {
-            throw new NotImplementedException();
+            return await _repo.Entities.ToListAsync();
         }
 
-        public Task<List<Lobby>> GetListAsync()
+        public Task<Lobby> GetByIdAsync(int lobbyId)
         {
             throw new NotImplementedException();
         }
