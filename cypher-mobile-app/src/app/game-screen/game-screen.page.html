@@ -85,24 +85,28 @@
         <h2 style="text-align: center;">Friends</h2>
         <div *ngFor="let all of friends">
           <li>Name: {{all.name}} <button (click)="deleteFriend(all.id)">&times;</button></li>
-          <!-- <li>Type:{{all.itemType}}</li> -->
         </div>
         <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%;" required
           [(ngModel)]="playername" (ngModelChange)="search(playername)">
         <div *ngFor="let all of playerSearchResults">
           <span *ngIf="playername">
-            <span *ngFor="let fr of friends">
-              <span *ngIf="playername !== loginservice.displayName && playername !== fr.name">
-                <!-- <span *ngIf="playername !== lol.name"> -->
+            <span *ngIf="playername !== loginservice.displayName">
+              <span *ngIf="friends.length===0">
                 <span style="font-size: 20px; margin-left: 30%;">{{all.name}}
                 </span>
                 <button size="small" (click)="addFriend(all.id)">Add Friend
                 </button>
-                <!-- </span> -->
+              </span>
+              <span *ngFor="let fr of friends">
+                <span *ngIf="playername !== fr.name">
+                  <span style="font-size: 20px; margin-left: 30%;">{{all.name}}
+                  </span>
+                  <button size="small" (click)="addFriend(all.id)">Add Friend
+                  </button>
+                </span>
               </span>
 
             </span>
-
           </span>
         </div>
         <!-- <p>Friends</p> -->
