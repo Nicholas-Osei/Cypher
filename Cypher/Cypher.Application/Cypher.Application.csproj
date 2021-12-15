@@ -41,6 +41,14 @@
     <None Remove="Features\Inventorys\Commands\Update\" />
     <None Remove="Features\Inventorys\Queries\GetAll\" />
     <None Remove="Features\Inventorys\Queries\GetById\" />
+    <None Remove="Features\Messages\" />
+    <None Remove="Features\Messages\Queries\" />
+    <None Remove="Features\Messages\Queries\GetAll\" />
+    <None Remove="Features\Messages\Commands\" />
+    <None Remove="Features\Messages\Commands\Create\" />
+    <None Remove="Features\Messages\Commands\Delete\" />
+    <None Remove="Features\Messages\Commands\Update\" />
+    <None Remove="Features\Messages\Queries\GetById\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\UserCredentials\" />
@@ -56,5 +64,13 @@
     <Folder Include="Features\Inventorys\Commands\Update\" />
     <Folder Include="Features\Inventorys\Queries\GetAll\" />
     <Folder Include="Features\Inventorys\Queries\GetById\" />
+    <Folder Include="Features\Messages\" />
+    <Folder Include="Features\Messages\Queries\" />
+    <Folder Include="Features\Messages\Queries\GetAll\" />
+    <Folder Include="Features\Messages\Commands\" />
+    <Folder Include="Features\Messages\Commands\Create\" />
+    <Folder Include="Features\Messages\Commands\Delete\" />
+    <Folder Include="Features\Messages\Commands\Update\" />
+    <Folder Include="Features\Messages\Queries\GetById\" />
   </ItemGroup>
 </Project>

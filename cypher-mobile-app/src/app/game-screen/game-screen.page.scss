@@ -32,7 +32,7 @@ body {
   position: absolute;
   top: 1;
   // float: right;
-  right: 45px;
+  right: 5px;
   font-size: 36px;
   margin-left: 50px;
 }
@@ -60,6 +60,6 @@ th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
+.InventoryTable tr:nth-child(even) {
   background-color: #8aa2e4;
 }

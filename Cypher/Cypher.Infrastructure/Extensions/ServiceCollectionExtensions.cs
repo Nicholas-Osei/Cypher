@@ -31,6 +31,7 @@ namespace Cypher.Infrastructure.Extensions {
             services.AddTransient<IUnitOfWork, UnitOfWork> ();
             services.AddTransient<IItemRepository, ItemRepository> ();
             services.AddTransient<IInventoryRepository, InventoryRepository>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
             #endregion Repositories
         }
     }

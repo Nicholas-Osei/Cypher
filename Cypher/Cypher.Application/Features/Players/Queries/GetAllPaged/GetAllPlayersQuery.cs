@@ -56,7 +56,7 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                     
                 };
 
-                var playerList = _repo.Players.Include(p => p.Inventory)
+                var playerList = _repo.Players.Include(m=>m.MessagePlayers).Include(p => p.Inventory)
                     .ThenInclude(i => i.Items)
                     .Select(expression);
 

@@ -40,6 +40,7 @@ namespace Cypher.Infrastructure.Repositories
         {
             return await _repo.Entities
                 .Where(p => p.Id == playerId)
+                .Include(m=>m.MessagePlayers)
                 .Include(p => p.Friends)
                 .Include(i => i.Inventory)
                 .ThenInclude(e => e.Items)
