@@ -30,6 +30,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@ionic-native/core": "^5.36.0",
     "@ionic-native/google-plus": "^5.36.0",
     "@ionic-native/in-app-browser": "^5.36.0",
     "@ionic/angular": "^5.5.2",
