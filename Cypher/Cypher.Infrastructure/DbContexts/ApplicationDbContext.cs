@@ -26,9 +26,9 @@ namespace Cypher.Infrastructure.DbContexts {
         public DbSet<Item> Items { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Lobby> Lobbies { get; set; }
-        public DbSet<PlayerLobby> PlayerLobbies { get; set; }
+        //public DbSet<PlayerLobby> PlayerLobbies { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<MessagePlayer> MessagePlayers { get; set; }
+        //public DbSet<MessagePlayer> MessagePlayers { get; set; }
         public DbSet<Puzzle> Puzzles { get; set; }
         public DbSet<UserCredential> UserCredentials { get; set; }
 
@@ -60,7 +60,13 @@ namespace Cypher.Infrastructure.DbContexts {
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<MessagePlayer>().HasKey(mp => new { mp.MessageId, mp.PlayerId });
-            builder.Entity<PlayerLobby>().HasKey(pl => new { pl.PlayerId, pl.LobbyId });
+            //builder.Entity<PlayerLobby>().HasKey(pl => new { pl.PlayerId, pl.LobbyId });
+
+            builder.Entity<Lobby>()
+                .HasOne<Player>(l => l.LobbyAdmin)
+                .WithMany(p => p.LobbiesAdmin);
+                //.HasForeignKey(l => l.LobbyAdmin);
+            //builder.Entity<Lobby>().h
 
             foreach (var property in builder.Model.GetEntityTypes ()
                     .SelectMany (t => t.GetProperties ())

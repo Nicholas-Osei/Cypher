@@ -12,13 +12,13 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
     public class GetAllPlayersResponse
     {
         public int Id { get; set; }
-        public int check { get; set; }
+        //public int check { get; set; }
         public string Name { get; set; }
-        public bool IsAdmin { get; set; }
-        public Inventory inventory { get; set; }
+        //public bool IsAdmin { get; set; }
+        //public Inventory inventory { get; set; }
         //public ICollection<Item> Items { get; set; } = new List<Item>();
-        public ICollection<MessagePlayer> Messages { get; set; }
-        public ICollection<PlayerLobby> PlayerLobbies { get; set; }
+        //public ICollection<MessagePlayer> Messages { get; set; }
+        //public ICollection<Lobby> Lobbies { get; set; }
 
     }
 }

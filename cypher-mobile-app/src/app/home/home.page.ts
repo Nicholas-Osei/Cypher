@@ -74,7 +74,7 @@ export class HomePage implements OnInit {
     console.log(form.value.email);
     // this.loginservice.allCredentials().subscribe(c => { this.gebruikerCredentials = c; console.log('Refresh'); });
     const toBAseAuthentication = Buffer.from(form.value.email + form.value.password).toString('base64');
-    console.log(toBAseAuthentication);
+    console.log(x);
     console.log(this.loginservice.gebruikerCredentials);
     for (const x of this.loginservice.gebruikerCredentials.data) {
       console.log(x.base64Credential, toBAseAuthentication);

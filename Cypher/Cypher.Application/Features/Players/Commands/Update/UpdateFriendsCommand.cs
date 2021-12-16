@@ -38,17 +38,6 @@ namespace Cypher.Application.Features.Players.Commands.Update
                     return Result<int>.Fail($"Player You Are Trying To Add Not Found.");
                 else
                 {
-                    //if (player.Friends == null)
-                    //    player.Friends = new List<PlayerFriend>();
-
-                    //var pf = new PlayerFriend()
-                    //{
-                    //    PlayerId = player.Id,
-                    //    Player = player,
-                    //    FriendId = friend.Id,
-                    //    Friend = friend
-                    //};
-                    //player.Friends.Add(pf);
                     if (player.Friends == null)
                         player.Friends = new List<Player>();
 

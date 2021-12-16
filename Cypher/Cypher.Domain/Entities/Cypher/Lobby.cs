@@ -11,6 +11,6 @@ namespace Cypher.Domain.Entities.Cypher
     {
         public string Name { get; set; }
         public Player LobbyAdmin { get; set; }
-        public virtual ICollection<PlayerLobby> PlayerLobbies { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
     }
 }
