@@ -1,0 +1,24 @@
+.card-cli-wrapper{
+    width: 97%;
+  }
+  .card-cli{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: inherit; 
+    flex-shrink: 0;
+    height: 30%;
+    bottom: 0;
+  }
+  .fabemptyspace{
+    height: 56px;
+    width : 56px;
+  }
+  
+  .command-output {
+    
+        margin-left: 8px;
+        overflow-y: auto;
+        max-height: 100px;
+      }
