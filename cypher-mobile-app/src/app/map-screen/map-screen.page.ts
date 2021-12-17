@@ -51,17 +51,17 @@ export class MapScreenPage implements OnInit {
     }
 
     var mapStyle = [
-      {
-        featureType: "poi",
-        elementType: "labels",
-        stylers: [{ visibility: "off" }]
-      },
-      {
-        featureType: "transit",
-        elementType: "labels",
-        stylers: [{ visibility: "off" }]
-      }
-    ]
+    {
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [{ visibility: "off" }]
+    },
+    {  
+      featureType: "transit",
+      elementType: "labels",
+      stylers: [{ visibility: "off" }]
+    }];
+
     const location = new google.maps.LatLng(this.coords.latitude, this.coords.longitude);
     const options = {
       center: location,
@@ -90,7 +90,7 @@ export class MapScreenPage implements OnInit {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position: GeolocationPosition) => {
-            const pos = {
+            var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
@@ -100,6 +100,12 @@ export class MapScreenPage implements OnInit {
             this.infoWindow.open(this.map);
             this.map.setCenter(pos);
             this.userMarker.setMap(this.map);
+            navigator.geolocation.watchPosition(position => {
+              pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              }
+            })
           },
           () => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
