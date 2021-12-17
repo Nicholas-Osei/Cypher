@@ -10,6 +10,7 @@ namespace Cypher.Domain.Entities.Cypher
     public class Lobby : AuditableEntity
     {
         public string Name { get; set; }
+        public int LobbyAdminId { get; set; }
         public Player LobbyAdmin { get; set; }
         public virtual ICollection<Player> Players { get; set; }
     }

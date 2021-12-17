@@ -15,7 +15,7 @@ namespace Cypher.Application.Features.Lobbies.CMDs.Create
     public class CreateLobbyCommand : IRequest<Result<int>>
     {
         public string Name { get; set; }
-        public Player LobbyAdmin { get; set; }
+        public int LobbyAdminId { get; set; }
         public ICollection<Player> Players { get; set; }
 
         public class CreateLobbyCommandHandler : IRequestHandler<CreateLobbyCommand, Result<int>>
