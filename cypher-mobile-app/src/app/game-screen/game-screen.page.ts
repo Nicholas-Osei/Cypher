@@ -27,6 +27,7 @@ export class GameScreenPage implements OnInit {
   lol = Array(5);
   titel = '';
   teller = 0;
+  notViaGoogle = false;
 
   constructor(public loginservice: LoginService, public speler: PlayerService, public router: Router) {
     // this.speler.getAllPlayers().subscribe(p => {
@@ -53,35 +54,37 @@ export class GameScreenPage implements OnInit {
     ).then(() => { window.location.reload(); });
   }
   async getUserItems() {
+    console.log(this.loginservice.displayName);
     this.speler.players.data.forEach(m => {
       this.teller++;
       // console.log(this.loginservice.displayName);
       console.log(this.speler.players.data.length, this.teller);
       if (m.name === this.loginservice.displayName) {
         //
-        this.speler.inventory = m.inventory.items;
-        this.messages = m.messages;
-        this.lobbies = m.playerLobbies;
+        // this.speler.inventory = m.inventory.items;
+        // this.messages = m.messages;
+        // this.lobbies = m.playerLobbies;
         this.id = m.id;
+        console.log(m.name);
+        this.notViaGoogle = true;
       }
-      else
-        if (this.speler.players.data.length === this.teller) {
-          console.log('ik ben hier');
-          const credentials =
-          {
-            name: this.loginservice.displayName,
-            isAdmin: false,
-            inventory: {
-              items: []
-            },
-            messages: [],
-            playerLobbies: []
-
-          };
-          this.speler.postPlayer(credentials).subscribe(a => { console.log('Player Added'); window.location.reload(); });
-        }
-
     });
+    console.log(this.notViaGoogle);
+    if (!this.notViaGoogle) {
+      console.log(this.notViaGoogle);
+      const credentials =
+      {
+        name: this.loginservice.displayName,
+        isAdmin: false,
+        inventory: {
+          items: []
+        },
+        messages: [],
+        playerLobbies: []
+
+      };
+      this.speler.postPlayer(credentials).subscribe(a => { console.log('Player Added'); window.location.reload(); });
+    }
     this.getPlayerbyId();
   }
   getPlayerbyId() {
@@ -90,6 +93,9 @@ export class GameScreenPage implements OnInit {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.friends);
         this.friends = this.playerbyId.data.friends;
+        this.speler.inventory = this.playerbyId.data.inventory;
+        // this.speler.messages = m.messages;
+        // this.lobbies = m.playerLobbies;
       });
   }
 
