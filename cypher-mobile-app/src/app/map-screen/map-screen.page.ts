@@ -99,6 +99,7 @@ export class MapScreenPage implements OnInit {
             this.infoWindow.setContent('Location found.');
             this.infoWindow.open(this.map);
             this.map.setCenter(pos);
+            this.userMarker.setMap(this.map);
           },
           () => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
