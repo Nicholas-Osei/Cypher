@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'inventory',
     loadChildren: () => import('./inventory/inventory.module').then( m => m.InventoryPageModule)
   },
+  {
+    path: 'cli',
+    loadChildren: () => import('./cli/cli.module').then( m => m.CliPageModule)
+  },
 
 ];
 

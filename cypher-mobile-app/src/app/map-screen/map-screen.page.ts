@@ -42,6 +42,7 @@ export class MapScreenPage implements OnInit {
     this.router.navigate(['game-screen']).then(() => window.location.reload());
     this.inMapScreen = false;
   }
+
   async showMap() {
     if (!this.coords) {
       const coordinates = await Geolocation.getCurrentPosition();
@@ -127,6 +128,12 @@ export class MapScreenPage implements OnInit {
   closeNav() {
     document.getElementById('mySidenav').style.width = '0';
   }
+
+  openCLI(){
+    console.log("called open cli");
+    this.router.navigate(['cli']);
+  }
+
   renderPage(page: any) {
     if (page === 'inventory') {
       this.router.navigate(['inventory']
