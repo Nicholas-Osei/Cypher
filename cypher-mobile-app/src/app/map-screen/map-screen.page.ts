@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
@@ -101,6 +102,19 @@ export class MapScreenPage implements OnInit {
         infoWindow.open(this.map);
       }
     });
+
+    for (const region in cityregions) {
+      const regionCircle = new google.maps.Circle({
+        strokeColor: cityregions[region].strokeColor,
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: cityregions[region].fillColor,
+        fillOpacity: 0.35,
+        map: this.map,
+        center: cityregions[region].center,
+        radius: cityregions[region].radius,
+      });
+    }
   }
 
 
@@ -123,3 +137,33 @@ export class MapScreenPage implements OnInit {
     this.closeNav();
   }
 }
+
+interface CityRegion {
+  center: google.maps.LatLngLiteral;
+  radius: number;
+  strokeColor: string;
+  fillColor: string;
+}
+
+const cityregions: Record<string, CityRegion> = {
+  studentenbuurt: {
+    center: { lat: 51.221814, lng: 4.413618 },
+    radius: 250,
+    strokeColor: '#FF0000',
+    fillColor: '#FF0000',
+  },
+  eilandje: {
+    center: { lat: 51.233345, lng: 4.411115 },
+    radius: 200,
+    strokeColor: '#FFF300',
+    fillColor: '#FFF300',
+  },
+  meir: {
+    center: { lat: 51.218094, lng: 4.408774 },
+    radius: 220,
+    strokeColor: '#27FF00',
+    fillColor: '#27FF00',
+  }
+};
+
+

@@ -4,6 +4,9 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Platform } from '@ionic/angular';
+import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { PlayerService } from './player.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +22,15 @@ export class LoginService {
   isLoggedIn = false;
   userData: any = {};
   stayLoggedIn: boolean;
+  // d = device.cordova;
   // gebruikerCredentials = [];
+  players: any;
   gebruikerCredentials: RootObject;
   // eslint-disable-next-line max-len
   authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwianRpIjoiOGVhMDYxMTQtZTcxYi00MTljLTlhYmMtYWFiMjgwMzcxNzRmIiwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInVpZCI6IjJlN2FkMzVhLTliYTctNGQzOS04ZGQxLTc3ZmI0N2U0YzVkZiIsImZpcnN0X25hbWUiOiJNdWtlc2giLCJsYXN0X25hbWUiOiJNdXJ1Z2FuIiwiZnVsbF9uYW1lIjoiTXVrZXNoIE11cnVnYW4iLCJpcCI6IjAuMC4wLjEiLCJyb2xlcyI6WyJBZG1pbiIsIk1vZGVyYXRvciIsIkJhc2ljIiwiU3VwZXJBZG1pbiJdLCJuYmYiOjE2MzY1NDQ2NjUsImV4cCI6MTYzNjU0ODI2NSwiaXNzIjoiQ3lwaGVyLkFwaSIsImF1ZCI6IkN5cGhlci5BcGkuVXNlciJ9.fdBujUAYnruEO4uNhW6j7Vsb2BD6KC-ZCz6hNxrDPgQ';
 
-  constructor(public googlePlus: GooglePlus, private router: Router, private http: HttpClient) { }
+  constructor(public googlePlus: GooglePlus, private router: Router, private http: HttpClient,
+    public platform: Platform, private socialAuthService: SocialAuthService) { }
 
 
   allCredentials(): Observable<RootObject> {
@@ -55,43 +61,79 @@ export class LoginService {
   }
 
   login() {
-    const gplusUser = this.googlePlus.login({
-      webClientId: '646712186754-jlveohr7vqen6rl214hs3bsct3qf5ush.apps.googleusercontent.com',
-      offline: true,
-      scopes: 'profile email'
-    })
-      .then(res => {
-        console.log(res);
-        this.displayName = res.displayName;
-        this.email = res.email;
-        this.familyName = res.familyName;
-        this.givenName = res.givenName;
-        this.userId = res.userId;
-        this.imageUrl = res.imageUrl;
+    if (!this.platform.ready) {
+      const gplusUser = this.googlePlus.login({
+        webClientId: '646712186754-jlveohr7vqen6rl214hs3bsct3qf5ush.apps.googleusercontent.com',
+        offline: true,
+        scopes: 'profile email'
+      })
+        .then(res => {
+          console.log(res);
+          this.displayName = res.displayName;
+          this.email = res.email;
+          this.familyName = res.familyName;
+          this.givenName = res.givenName;
+          this.userId = res.userId;
+          this.imageUrl = res.imageUrl;
+          this.isLoggedIn = true;
+          this.router.navigate(['game-screen']);
+        }, result => this.userData = 'Logged in')
+        .catch(err => console.error(err));
+      ;
+      return this.userData;
+    }
+    else {
+      console.log('web');
+      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(res => {
+        console.log('logged in');
+        this.displayName = res.name;
         this.isLoggedIn = true;
+        localStorage.setItem('token', this.authToken);
+        localStorage.setItem('Isloggedin', JSON.stringify(this.isLoggedIn));
+        localStorage.setItem('Displayname', JSON.stringify(this.displayName));
         this.router.navigate(['game-screen']);
-      }, result => this.userData = 'Logged in')
-      .catch(err => console.error(err));
-    ;
-    return this.userData;
+        // this.playerservice.getAllPlayers().subscribe(p => this.players = p.data);
+        // this.players.data.forEach(element => {
+        //   console.log(element);
+        // });
+
+        // const credentials =
+        // {
+        //   name: res.name,
+        //   isAdmin: false,
+        //   inventory: {
+        //     items: []
+        //   },
+        //   messages: [],
+        //   playerLobbies: []
+
+        // };
+        // this.playerservice.postPlayer(credentials).subscribe(a => console.log('Player Added'));
+      });
+    }
   }
 
 
   logout() {
-    this.googlePlus.logout()
-      .then(res => {
-        console.log(res);
-        this.displayName = '';
-        this.email = '';
-        this.familyName = '';
-        this.givenName = '';
-        this.userId = '';
-        this.imageUrl = '';
+    if (!this.platform.ready) {
+      this.googlePlus.logout()
+        .then(res => {
+          console.log(res);
+          this.displayName = '';
+          this.email = '';
+          this.familyName = '';
+          this.givenName = '';
+          this.userId = '';
+          this.imageUrl = '';
 
-        // this.isLoggedIn = false;
-        // this.router.navigate(['home']);
-      })
-      .catch(err => console.error(err));
+          // this.isLoggedIn = false;
+          // this.router.navigate(['home']);
+        })
+        .catch(err => console.error(err));
+    }
+    else {
+      this.socialAuthService.signOut();
+    }
     this.isLoggedIn = false;
     localStorage.clear();
     this.router.navigate(['home']);

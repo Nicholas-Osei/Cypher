@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../Services/login.service';
@@ -25,6 +26,7 @@ export class GameScreenPage implements OnInit {
 
   lol = Array(5);
   titel = '';
+  teller = 0;
 
   constructor(public loginservice: LoginService, public speler: PlayerService, public router: Router) {
     // this.speler.getAllPlayers().subscribe(p => {
@@ -40,7 +42,7 @@ export class GameScreenPage implements OnInit {
         .log('Got all players');
       console.log(this.speler.players.data[0].name);
       this.getUserItems();
-      this.getPlayerbyId();
+      // this.getPlayerbyId();
       console.log(this.speler.inventory);
     });
 
@@ -50,15 +52,37 @@ export class GameScreenPage implements OnInit {
     this.router.navigate(['map-screen'],
     ).then(() => { window.location.reload(); });
   }
-  getUserItems() {
+  async getUserItems() {
     this.speler.players.data.forEach(m => {
+      this.teller++;
+      // console.log(this.loginservice.displayName);
+      console.log(this.speler.players.data.length, this.teller);
       if (m.name === this.loginservice.displayName) {
+        //
         this.speler.inventory = m.inventory.items;
         this.messages = m.messages;
         this.lobbies = m.playerLobbies;
         this.id = m.id;
       }
+      else
+        if (this.speler.players.data.length === this.teller) {
+          console.log('ik ben hier');
+          const credentials =
+          {
+            name: this.loginservice.displayName,
+            isAdmin: false,
+            inventory: {
+              items: []
+            },
+            messages: [],
+            playerLobbies: []
+
+          };
+          this.speler.postPlayer(credentials).subscribe(a => { console.log('Player Added'); window.location.reload(); });
+        }
+
     });
+    this.getPlayerbyId();
   }
   getPlayerbyId() {
     this.speler.getPlayerById(this.id).subscribe(
@@ -66,17 +90,9 @@ export class GameScreenPage implements OnInit {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.friends);
         this.friends = this.playerbyId.data.friends;
-        // this.lol();
       });
-    //   if (condition) {
-
-    //   }
   }
-  // GetF() {
-  //   this.playerbyId.data.friends.forEach(m => {
-  //     console.log(m.name);
-  //   });
-  // }
+
   search() {
     console.log(this.playername);
     // console.log(this.)

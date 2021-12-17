@@ -46,19 +46,22 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                 {
                     Id = e.Id,
                     Name = e.Name,
-                    inventory = e.Inventory,
+                    //inventory = e.Inventory,
 
-                    IsAdmin = e.IsAdmin,
+                    //IsAdmin = e.IsAdmin,
                     //check = e.Inventory.Items.Count,
                     //Items = e.Inventory.Items,
-                    Messages = e.MessagePlayers,
-                    PlayerLobbies = e.PlayerLobbies
+                    //Messages = e.MessagePlayers,
+                    //Lobbies = e.LobbiesJoined
                     
                 };
 
-                var playerList = _repo.Players.Include(m=>m.MessagePlayers).Include(p => p.Inventory)
-                    .ThenInclude(i => i.Items)
+                //var playerList = _repo.Players.Include(m=>m.MessagePlayers).Include(p => p.Inventory)
+                //    .ThenInclude(i => i.Items)
+                //    .Select(expression);
+                var playerList = _repo.Players
                     .Select(expression);
+
 
                 if (!string.IsNullOrWhiteSpace(request.NameQuery))
                     playerList = playerList.Where(p => p.Name == request.NameQuery);
