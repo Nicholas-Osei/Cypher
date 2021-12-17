@@ -12,6 +12,23 @@ export class CliPage implements OnInit {
 
   ngOnInit() {
   }
+  
+  cliOutput : string = 'Run CLI.startup... CLI started!';
+  commandInput : string = ' ';
+  activeCLI = false;
+  public commands = ['Run', 'List'];
+
+  // @ViewChild('command-output') commandoutput:ElementRef;
+
+  toggleCLI(){
+    this.activeCLI = !this.activeCLI;
+  }
+
+  CommandInput(command:string){
+    this.cliOutput += "\n " + this.commandInput;
+    this.commandInput = ' ';
+    // this.commandoutput.nativeElement.setAttribute(this.commandoutput.nativeElement);
+  }
 
   goToMapscreen() {
     this.router.navigate(['map-screen']);
