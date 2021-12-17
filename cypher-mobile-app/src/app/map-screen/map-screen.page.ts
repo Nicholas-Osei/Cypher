@@ -104,7 +104,8 @@ export class MapScreenPage implements OnInit {
               pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
-              }
+              };
+              this.userMarker.setMap(this.map);
             })
           },
           () => {
