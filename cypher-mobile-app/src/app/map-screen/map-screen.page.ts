@@ -129,8 +129,8 @@ export class MapScreenPage implements OnInit {
     document.getElementById('mySidenav').style.width = '0';
   }
 
-  openCLI(){
-    console.log("called open cli");
+  openCLI() {
+    console.log('called open cli');
     this.router.navigate(['cli']);
   }
 
