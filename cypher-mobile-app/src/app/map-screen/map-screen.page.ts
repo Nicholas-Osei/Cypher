@@ -2,6 +2,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
+import { markAsUntransferable } from 'worker_threads';
 
 declare let google: any;
 
@@ -16,6 +17,7 @@ export class MapScreenPage implements OnInit {
   coords: any;
   infoWindow: any;
   showPage: any;
+  userMarker: any;
   inMapScreen = true;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -47,14 +49,34 @@ export class MapScreenPage implements OnInit {
       const coordinates = await Geolocation.getCurrentPosition();
       this.coords = coordinates.coords;
     }
+
+    var mapStyle = [
+      {
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }]
+      },
+      {
+        featureType: "transit",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }]
+      }
+    ]
     const location = new google.maps.LatLng(this.coords.latitude, this.coords.longitude);
     const options = {
       center: location,
       zoom: 15,
-      disableDefaultUI: true
+      disableDefaultUI: true,
+      styles: mapStyle
     };
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
     this.infoWindow = new google.maps.InfoWindow();
+    this.userMarker = new google.maps.Marker({
+      icon: playerMarker,
+      position: location,
+      title: 'You are here!'
+    });
+    this.userMarker.setMap(this.map);
 
     const locationButton = document.createElement('button');
 
@@ -166,4 +188,11 @@ const cityregions: Record<string, CityRegion> = {
   }
 };
 
-
+const playerMarker = {
+  fillColor: '#4285F4',
+  fillOpacity: 1,
+  path: google.maps.SymbolPath.CIRCLE,
+  scale: 8,
+  strokeColor: 'rgb(255,255,255)',
+  strokeWeight: 2
+}
