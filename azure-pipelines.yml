@@ -4,7 +4,7 @@
 
 trigger:
 - main
-- Setup-mobile-app-for-docker
+
 
 resources:
 - repo: self
