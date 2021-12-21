@@ -85,7 +85,7 @@ export class MapScreenPage implements OnInit {
 
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 
-    locationButton.addEventListener('click', () => {
+    locationButton.addEventListener('click', async () => {
       // Try HTML5 geolocation.
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -97,15 +97,16 @@ export class MapScreenPage implements OnInit {
 
             this.infoWindow.setPosition(pos);
             this.infoWindow.setContent('Location found.');
+            console.log(pos);
             this.infoWindow.open(this.map);
             this.map.setCenter(pos);
-            this.userMarker.setMap(this.map);
+            this.userMarker.setPosition(pos);
             navigator.geolocation.watchPosition(position => {
               pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
               };
-              this.userMarker.setMap(this.map);
+              this.userMarker.setPosition(pos);
             })
           },
           () => {
