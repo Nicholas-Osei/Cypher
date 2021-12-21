@@ -152,9 +152,12 @@ export class MapScreenPage implements OnInit {
   SearchRegionAreasForPlayer(){
     for(const region in cityregions){
       if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius){
-        console.log("You are inside this circle");
-      } else {
-        console.log("You are NOT inside this circle");
+        if(cityregions[region].isGameStartable){
+          cityregions[region].isGameStartable = false
+          cityregions[region].playGame();
+        }
+      // } else {
+      //   console.log("You are NOT inside this circle");
       }
     }
   }
@@ -184,6 +187,9 @@ interface CityRegion {
   radius: number;
   strokeColor: string;
   fillColor: string;
+  isGameStartable?: boolean;
+
+  playGame(): void;
 }
 
 const cityregions: Record<string, CityRegion> = {
@@ -192,36 +198,56 @@ const cityregions: Record<string, CityRegion> = {
     radius: 250,
     strokeColor: '#FF0000',
     fillColor: '#FF0000',
+    
+    playGame(){
+      console.log("Start Game 1");
+    },
   },
   eilandje: {
     center: { lat: 51.233345, lng: 4.411115 },
     radius: 200,
     strokeColor: '#FFF300',
     fillColor: '#FFF300',
+    playGame(){
+      console.log("Start Game 2");
+    },
   },
   meir: {
     center: { lat: 51.218094, lng: 4.408774 },
     radius: 220,
     strokeColor: '#27FF00',
     fillColor: '#27FF00',
+    playGame(){
+      console.log("Start Game 3");
+    },
   },
   test: {
     center: { lat: 51.216392, lng: 4.404195 },
     radius: 160,
     strokeColor: '#7E00FF',
     fillColor: '#7E00FF',
+    playGame(){
+      console.log("Start Game 4");
+    },
   },
   aphogeschool: {
     center: { lat: 51.229853, lng: 4.415807 },
     radius: 150,
     strokeColor: '#FF8000',
     fillColor: '#FF8000',
+    playGame(){
+      console.log("Start Game 5");
+    },
   },
   test2: {
     center: { lat: 51.231731, lng: 4.431389 },
     radius: 200,
     strokeColor: '#FF8000',
     fillColor: '#FF8000',
+    isGameStartable: true,
+    playGame(){
+      console.log("Start Game 6");
+    },
   }
 };
 
