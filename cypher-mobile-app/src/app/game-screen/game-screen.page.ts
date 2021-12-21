@@ -116,7 +116,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   setShowPageToFriends() {
     this.showPage = 'friends';
   }
-  search() {
+  search(name?: any) {
     console.log(this.playername);
     // console.log(this.)
     this.speler.searchForFriends(this.playername).

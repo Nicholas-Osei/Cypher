@@ -15,17 +15,17 @@ const routes: Routes = [
     loadChildren: () => import('./map-screen/map-screen.module').then(m => m.MapScreenPageModule)
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
     path: 'inventory',
-    loadChildren: () => import('./inventory/inventory.module').then( m => m.InventoryPageModule)
+    loadChildren: () => import('./inventory/inventory.module').then(m => m.InventoryPageModule)
   },
   {
     path: 'cli',
-    loadChildren: () => import('./cli/cli.module').then( m => m.CliPageModule)
+    loadChildren: () => import('./cli/cli.module').then(m => m.CliPageModule)
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
 
 ];

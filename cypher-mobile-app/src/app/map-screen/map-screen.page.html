@@ -26,7 +26,16 @@
   </a>
 
 
-  <a class="float">
-    <i class="fas fa-terminal my-float" (click)="openCLI()"></i>
-  </a>
+  <!-- <a class="float"> -->
+  <!-- <span (click)="openCLI()">>_</span> -->
+  <!-- <input type="image" name="Name of image button" src="Path of the Image file? border=" Specfiy Image Border " alt="
+      text"> -->
+  <!-- <input type="image" src="../../assets/icon/person1.jpeg" height="50" width="30"
+      style="margin-top:20%; background-color: green;" (click)="openCLI()"> -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+    <ion-fab-button size="larger" color="light" (click)="openCLI()">
+      <ion-icon name="terminal-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <!-- </a> -->
 </ion-content>
