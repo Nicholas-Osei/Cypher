@@ -85,7 +85,7 @@ export class MapScreenPage implements OnInit {
 
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 
-    locationButton.addEventListener('click', async () => {
+    locationButton.addEventListener('click', () => {
       // Try HTML5 geolocation.
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -97,7 +97,6 @@ export class MapScreenPage implements OnInit {
 
             this.infoWindow.setPosition(pos);
             this.infoWindow.setContent('Location found.');
-            console.log(pos);
             this.infoWindow.open(this.map);
             this.map.setCenter(pos);
             this.userMarker.setPosition(pos);
@@ -107,6 +106,8 @@ export class MapScreenPage implements OnInit {
                 lng: position.coords.longitude,
               };
               this.userMarker.setPosition(pos);
+              console.log(pos);
+              this.SearchRegionAreasForPlayer();
             })
           },
           () => {
@@ -148,6 +149,15 @@ export class MapScreenPage implements OnInit {
     }
   }
 
+  SearchRegionAreasForPlayer(){
+    for(const region in cityregions){
+      if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].center){
+        console.log("You are inside this circle");
+      } else {
+        console.log("You are not inside this circle");
+      }
+    }
+  }
 
   openNav() {
 
@@ -194,6 +204,18 @@ const cityregions: Record<string, CityRegion> = {
     radius: 220,
     strokeColor: '#27FF00',
     fillColor: '#27FF00',
+  },
+  test: {
+    center: { lat: 51.216392, lng: 4.404195 },
+    radius: 160,
+    strokeColor: '#7E00FF',
+    fillColor: '#7E00FF',
+  },
+  aphogeschool: {
+    center: { lat: 51.229853, lng: 4.415807 },
+    radius: 150,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
   }
 };
 
