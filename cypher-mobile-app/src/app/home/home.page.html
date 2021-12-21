@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> CYPHER LOGIN </ion-title>
+    <ion-title style="text-align: center;"> CYPHER LOGIN </ion-title>
     <ion-buttons slot="start" *ngIf="toRegister;">
       <ion-back-button defaultHref="" (click)="registerBoolean()"></ion-back-button>
     </ion-buttons>
@@ -8,49 +8,66 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="!toRegister; else Register">
+  <div *ngIf="!toRegister;" class="LogInScreen">
     <ion-text color="dark">
-      <h2>Enter your Email and password to Login</h2>
+      <h2 style="text-align: center;">SIGN IN</h2>
     </ion-text>
     <form #UserLogin="ngForm" (submit)="checkUserCredential(UserLogin)">
-      Email:
+      <h3>Email:</h3>
       <ion-item>
         <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
       </ion-item>
-      Password:
+      <h3>Password:</h3>
       <ion-item>
         <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
       </ion-item>
-      <ion-button size="small" type="submit" style="align-items: center" [disabled]="!UserLogin.valid">Log in
+      <ion-button size="small" type="submit" style="margin-left: 32% ;" [disabled]="!UserLogin.valid">
+        Log
+        in
       </ion-button>
-      <p>No account ? <ion-button (click)="registerBoolean()" size="small" color="success">REGISTER</ion-button>
+      <p style="font-size: 20px
+      ;">No account ? <ion-button (click)="registerBoolean()" size="small" color="success">REGISTER
+        </ion-button>
       </p>
     </form>
-    <ion-button (click)="login()" size="small">Login With Google</ion-button>
+    <!-- <ion-button (click)="login()" size="small">Login With Google</ion-button> -->
+    <div class="google-btn" (click)="login()">
+      <div class=" google-icon-wrapper">
+        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+      </div>
+      <p class="btn-text"><b>Sign in with google</b></p>
+    </div>
   </div>
-  <ng-template #Register>
+  <div class="LogInScreen" *ngIf="toRegister">
     <form #UserRegister="ngForm" (submit)="registerUser(UserRegister)">
-      Email:
+      <ion-text color="dark">
+        <h2 style="text-align: center;">SIGN UP</h2>
+      </ion-text>
+      <h3>Email:</h3>
       <ion-item>
         <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
       </ion-item>
-      Password:
+      <h3>Password:</h3>
       <ion-item>
         <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
       </ion-item>
-      Confirm Password:
+      <h3>Confirm Password:</h3>
       <ion-item>
         <ion-input name="confirmpassword" type="password" placeholder="Confirm Password" ngModel required></ion-input>
       </ion-item>
       <ion-button size="small" type="submit" style="align-items: center" [disabled]="!UserRegister.valid">REGISTER !
       </ion-button>
+      <div style="font-size: 20px
+      ;margin: auto;">Already have an account? <ion-button (click)="registerBoolean()" size="small" color="success"
+          style="margin-left: 32% ;">LOG IN
+        </ion-button>
+      </div>
       <h2>{{passwordcheck}}</h2>
     </form>
-  </ng-template>
+  </div>
   <!-- <ion-button onclick="window.open('https://34b1-81-11-219-174.ngrok.io','_system', 'location=yes');">
     Pay with Google Pay</ion-button> -->
 
-  <div id="myPaypalButtons"></div>
-  <p> BALANCE : {{mybalance}}€</p>
-
+  <!-- <div id="myPaypalButtons"></div>
+  <p> BALANCE : {{mybalance}}€</p> -->
 </ion-content>
