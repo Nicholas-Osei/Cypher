@@ -151,10 +151,10 @@ export class MapScreenPage implements OnInit {
 
   SearchRegionAreasForPlayer(){
     for(const region in cityregions){
-      if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].center){
+      if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius){
         console.log("You are inside this circle");
       } else {
-        console.log("You are not inside this circle");
+        console.log("You are NOT inside this circle");
       }
     }
   }
@@ -214,6 +214,12 @@ const cityregions: Record<string, CityRegion> = {
   aphogeschool: {
     center: { lat: 51.229853, lng: 4.415807 },
     radius: 150,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+  },
+  test2: {
+    center: { lat: 51.231731, lng: 4.431389 },
+    radius: 200,
     strokeColor: '#FF8000',
     fillColor: '#FF8000',
   }
