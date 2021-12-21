@@ -35,7 +35,7 @@ import { environment } from '../environments/environment';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '646712186754-c36mk5hmluv34o2lk8vmgk2h6p3ne1pk.apps.googleusercontent.com'
+              '646712186754-d62s8o7ubc3s2vm1bqp3g8fjg5k6150u.apps.googleusercontent.com'
             )
           }
         ]
