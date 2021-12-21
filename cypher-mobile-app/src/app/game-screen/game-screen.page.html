@@ -129,12 +129,12 @@
             <img [src]="imageUrl" alt="Italian Trulli">
           </div>
 
-          <li style="color: black; font-size: 20px;">{{all.name}} <button
-              (click)="deleteFriend(all.id)">&times;</button></li>
+          <li style="color: black; font-size: 20px;">{{all.name}} <button (click)="deleteFriend(all.id)"
+              style="color: red; border-radius: 50%; border: 1px solid;"> &times;</button></li>
           <!-- </ol> -->
         </div>
-        <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%;" required
-          [(ngModel)]="playername" (ngModelChange)="search(playername)">
+        <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%; color: #000;"
+          required [(ngModel)]="playername" (ngModelChange)="search(playername)">
         <div *ngFor="let all of playerSearchResults">
           <span *ngIf="playername">
             <span *ngIf="playername !== loginservice.displayName">
