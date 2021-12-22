@@ -8,13 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <h2 style="text-align: center;">Inventory</h2>
-  <!-- <table class="InventoryTable"> -->
-  <!-- <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Item Type</th>
-    </tr> -->
+  <!-- <h2 style="text-align: center;">Inventory</h2> -->
+
   <div *ngFor="let all of inventory" class="Items">
     <!-- <input type="radio" name="id">{{all.id}}</td> -->
     <button (click)="deleteItem(all.id)" style="float: right; margin-top: 1%;">&times;</button>
@@ -29,18 +24,20 @@
       <input type="radio"> Name: {{all.name}}
       Type: {{all.itemType}} <br>
     </div> -->
-  <div style="clear: both;">
-    <p style=" text-align: center; ">Add new Item</p>
+  <div style="clear: both;" class="InventoryForm">
+    <h3 style=" text-align: center; ">Add new Item</h3>
     <form #addItem="ngForm" (submit)="addItemToInventory(addItem)">
-      <span>
+      <p style=" text-align: center;">
         <label for="float-input" style="margin-right: 13%;">Naam</label>
-        <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="naam" required ngModel><br>
-      </span>
-      <span>
+        <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="naam" style="color: #000;" required
+          ngModel><br>
+      </p>
+      <p style=" text-align: center;">
         <label for="float-input" style="margin-right: 5%;">Item Type</label>
-        <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="itemType" required ngModel>
-      </span>
-      <ion-button type="submit" style="margin-left: 40%;">Add Item</ion-button>
+        <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="itemType" style="color: #000;"
+          required ngModel>
+      </p>
+      <ion-button type="submit" style="margin-left: 30%;">Add Item</ion-button>
     </form>
   </div>
 

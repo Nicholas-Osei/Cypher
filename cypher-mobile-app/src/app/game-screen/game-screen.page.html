@@ -19,13 +19,18 @@
 </ion-header>
 <ion-content>
 
-  <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776;</span>
+  <span style="font-size:60px;cursor:pointer;  color: white; background-color: rgba(15, 15, 15, 0.74);
+  color: #fff;
+  border-radius: 70px;" (click)="openNav()">&#9776;</span>
   <ion-button i color="light" (click)="loginservice.logout()" style="float: right;">
     Log Out
   </ion-button>
+  <p style=" margin-left: 250px; margin-top: 5%; font-size: 20px; font-weight: bolder; color: green;">{{ time | date:
+    'hh:mm:ss a' }}
+  </p>
   <div *ngIf="loginservice.isLoggedIn">
 
-    <h1>{{titel}}
+    <h1 style="color: black; text-align: center;">{{titel}}
     </h1>
     <p>
       <span *ngIf="loginservice.email">Email: {{loginservice.email}}</span><br />
@@ -81,28 +86,70 @@
         </form>
 
       </div>  -->
-      <div *ngIf="showPage === 'friends'">
-        <h2 style="text-align: center;">Friends</h2>
-        <div *ngFor="let all of friends">
-          <li>Name: {{all.name}} <button (click)="deleteFriend(all.id)">&times;</button></li>
+      <div *ngIf="!showPage">
+        <div *ngIf="friends">
+          <div *ngIf="friends.length===1">
+            <p style="color: black; font-size: 25px;  text-align: center;">You have just {{friends.length}} FRIEND so
+              far </p>
+            <ion-button style="margin-left: 25%" (click)="setShowPageToFriends()">ADD MORE FRIENDS</ion-button>
+          </div>
+          <div *ngIf="friends.length>1">
+            <p style="color: black; font-size: 25px; text-align: center;">You have {{friends.length}} FRIENDS so far
+            </p>
+          </div>
+          <div *ngIf="friends.length<1">
+            <p style="font-size: 25px;  text-align: center;"> You have No FRIENDS 😕</p>
+            <ion-button style="margin-left: 30%" (click)="setShowPageToFriends()">ADD FRIENDS</ion-button>
+          </div>
+
+          <p style="color: black; font-size: 25px;  text-align: center;"> You have <span style="color: red;">0</span>
+            Messages</p>
+          <p style="color: black; font-size: 25px;  text-align: center;"> You are in <span style="color: red;">0</span>
+            Lobby's</p>
+          <p style="color: black; font-size: 25px;  text-align: center;"> There is currently <span
+              style="color: red;">no</span> Teams to join</p>
         </div>
-        <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%;" required
-          [(ngModel)]="playername" (ngModelChange)="search(playername)">
+
+
+      </div>
+      <div *ngIf="showPage === 'friends'">
+        <h2 style="text-align: center; color: black; font-size: 50px;">Friends</h2>
+        <div *ngFor="let all of friends;let i = index" class="Friends">
+          <!-- <ol> -->
+          <div *ngIf="i===0">
+            <img src="./assets/icon/person1.jpeg" alt="Italian Trulli">
+          </div>
+          <div *ngIf="i===1">
+            <img src='./assets/icon/person2.jpeg' alt="Italian Trulli">
+          </div>
+          <div *ngIf="i===2">
+            <img src='./assets/icon/person3.jpeg' alt="Italian Trulli">
+          </div>
+          <div *ngIf="i>2">
+            <img [src]="imageUrl" alt="Italian Trulli">
+          </div>
+
+          <li style="color: black; font-size: 20px;">{{all.name}} <button (click)="deleteFriend(all.id)"
+              style="color: red; border-radius: 50%; border: 1px solid;"> &times;</button></li>
+          <!-- </ol> -->
+        </div>
+        <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%; color: #000;"
+          required [(ngModel)]="playername" (ngModelChange)="search(playername)">
         <div *ngFor="let all of playerSearchResults">
           <span *ngIf="playername">
             <span *ngIf="playername !== loginservice.displayName">
               <span *ngIf="friends.length===0">
-                <span style="font-size: 20px; margin-left: 30%;">{{all.name}}
+                <span style="font-size: 20px; margin-left: 30%; color: #000;">{{all.name}}
                 </span>
-                <button size="small" (click)="addFriend(all.id)">Add Friend
-                </button>
+                <ion-button size="small" (click)="addFriend(all.id)" color="primary">Add Friend
+                </ion-button>
               </span>
               <span *ngFor="let fr of friends">
                 <span *ngIf="playername !== fr.name">
-                  <span style="font-size: 20px; margin-left: 30%;">{{all.name}}
+                  <span style="font-size: 30px; margin-left: 30%; color: #000;">{{all.name}}
                   </span>
-                  <button size="small" (click)="addFriend(all.id)">Add Friend
-                  </button>
+                  <ion-button size="small" (click)="addFriend(all.id)" color="primary">Add Friend
+                  </ion-button>
                 </span>
               </span>
 

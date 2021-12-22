@@ -41,7 +41,7 @@ export class LoginService {
       'Authorization': `Bearer ${this.authToken}`
     });
     //return this.http.get<RootObject>('https://api.genderize.io/?name=luc');
-    return this.http.get<RootObject>('https://localhost:5001/api/v1/UserCredential?pageSize=100500',
+    return this.http.get<RootObject>('https://cypher-web-app.azurewebsites.net/api/v1/UserCredential?pageSize=100500',
       { headers: httpHeaders });
   }
 
@@ -53,11 +53,12 @@ export class LoginService {
       'Authorization': `Bearer ${this.authToken}`
     });
     //return this.http.get<RootObject>('https://api.genderize.io/?name=luc');
-    return this.http.post<RootObject>('https://localhost:5001/api/v1/UserCredential', credential, { headers: httpHeaders });
+    // eslint-disable-next-line max-len
+    return this.http.post<RootObject>('https://cypher-web-app.azurewebsites.net/api/v1/UserCredential', credential, { headers: httpHeaders });
   }
 
   async getToken(gegevens) {
-    return this.http.post<Tokens>('https://localhost:5001/api/identity/token', gegevens).toPromise();
+    return this.http.post<Tokens>('https://cypher-web-app.azurewebsites.net/api/identity/token', gegevens).toPromise();
   }
 
   login() {

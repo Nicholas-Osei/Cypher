@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <title>Ionic App</title>
 
   <base href="." />
 
-  <meta name="color-scheme" content="light dark" />
+  <meta name="color-scheme" content="white" />
   <meta name="viewport"
     content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta http-equiv="Content-Security-Policy"
@@ -23,15 +23,38 @@
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
   <!-- GoogleMaps script -->
-  <script src="https://maps.google.com/maps/api/js?key=AIzaSyBjSFkzQOTdeB0Lj0wp6eGd5YxXZq7q24E" async defer></script>
+  <script src="https://maps.google.com/maps/api/js?key=AIzaSyBjSFkzQOTdeB0Lj0wp6eGd5YxXZq7q24E" async=""
+    defer=""></script>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1976d2">
+  <meta name="background_color" content="#FFFFFF">
+  <!-- place this in a head section -->
+  <link rel="apple-touch-icon" href="/src/assets/icons/cypher.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="touch-icon-ipad-retina.png">
 </head>
 
 <body>
+  <script>
+    const isIos = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    }
+    // Detects if device is in standalone mode
+    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+    // Checks if should display install popup notification:
+    if (isIos() && !isInStandaloneMode()) {
+      this.setState({ showInstallMessage: true });
+    }
+  </script>
   <script
     src="https://www.paypal.com/sdk/js?client-id=AYfQYDzbH0v-G12fL-RsUrIAcekJNpli743xyJ664-mfVA4a4s1c1N4M5y7NvJG2ycvaHYJMwGMR80XY">
     </script>
 
   <app-root></app-root>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 
 </html>

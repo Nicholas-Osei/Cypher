@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <div class="card-cli-wrapper" >
+  <div class="card-cli-wrapper">
     <ion-card disabled="false" class="card-cli" *ngIf="activeCLI">
       <ion-card-content>
         <ion-textarea readonly=true #commandoutput class="command-output" id="command-output" name="command-output">
@@ -19,15 +19,16 @@
       </ion-card-content>
       <ion-item>
       </ion-item>
-      
-      
+
+
       <ion-item class="cliInput">
         <div class="fabemptyspace"></div>
-        <ion-input id="commandInput" name="commandInput" [(ngModel)]="commandInput" placeholder="Enter Input" (keyup.enter)="CommandInput()"></ion-input>
+        <ion-input id="commandInput" name="commandInput" [(ngModel)]="commandInput" placeholder="Enter Input"
+          (keyup.enter)="CommandInput()"></ion-input>
         <div *ngFor="let command of commands">
           <ion-button fill="outline">{{ command }}</ion-button>
         </div>
-        </ion-item>
+      </ion-item>
     </ion-card>
   </div>
 
@@ -36,7 +37,7 @@
   <ion-fab slot="fixed" vertical="bottom" horizontal="start">
     <ion-fab-button size="small" color="light" size="medium" (click)="toggleCLI()">
       <ng-template [ngIf]="activeCLI" [ngIfElse]="cliopen">
-      <ion-icon name="chevron-down-outline"></ion-icon>
+        <ion-icon name="chevron-down-outline"></ion-icon>
       </ng-template>
 
       <ng-template #cliopen>
@@ -44,5 +45,6 @@
       </ng-template>
     </ion-fab-button>
   </ion-fab>
+
 
 </ion-content>

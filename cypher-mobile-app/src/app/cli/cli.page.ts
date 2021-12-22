@@ -8,24 +8,26 @@ import { Router } from '@angular/router';
 })
 export class CliPage implements OnInit {
 
+  cliOutput = 'Run CLI.startup... CLI started!';
+  commandInput = ' ';
+  activeCLI = false;
+  public commands = ['Run', 'List'];
   constructor(public router: Router) { }
 
   ngOnInit() {
   }
-  
-  cliOutput : string = 'Run CLI.startup... CLI started!';
-  commandInput : string = ' ';
-  activeCLI = false;
-  public commands = ['Run', 'List'];
+
+
 
   // @ViewChild('command-output') commandoutput:ElementRef;
 
-  toggleCLI(){
+  toggleCLI() {
     this.activeCLI = !this.activeCLI;
   }
 
-  CommandInput(command:string){
-    this.cliOutput += "\n " + this.commandInput;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  CommandInput(command?: string) {
+    this.cliOutput += '\n ' + this.commandInput;
     this.commandInput = ' ';
     // this.commandoutput.nativeElement.setAttribute(this.commandoutput.nativeElement);
   }

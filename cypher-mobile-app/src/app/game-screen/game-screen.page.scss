@@ -1,5 +1,6 @@
-body {
+ionic-content {
   font-family: "Lato", sans-serif;
+  --ion-background-color: #33923b;
 }
 
 .sidenav {
@@ -51,6 +52,7 @@ table {
   width: 90%;
   text-align: center;
   margin: 5%;
+  color: #111;
 }
 
 td,
@@ -62,4 +64,21 @@ th {
 
 .InventoryTable tr:nth-child(even) {
   background-color: #8aa2e4;
+}
+p {
+  color: black;
+}
+img {
+  border-radius: 70%;
+  height: 90px;
+  width: 90px;
+}
+li {
+  list-style-type: none;
+}
+.Friends {
+  float: left;
+  padding: 10px;
+  // margin: 2%;
+  align-items: center;
 }

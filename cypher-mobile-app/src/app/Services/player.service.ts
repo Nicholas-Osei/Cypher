@@ -29,7 +29,7 @@ export class PlayerService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.loginservice.authToken}`
     });
-    return this.http.get<Player>('https://localhost:5001/api/v1/player?pageSize=500',
+    return this.http.get<Player>('https://cypher-web-app.azurewebsites.net/api/v1/player?pageSize=500',
       { headers: httpHeaders });
   }
 
@@ -40,7 +40,7 @@ export class PlayerService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.loginservice.authToken}`
     });
-    return this.http.get<Player>('https://localhost:5001/api/v1/player/' + id, { headers: httpHeaders });
+    return this.http.get<Player>('https://cypher-web-app.azurewebsites.net/api/v1/player/' + id, { headers: httpHeaders });
   }
 
   searchForFriends(name): Observable<Player> {
@@ -50,7 +50,7 @@ export class PlayerService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.loginservice.authToken}`
     });
-    return this.http.get<Player>('https://localhost:5001/api/v1/player?playername=' + name, { headers: httpHeaders });
+    return this.http.get<Player>('https://cypher-web-app.azurewebsites.net/api/v1/player?playername=' + name, { headers: httpHeaders });
   }
 
   addToPlayerFriends(id, gegevens: any): Observable<Player> {
@@ -60,7 +60,8 @@ export class PlayerService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.loginservice.authToken}`
     });
-    return this.http.put<Player>('https://localhost:5001/api/v1/Player/' + id + '/friends', gegevens, { headers: httpHeaders });
+    // eslint-disable-next-line max-len
+    return this.http.put<Player>('https://cypher-web-app.azurewebsites.net/api/v1/Player/' + id + '/friends', gegevens, { headers: httpHeaders });
   }
   deleteFriend(playerid, friendid): Observable<Player> {
     const httpHeaders = new HttpHeaders({
@@ -70,7 +71,7 @@ export class PlayerService {
       'Authorization': `Bearer ${this.loginservice.authToken}`
     });
     // eslint-disable-next-line max-len
-    return this.http.delete<Player>('https://localhost:5001/api/v1/Player/' + playerid + '/friends' + '/' + friendid, { headers: httpHeaders });
+    return this.http.delete<Player>('https://cypher-web-app.azurewebsites.net/api/v1/Player/' + playerid + '/friends' + '/' + friendid, { headers: httpHeaders });
   }
 
   updateInventoryItems(id: number, gegevens: any): Observable<Inventory> {
@@ -80,7 +81,8 @@ export class PlayerService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.loginservice.authToken}`
     });
-    return this.http.put<Inventory>('https://localhost:5001/api/v1/inventory/' + id + '?pageSize=500', gegevens, { headers: httpHeaders });
+    // eslint-disable-next-line max-len
+    return this.http.put<Inventory>('https://cypher-web-app.azurewebsites.net/api/v1/inventory/' + id + '?pageSize=500', gegevens, { headers: httpHeaders });
   }
 
   postPlayer(gegevens): Observable<Player> {
@@ -90,7 +92,8 @@ export class PlayerService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.loginservice.authToken}`
     });
-    return this.http.post<Player>('https://localhost:5001/api/v1/player?pageSize=500', gegevens, { headers: httpHeaders });
+    // eslint-disable-next-line max-len
+    return this.http.post<Player>('https://cypher-web-app.azurewebsites.net/api/v1/player?pageSize=500', gegevens, { headers: httpHeaders });
   }
   deleteInventoryItem(id: number) {
     const httpHeaders = new HttpHeaders({
@@ -99,7 +102,8 @@ export class PlayerService {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       'Authorization': `Bearer ${this.loginservice.authToken}`
     });
-    return this.http.delete<Inventory>('https://localhost:5001/api/v1/item/' + id + '?pageSize=500', { headers: httpHeaders });
+    // eslint-disable-next-line max-len
+    return this.http.delete<Inventory>('https://cypher-web-app.azurewebsites.net/api/v1/item/' + id + '?pageSize=500', { headers: httpHeaders });
   }
 }
 

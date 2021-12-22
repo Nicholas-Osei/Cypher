@@ -1,5 +1,21 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
+FROM node:15.4 as build 
+WORKDIR /app-mobile
+COPY ../cypher-mobile-app/package*.json .
+RUN npm install
+COPY . .
+RUN npm run prod
+
+FROM nginx:1.19
+
+
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/www/ /usr/share/nginx/html
+
+
+
+ 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 ENV ASPNETCORE_ENVIRONMENT=Development
 WORKDIR /app

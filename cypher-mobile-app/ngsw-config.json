@@ -1,0 +1,52 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "Api",
+      "urls": [
+        "https://cypher-web-app.azurewebsites.net/api/v1/*",
+        "https://cypher-web-app.azurewebsites.net/api/v1/UserCredential",
+        "https://cypher-web-app.azurewebsites.net/api/v1/player?pageSize=500",
+        "https://cypher-web-app.azurewebsites.net/api/v1/player/",
+        "https://cypher-web-app.azurewebsites.net/api/v1/player?playername=",
+        "https://cypher-web-app.azurewebsites.net/api/v1/inventory/",
+        "https://cypher-web-app.azurewebsites.net/api/v1/item/",
+        "https://cypher-web-app.azurewebsites.net/api/identity/token"
+
+      ],"version": 1,
+      "cacheConfig": {
+        "maxSize": 9,
+        "maxAge": "6h"
+        ,"timeout": "10s",
+        "strategy": "freshness"
+      }
+    }
+  ]
+}
