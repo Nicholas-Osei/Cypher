@@ -154,14 +154,15 @@ export class MapScreenPage implements OnInit {
   SearchRegionAreasForPlayer(){
     for(const region in cityregions){
       if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius){
-        this.getPlayerInArea = true;
+        this.getPlayerInArea = cityregions[region].playerInArea;
         console.log(cityregions[region].playerInArea)
         if(cityregions[region].isGameStartable){
-          cityregions[region].isGameStartable = false
+          cityregions[region].isGameStartable = false;
+          cityregions[region].playerInArea = true;
           cityregions[region].playGame();
         }
-      } else {
-        this.getPlayerInArea = false;
+      // } else {
+      //   this.getPlayerInArea = false;
       }
     }
   }
@@ -269,7 +270,18 @@ const cityregions: Record<string, CityRegion> = {
     playGame(){
       console.log("Start Game 6");
     },
-  }
+  },
+  test3: {
+    center: { lat: 51.229367, lng: 4.420595 },
+    radius: 100,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+    isGameStartable: true,
+    playerInArea: false,
+    playGame(){
+      console.log("Start Game 7");
+    },
+  },
 };
 
 const playerMarker = {
