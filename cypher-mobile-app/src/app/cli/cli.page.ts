@@ -36,8 +36,9 @@ export class CliPage implements OnInit {
     this.router.navigate(['map-screen']);
   }
 
-  GoTo(page : string){
-    console.log("Called open " + page);
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  GoTo(page: string) {
+    console.log('Called open ' + page);
     this.router.navigate([page]);
   }
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-var */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable guard-for-in */
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -46,9 +48,9 @@ export class MapScreenPage implements OnInit {
     this.router.navigate(['game-screen']).then(() => window.location.reload());
     this.inMapScreen = false;
   }
-  
-  GoTo(page : string){
-    console.log("Called open " + page);
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  GoTo(page: string) {
+    console.log('Called open ' + page);
     this.router.navigate([page]).then(() => window.location.reload());
     this.inMapScreen = false;
   }
@@ -60,16 +62,16 @@ export class MapScreenPage implements OnInit {
     }
 
     var mapStyle = [
-    {
-      featureType: "poi",
-      elementType: "labels",
-      stylers: [{ visibility: "off" }]
-    },
-    {  
-      featureType: "transit",
-      elementType: "labels",
-      stylers: [{ visibility: "off" }]
-    }];
+      {
+        featureType: 'poi',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'transit',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      }];
 
     const location = new google.maps.LatLng(this.coords.latitude, this.coords.longitude);
     const options = {
@@ -109,6 +111,7 @@ export class MapScreenPage implements OnInit {
             this.infoWindow.open(this.map);
             this.map.setCenter(pos);
             this.userMarker.setPosition(pos);
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             navigator.geolocation.watchPosition(position => {
               pos = {
                 lat: position.coords.latitude,
@@ -117,7 +120,7 @@ export class MapScreenPage implements OnInit {
               this.userMarker.setPosition(pos);
               console.log(pos);
               this.SearchRegionAreasForPlayer();
-            })
+            });
           },
           () => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -158,18 +161,20 @@ export class MapScreenPage implements OnInit {
     }
   }
 
-  SearchRegionAreasForPlayer(){
-    for(const region in cityregions){
-      if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius){
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  SearchRegionAreasForPlayer() {
+    for (const region in cityregions) {
+      // eslint-disable-next-line max-len
+      if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius) {
         this.getPlayerInArea = cityregions[region].playerInArea;
-        console.log(cityregions[region].playerInArea)
-        if(cityregions[region].isGameStartable){
+        console.log(cityregions[region].playerInArea);
+        if (cityregions[region].isGameStartable) {
           cityregions[region].isGameStartable = false;
           cityregions[region].playerInArea = true;
           cityregions[region].playGame();
         }
-      // } else {
-      //   this.getPlayerInArea = false;
+        // } else {
+        //   this.getPlayerInArea = false;
       }
     }
   }
@@ -177,7 +182,7 @@ export class MapScreenPage implements OnInit {
   openNav() {
 
     document.getElementById('mySidenav').style.width = '250px';
-    console.log('hmmm');
+    console.log('side nav opened');
   }
 
   closeNav() {
@@ -193,7 +198,7 @@ export class MapScreenPage implements OnInit {
   }
 
   openGhostHacker() {
-    alert("The Ghost Hacker is on your tale!");
+    alert('The Ghost Hacker is on your tale!');
   }
 
   openDecryption() {
@@ -230,8 +235,9 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#FF0000',
     isGameStartable: true,
     playerInArea: false,
-    playGame(){
-      console.log("Start Game 1");
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    playGame() {
+      console.log('Start Game 1');
     },
   },
   eilandje: {
@@ -241,8 +247,9 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#FFF300',
     isGameStartable: true,
     playerInArea: false,
-    playGame(){
-      console.log("Start Game 2");
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    playGame() {
+      console.log('Start Game 2');
     },
   },
   meir: {
@@ -252,8 +259,8 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#27FF00',
     isGameStartable: true,
     playerInArea: false,
-    playGame(){
-      console.log("Start Game 3");
+    playGame() {
+      console.log('Start Game 3');
     },
   },
   test: {
@@ -263,8 +270,8 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#7E00FF',
     isGameStartable: true,
     playerInArea: false,
-    playGame(){
-      console.log("Start Game 4");
+    playGame() {
+      console.log('Start Game 4');
     },
   },
   aphogeschool: {
@@ -274,8 +281,8 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#FF8000',
     isGameStartable: true,
     playerInArea: false,
-    playGame(){
-      console.log("Start Game 5");
+    playGame() {
+      console.log('Start Game 5');
     },
   },
   test2: {
@@ -285,8 +292,8 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#FF8000',
     isGameStartable: true,
     playerInArea: false,
-    playGame(){
-      console.log("Start Game 6");
+    playGame() {
+      console.log('Start Game 6');
     },
   },
   test3: {
@@ -296,8 +303,8 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#FF8000',
     isGameStartable: true,
     playerInArea: false,
-    playGame(){
-      console.log("Start Game 7");
+    playGame() {
+      console.log('Start Game 7');
     },
   },
 };
@@ -309,4 +316,4 @@ const playerMarker = {
   scale: 8,
   strokeColor: 'rgb(255,255,255)',
   strokeWeight: 2
-}
+};

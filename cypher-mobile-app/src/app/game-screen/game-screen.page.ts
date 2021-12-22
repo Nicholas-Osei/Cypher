@@ -67,8 +67,9 @@ export class GameScreenPage implements OnInit, OnDestroy {
     ).then(() => { window.location.reload(); });
   }
 
-  GoTo(page : string){
-    console.log("Called open " + page);
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  GoTo(page: string) {
+    console.log('Called open ' + page);
     this.router.navigate([page]).then(() => window.location.reload());
   }
 
@@ -148,38 +149,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   }
 
 
-  // addItemToInventory(form) {
-  //   let newItems: any = [];
-  //   const item = [];
-  //   console.log('clicked');
-  //   this.players.data.forEach(m => {
-  //     if (m.name === this.loginservice.displayName) {
-  //       // eslint-disable-next-line @typescript-eslint/prefer-for-of
-  //       for (let index = 0; index < m.inventory.items.length; index++) {
-  //         item.push(
-  //           {
-  //             name: m.inventory.items[index].name,
-  //             itemType: m.inventory.items[index].itemType
-  //           },
-  //         );
-  //       }
-  //       item.push(
-  //         {
-  //           name: form.value.naam,
-  //           itemType: form.value.itemType
-  //         }
-  //       );
-  //       newItems = {
-  //         id: m.inventory.id,
-  //         items: item
-  //       };
-  //       return this.speler.updateInventoryItems(m.inventory.id, newItems).
-  //         subscribe(l => { console.log('added'); form.value.naam = ''; form.value.itemType = ''; this.ngOnInit(); });
-  //     }
 
-  //   });
-
-  // }
 
   openNav() {
     document.getElementById('mySidenav').style.width = '250px';
@@ -199,9 +169,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   renderPage(page: any) {
     this.showPage = page;
-    // if (this.showPage === 'friends') {
-    //   this.generateRandomNumber();
-    // }
+
     console.log(this.showPage);
     this.closeNav();
   }
