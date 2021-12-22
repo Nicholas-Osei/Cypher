@@ -28,7 +28,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   time = new Date();
   rxTime = new Date();
   intervalId;
-  // lol = Array(5);
+  tabel = Array(5);
   titel = '';
   teller = 0;
   notViaGoogle = false;
