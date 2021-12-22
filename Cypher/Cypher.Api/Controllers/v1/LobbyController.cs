@@ -22,6 +22,7 @@ namespace Cypher.Api.Controllers.v1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
+
             throw new NotImplementedException();
         }
 
