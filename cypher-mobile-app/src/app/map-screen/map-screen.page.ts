@@ -20,6 +20,7 @@ export class MapScreenPage implements OnInit {
   showPage: any;
   userMarker: any;
   inMapScreen = true;
+  getPlayerInArea = false;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -154,12 +155,15 @@ export class MapScreenPage implements OnInit {
   SearchRegionAreasForPlayer(){
     for(const region in cityregions){
       if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius){
+        this.getPlayerInArea = cityregions[region].playerInArea;
+        console.log(cityregions[region].playerInArea)
         if(cityregions[region].isGameStartable){
-          cityregions[region].isGameStartable = false
+          cityregions[region].isGameStartable = false;
+          cityregions[region].playerInArea = true;
           cityregions[region].playGame();
         }
       // } else {
-      //   console.log("You are NOT inside this circle");
+      //   this.getPlayerInArea = false;
       }
     }
   }
@@ -207,6 +211,7 @@ interface CityRegion {
   strokeColor: string;
   fillColor: string;
   isGameStartable?: boolean;
+  playerInArea: boolean;
 
   playGame(): void;
 }
@@ -217,7 +222,8 @@ const cityregions: Record<string, CityRegion> = {
     radius: 250,
     strokeColor: '#FF0000',
     fillColor: '#FF0000',
-    
+    isGameStartable: true,
+    playerInArea: false,
     playGame(){
       console.log("Start Game 1");
     },
@@ -227,6 +233,8 @@ const cityregions: Record<string, CityRegion> = {
     radius: 200,
     strokeColor: '#FFF300',
     fillColor: '#FFF300',
+    isGameStartable: true,
+    playerInArea: false,
     playGame(){
       console.log("Start Game 2");
     },
@@ -236,6 +244,8 @@ const cityregions: Record<string, CityRegion> = {
     radius: 220,
     strokeColor: '#27FF00',
     fillColor: '#27FF00',
+    isGameStartable: true,
+    playerInArea: false,
     playGame(){
       console.log("Start Game 3");
     },
@@ -245,6 +255,8 @@ const cityregions: Record<string, CityRegion> = {
     radius: 160,
     strokeColor: '#7E00FF',
     fillColor: '#7E00FF',
+    isGameStartable: true,
+    playerInArea: false,
     playGame(){
       console.log("Start Game 4");
     },
@@ -254,6 +266,8 @@ const cityregions: Record<string, CityRegion> = {
     radius: 150,
     strokeColor: '#FF8000',
     fillColor: '#FF8000',
+    isGameStartable: true,
+    playerInArea: false,
     playGame(){
       console.log("Start Game 5");
     },
@@ -264,10 +278,22 @@ const cityregions: Record<string, CityRegion> = {
     strokeColor: '#FF8000',
     fillColor: '#FF8000',
     isGameStartable: true,
+    playerInArea: false,
     playGame(){
       console.log("Start Game 6");
     },
-  }
+  },
+  test3: {
+    center: { lat: 51.229367, lng: 4.420595 },
+    radius: 100,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+    isGameStartable: true,
+    playerInArea: false,
+    playGame(){
+      console.log("Start Game 7");
+    },
+  },
 };
 
 const playerMarker = {

@@ -65,5 +65,10 @@
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
+  <ion-fab *ngIf="getPlayerInArea;" slot="fixed" vertical="center" horizontal="center">
+    <ion-fab-button size="larger" color="light">
+      <ion-icon name="game-controller-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <!-- </a> -->
 </ion-content>
