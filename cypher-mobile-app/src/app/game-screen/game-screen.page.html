@@ -28,8 +28,7 @@
         <ion-icon name="people-circle-outline" slot="start"></ion-icon>
         <ion-label>Game Lobbies</ion-label>
       </ion-item>
-      <!-- <ion-item (click)="GoTo('friends')"> -->
-      <ion-item (click)="setShowPageToFriends()">
+      <ion-item (click)="GoTo('friends')">
         <ion-icon name="person-outline" slot="start"></ion-icon>
         <ion-label>Friends</ion-label>
       </ion-item>
@@ -71,7 +70,7 @@
     <ion-button i color="light" (click)="loginservice.logout()" style="float: right;">
       Log Out
     </ion-button>
-    <p style=" margin-left: 250px; margin-top: 5%; font-size: 20px; font-weight: bolder; color: green;">{{ time | date:
+    <p style=" margin-left: 250px; margin-top: 15%; font-size: 20px; font-weight: bolder; color: green;">{{ time | date:
       'hh:mm:ss a' }}
     </p>
     <div *ngIf="loginservice.isLoggedIn">
@@ -97,7 +96,7 @@
             <div *ngIf="friends.length===1">
               <p style="color: black; font-size: 25px;  text-align: center;">You have just {{friends.length}} FRIEND so
                 far </p>
-              <ion-button style="margin-left: 25%" (click)="setShowPageToFriends()">ADD MORE FRIENDS</ion-button>
+              <ion-button style="margin-left: 25%" (click)="GoTo('friends')">ADD MORE FRIENDS</ion-button>
             </div>
             <div *ngIf="friends.length>1">
               <p style="color: black; font-size: 25px; text-align: center;">You have {{friends.length}} FRIENDS so far
@@ -105,7 +104,7 @@
             </div>
             <div *ngIf="friends.length<1">
               <p style="font-size: 25px;  text-align: center;"> You have No FRIENDS 😕</p>
-              <ion-button style="margin-left: 30%" (click)="setShowPageToFriends()">ADD FRIENDS</ion-button>
+              <ion-button style="margin-left: 30%" (click)="GoTo('friends')">ADD FRIENDS</ion-button>
             </div>
 
             <p style="color: black; font-size: 25px;  text-align: center;"> You have <span style="color: red;">0</span>
@@ -120,9 +119,8 @@
 
         </div>
         <div *ngIf="showPage === 'friends'">
-          <h2 style="text-align: center; color: black; font-size: 50px;">Friends</h2>
+          <!-- <h2 style="text-align: center; color: black; font-size: 50px;">Friends</h2>
           <div *ngFor="let all of friends;let i = index" class="Friends">
-            <!-- <ol> -->
             <div *ngIf="i===0">
               <img src="./assets/icon/person1.jpeg" alt="Italian Trulli">
             </div>
@@ -135,10 +133,8 @@
             <div *ngIf="i>2">
               <img [src]="imageUrl" alt="Italian Trulli">
             </div>
-
             <li style="color: black; font-size: 20px;">{{all.name}} <button (click)="deleteFriend(all.id)"
                 style="color: red; border-radius: 50%; border: 1px solid;"> &times;</button></li>
-            <!-- </ol> -->
           </div>
           <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%; color: #000;"
             required [(ngModel)]="playername" (ngModelChange)="search(playername)">
@@ -162,8 +158,8 @@
 
               </span>
             </span>
-          </div>
-          <!-- <p>Friends</p> -->
+          </div> -->
+
         </div>
         <div *ngIf="showPage === 'lobby'">
 

@@ -41,8 +41,9 @@ export class InventoryPage implements OnInit {
     this.inInventory = false;
   }
 
-  GoTo(page : string){
-    console.log("Called open " + page);
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  GoTo(page: string) {
+    console.log('Called open ' + page);
     this.router.navigate([page]).then(() => window.location.reload());
   }
 

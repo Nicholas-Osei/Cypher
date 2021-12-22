@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'lobbies',
     loadChildren: () => import('./lobbies/lobbies.module').then( m => m.LobbiesPageModule)
   },
+  {
+    path: 'friends',
+    loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
+  },
 
 ];
 

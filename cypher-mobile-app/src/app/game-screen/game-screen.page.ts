@@ -28,7 +28,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   time = new Date();
   rxTime = new Date();
   intervalId;
-  lol = Array(5);
+  // lol = Array(5);
   titel = '';
   teller = 0;
   notViaGoogle = false;
@@ -36,11 +36,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
   imageUrl = '';
 
   constructor(public loginservice: LoginService, public speler: PlayerService, public router: Router) {
-    // this.speler.getAllPlayers().subscribe(p => {
-    //   this.players = p; console
-    //     .log('Got all players');
-    //   console.log(this.players.data[0].name);
-    // });
     this.imageUrl = './assets/icon/person' + 1 + '.jpeg';
     this.titel = 'Welcome, ' + loginservice.displayName + '!';
   }
@@ -84,7 +79,8 @@ export class GameScreenPage implements OnInit, OnDestroy {
         // this.speler.inventory = m.inventory.items;
         // this.messages = m.messages;
         // this.lobbies = m.playerLobbies;
-        this.id = m.id;
+        // this.id = m.id;
+        this.speler.playerId = m.id;
         console.log(m.name);
         this.notViaGoogle = true;
       }
@@ -109,12 +105,13 @@ export class GameScreenPage implements OnInit, OnDestroy {
   }
 
   getPlayerbyId() {
-    this.speler.getPlayerById(this.id).subscribe(
+    this.speler.getPlayerById(this.speler.playerId).subscribe(
       u => {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.friends);
         this.friends = this.playerbyId.data.friends;
         this.speler.inventory = this.playerbyId.data.inventory;
+        // this.speler.friends = this.playerbyId.data.friends;
         // this.speler.messages = m.messages;
         // this.lobbies = m.playerLobbies;
       });
@@ -134,14 +131,14 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
 
   deleteFriend(id: number) {
-    this.speler.deleteFriend(this.id, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
+    this.speler.deleteFriend(this.speler.playerId, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
   }
 
   addFriend(id: number) {
-    console.log(this.id);
+    console.log(this.speler.playerId);
 
     const newFriend = {
-      playerId: this.id,
+      playerId: this.speler.playerId,
       friendId: id
     };
     // eslint-disable-next-line max-len
