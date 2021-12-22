@@ -2,6 +2,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
+import { markAsUntransferable } from 'worker_threads';
 
 declare let google: any;
 
@@ -16,6 +17,7 @@ export class MapScreenPage implements OnInit {
   coords: any;
   infoWindow: any;
   showPage: any;
+  userMarker: any;
   inMapScreen = true;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -48,14 +50,34 @@ export class MapScreenPage implements OnInit {
       const coordinates = await Geolocation.getCurrentPosition();
       this.coords = coordinates.coords;
     }
+
+    var mapStyle = [
+    {
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [{ visibility: "off" }]
+    },
+    {  
+      featureType: "transit",
+      elementType: "labels",
+      stylers: [{ visibility: "off" }]
+    }];
+
     const location = new google.maps.LatLng(this.coords.latitude, this.coords.longitude);
     const options = {
       center: location,
       zoom: 15,
-      disableDefaultUI: true
+      disableDefaultUI: true,
+      styles: mapStyle
     };
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
     this.infoWindow = new google.maps.InfoWindow();
+    this.userMarker = new google.maps.Marker({
+      icon: playerMarker,
+      position: location,
+      title: 'You are here!'
+    });
+    this.userMarker.setMap(this.map);
 
     const locationButton = document.createElement('button');
 
@@ -69,7 +91,7 @@ export class MapScreenPage implements OnInit {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position: GeolocationPosition) => {
-            const pos = {
+            var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
@@ -78,6 +100,16 @@ export class MapScreenPage implements OnInit {
             this.infoWindow.setContent('Location found.');
             this.infoWindow.open(this.map);
             this.map.setCenter(pos);
+            this.userMarker.setPosition(pos);
+            navigator.geolocation.watchPosition(position => {
+              pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+              this.userMarker.setPosition(pos);
+              console.log(pos);
+              this.SearchRegionAreasForPlayer();
+            })
           },
           () => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -118,6 +150,18 @@ export class MapScreenPage implements OnInit {
     }
   }
 
+  SearchRegionAreasForPlayer(){
+    for(const region in cityregions){
+      if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius){
+        if(cityregions[region].isGameStartable){
+          cityregions[region].isGameStartable = false
+          cityregions[region].playGame();
+        }
+      // } else {
+      //   console.log("You are NOT inside this circle");
+      }
+    }
+  }
 
   openNav() {
 
@@ -150,6 +194,9 @@ interface CityRegion {
   radius: number;
   strokeColor: string;
   fillColor: string;
+  isGameStartable?: boolean;
+
+  playGame(): void;
 }
 
 const cityregions: Record<string, CityRegion> = {
@@ -158,19 +205,64 @@ const cityregions: Record<string, CityRegion> = {
     radius: 250,
     strokeColor: '#FF0000',
     fillColor: '#FF0000',
+    
+    playGame(){
+      console.log("Start Game 1");
+    },
   },
   eilandje: {
     center: { lat: 51.233345, lng: 4.411115 },
     radius: 200,
     strokeColor: '#FFF300',
     fillColor: '#FFF300',
+    playGame(){
+      console.log("Start Game 2");
+    },
   },
   meir: {
     center: { lat: 51.218094, lng: 4.408774 },
     radius: 220,
     strokeColor: '#27FF00',
     fillColor: '#27FF00',
+    playGame(){
+      console.log("Start Game 3");
+    },
+  },
+  test: {
+    center: { lat: 51.216392, lng: 4.404195 },
+    radius: 160,
+    strokeColor: '#7E00FF',
+    fillColor: '#7E00FF',
+    playGame(){
+      console.log("Start Game 4");
+    },
+  },
+  aphogeschool: {
+    center: { lat: 51.229853, lng: 4.415807 },
+    radius: 150,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+    playGame(){
+      console.log("Start Game 5");
+    },
+  },
+  test2: {
+    center: { lat: 51.231731, lng: 4.431389 },
+    radius: 200,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+    isGameStartable: true,
+    playGame(){
+      console.log("Start Game 6");
+    },
   }
 };
 
-
+const playerMarker = {
+  fillColor: '#4285F4',
+  fillOpacity: 1,
+  path: google.maps.SymbolPath.CIRCLE,
+  scale: 8,
+  strokeColor: 'rgb(255,255,255)',
+  strokeWeight: 2
+}
