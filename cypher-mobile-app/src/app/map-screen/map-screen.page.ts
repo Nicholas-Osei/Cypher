@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { markAsUntransferable } from 'worker_threads';
 
+
 declare let google: any;
 
 @Component({
@@ -174,8 +175,19 @@ export class MapScreenPage implements OnInit {
   }
 
   openCLI() {
-    console.log('called open cli');
     this.router.navigate(['cli']);
+  }
+
+  openWITS() {
+    this.router.navigate(['worm-in-the-system']);
+  }
+
+  openGhostHacker() {
+    alert("The Ghost Hacker is on your tale!");
+  }
+
+  openDecryption() {
+    this.router.navigate(['decryption']);
   }
 
   renderPage(page: any) {

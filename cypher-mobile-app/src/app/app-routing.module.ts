@@ -27,6 +27,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'worm-in-the-systsem',
+    loadChildren: () => import('./worm-in-the-systsem/worm-in-the-systsem.module').then( m => m.WormInTheSystsemPageModule)
+  },
+  {
+    path: 'decryption',
+    loadChildren: () => import('./decryption/decryption.module').then( m => m.DecryptionPageModule)
+  },
+  {
+    path: 'worm-in-the-system',
+    loadChildren: () => import('./worm-in-the-system/worm-in-the-system.module').then( m => m.WormInTheSystemPageModule)
+  },
 
 ];
 
