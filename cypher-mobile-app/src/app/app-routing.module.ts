@@ -28,10 +28,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'worm-in-the-systsem',
-    loadChildren: () => import('./worm-in-the-systsem/worm-in-the-systsem.module').then( m => m.WormInTheSystsemPageModule)
-  },
-  {
     path: 'decryption',
     loadChildren: () => import('./decryption/decryption.module').then( m => m.DecryptionPageModule)
   },
