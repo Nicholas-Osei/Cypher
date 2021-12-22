@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
       Cypher Game #1
@@ -14,61 +14,106 @@
     <a (click)="renderPage('teams')">Teams</a>
     <a (click)="renderPage('settings')">Settings</a>
   </span>
-</ion-header>
+</ion-header> -->
 
 
+<ion-menu side="start" content-id="main-content">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="goToGamescreen()">
+        <ion-icon name="mail" slot="start"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-item>
+      <ion-item (click)="renderPage('inventory')">
+        <ion-icon name="mail" slot="start"></ion-icon>
+        <ion-label>Inventory</ion-label>
+      </ion-item>
+      <ion-item (click)="renderPage('messages')">
+        <ion-icon name="paper-plane" slot="start"></ion-icon>
+        <ion-label>Messages</ion-label>
+      </ion-item>
+      <ion-item (click)="renderPage('teams')">
+        <ion-icon name="heart" slot="start"></ion-icon>
+        <ion-label>Teams</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="archive" slot="start"></ion-icon>
+        <ion-label>Archived</ion-label>
+      </ion-item>
+      <ion-item (click)="renderPage('settings')">
+        <ion-icon name="trash" slot="start"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Inbox</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
 
-
-<ion-content>
-
-  <div id="map" #map>
-    <span style="margin-left: 30%; margin-top: 50%; color: black;">Loading please wait ...</span>
-  </div>
-
-
-  <!-- <a class="menu">
-    <span class="posMenu" (click)="openNav()">&#9776;</span>
-  </a> -->
-
-  <ion-fab slot="fixed" vertical="top" horizontal="start">
-    <ion-fab-button size="larger" color="light" (click)="openNav()">
-      <ion-icon name="menu-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <!-- <a class="float"> -->
-  <!-- <span (click)="openCLI()">>_</span> -->
-  <!-- <input type="image" name="Name of image button" src="Path of the Image file? border=" Specfiy Image Border " alt="
-      text"> -->
-  <!-- <input type="image" src="../../assets/icon/person1.jpeg" height="50" width="30"
-      style="margin-top:20%; background-color: green;" (click)="openCLI()"> -->
-
-      
-
-  <ion-fab horizontal="start" vertical="bottom" slot="fixed">
-    <ion-fab-button color="light" size="larger">
-      <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="light" (click)="openCLI()">
-        <ion-icon name="terminal-outline"></ion-icon>
+    <div id="map" #map>
+      <span style="margin-left: 30%; margin-top: 50%; color: black;">Loading please wait ...</span>
+    </div>
+  
+  
+    <!-- <a class="menu">
+      <span class="posMenu" (click)="openNav()">&#9776;</span>
+    </a> -->
+  
+    <!-- <ion-fab slot="fixed" vertical="top" horizontal="start">
+      <ion-fab-button size="larger" color="light" (click)="openNav()">
+        <ion-icon name="menu-outline"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="light" (click)="openGhostHacker()">
-        <ion-icon name="skull-outline"></ion-icon>
+    </ion-fab> -->
+  
+    <!-- <a class="float"> -->
+    <!-- <span (click)="openCLI()">>_</span> -->
+    <!-- <input type="image" name="Name of image button" src="Path of the Image file? border=" Specfiy Image Border " alt="
+        text"> -->
+    <!-- <input type="image" src="../../assets/icon/person1.jpeg" height="50" width="30"
+        style="margin-top:20%; background-color: green;" (click)="openCLI()"> -->
+  
+        
+  
+    <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+      <ion-fab-button color="light" size="larger">
+        <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="light" (click)="openWITS()">
-        <ion-icon name="server-outline"></ion-icon>
+      <ion-fab-list side="top">
+        <ion-fab-button color="light" (click)="openCLI()">
+          <ion-icon name="terminal-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" (click)="openGhostHacker()">
+          <ion-icon name="skull-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" (click)="openWITS()">
+          <ion-icon name="server-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" (click)="openDecryption()">
+          <ion-icon name="document-lock-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+    <ion-fab *ngIf="getPlayerInArea;" slot="fixed" vertical="center" horizontal="center">
+      <ion-fab-button size="larger" color="light">
+        <ion-icon name="game-controller-outline"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="light" (click)="openDecryption()">
-        <ion-icon name="document-lock-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-  <ion-fab *ngIf="getPlayerInArea;" slot="fixed" vertical="center" horizontal="center">
-    <ion-fab-button size="larger" color="light">
-      <ion-icon name="game-controller-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <!-- </a> -->
-</ion-content>
+    </ion-fab>
+    <!-- </a> -->
+  </ion-content>
+  
+</div>
+

@@ -3,7 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { markAsUntransferable } from 'worker_threads';
-
+import { MenuController } from '@ionic/angular';
 
 declare let google: any;
 
@@ -25,7 +25,7 @@ export class MapScreenPage implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private menu: MenuController) {
 
   }
 
