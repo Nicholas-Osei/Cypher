@@ -29,11 +29,13 @@
     <form #addItem="ngForm" (submit)="addItemToInventory(addItem)">
       <p style=" text-align: center;">
         <label for="float-input" style="margin-right: 13%;">Naam</label>
-        <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="naam" required ngModel><br>
+        <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="naam" style="color: #000;" required
+          ngModel><br>
       </p>
       <p style=" text-align: center;">
         <label for="float-input" style="margin-right: 5%;">Item Type</label>
-        <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="itemType" required ngModel>
+        <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="itemType" style="color: #000;"
+          required ngModel>
       </p>
       <ion-button type="submit" style="margin-left: 30%;">Add Item</ion-button>
     </form>
