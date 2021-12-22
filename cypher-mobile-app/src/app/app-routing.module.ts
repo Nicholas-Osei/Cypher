@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'worm-in-the-system',
     loadChildren: () => import('./worm-in-the-system/worm-in-the-system.module').then( m => m.WormInTheSystemPageModule)
   },
+  {
+    path: 'lobbies',
+    loadChildren: () => import('./lobbies/lobbies.module').then( m => m.LobbiesPageModule)
+  },
 
 ];
 

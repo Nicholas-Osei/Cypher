@@ -16,4 +16,9 @@ export class DecryptionPage implements OnInit {
   goToMapscreen() {
     this.router.navigate(['map-screen']);
   }
+
+  GoTo(page : string){
+    console.log("Called open " + page);
+    this.router.navigate([page]).then(() => window.location.reload());
+  }
 }

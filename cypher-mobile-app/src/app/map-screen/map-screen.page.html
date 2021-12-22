@@ -25,28 +25,28 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item (click)="goToGamescreen()">
-        <ion-icon name="mail" slot="start"></ion-icon>
-        <ion-label>Home</ion-label>
+      <ion-item (click)="GoTo('friends')">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Friends</ion-label>
       </ion-item>
-      <ion-item (click)="renderPage('inventory')">
-        <ion-icon name="mail" slot="start"></ion-icon>
-        <ion-label>Inventory</ion-label>
-      </ion-item>
-      <ion-item (click)="renderPage('messages')">
-        <ion-icon name="paper-plane" slot="start"></ion-icon>
-        <ion-label>Messages</ion-label>
-      </ion-item>
-      <ion-item (click)="renderPage('teams')">
-        <ion-icon name="heart" slot="start"></ion-icon>
+      <ion-item (click)="GoTo('teams')">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
         <ion-label>Teams</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-icon name="archive" slot="start"></ion-icon>
-        <ion-label>Archived</ion-label>
+      <ion-item (click)="GoTo('messages')">
+        <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
+        <ion-label>Messages</ion-label>
       </ion-item>
-      <ion-item (click)="renderPage('settings')">
-        <ion-icon name="trash" slot="start"></ion-icon>
+      <ion-item (click)="GoTo('inventory')">
+        <ion-icon name="grid-outline" slot="start"></ion-icon>
+        <ion-label>Inventory</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('game-screen')">
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        <ion-label>Exit Lobby</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('settings')">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
         <ion-label>Settings</ion-label>
       </ion-item>
     </ion-list>
@@ -107,8 +107,9 @@
         </ion-fab-button>
       </ion-fab-list>
     </ion-fab>
+
     <ion-fab *ngIf="getPlayerInArea;" slot="fixed" vertical="center" horizontal="center">
-      <ion-fab-button size="larger" color="light">
+      <ion-fab-button size="larger" color="light" (click)="goToGamescreen()">
         <ion-icon name="game-controller-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>

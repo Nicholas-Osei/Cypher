@@ -46,6 +46,12 @@ export class MapScreenPage implements OnInit {
     this.router.navigate(['game-screen']).then(() => window.location.reload());
     this.inMapScreen = false;
   }
+  
+  GoTo(page : string){
+    console.log("Called open " + page);
+    this.router.navigate([page]).then(() => window.location.reload());
+    this.inMapScreen = false;
+  }
 
   async showMap() {
     if (!this.coords) {

@@ -1,13 +1,49 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>cli</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="" (click)="goToMapscreen()"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-menu side="start" content-id="main-content">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="GoTo('map-screen')">
+        <ion-icon name="map-outline" slot="start"></ion-icon>
+        <ion-label>Map</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('friends')">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Friends</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('teams')">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        <ion-label>Teams</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('messages')">
+        <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
+        <ion-label>Messages</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('inventory')">
+        <ion-icon name="grid-outline" slot="start"></ion-icon>
+        <ion-label>Inventory</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('settings')">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-<ion-content>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>CLI</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
 
   <div class="card-cli-wrapper">
     <ion-card disabled="false" class="card-cli" *ngIf="activeCLI">

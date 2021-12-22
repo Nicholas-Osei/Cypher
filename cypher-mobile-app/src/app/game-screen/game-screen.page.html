@@ -1,14 +1,14 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>GameScreen</ion-title>
   </ion-toolbar>
   <span id="mySidenav" class="sidenav">
     <a class="closebtn" (click)="closeNav()">&#9776;</a>
-    <!-- <a (click)="renderPage('inventory')">Inventory</a>
+    <a (click)="renderPage('inventory')">Inventory</a>
     <a (click)="renderPage('friends')">Friends</a>
     <a (click)="renderPage('lobby')">Lobby</a>
-    <a (click)="renderPage('messages')">Messages</a> -->
-    <!-- <a (click)="renderPage('inventory')">Inventory</a> -->
+    <a (click)="renderPage('messages')">Messages</a>
+    <a (click)="renderPage('inventory')">Inventory</a>
     <a (click)="renderPage('lobby')">Game Lobbies</a>
     <a (click)="renderPage('messages')">Messages</a>
     <a (click)="renderPage('friends')">Friends</a>
@@ -17,11 +17,59 @@
 
   </span>
 </ion-header>
-<ion-content>
+<ion-content> -->
 
-  <span style="font-size:60px;cursor:pointer;  color: white; background-color: rgba(15, 15, 15, 0.74);
+  <ion-menu side="start" content-id="main-content">
+    <ion-header>
+      <ion-toolbar translucent>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item (click)="GoTo('lobbies')">
+          <ion-icon name="people-circle-outline" slot="start"></ion-icon>
+          <ion-label>Game Lobbies</ion-label>
+        </ion-item>
+        <ion-item (click)="GoTo('friends')">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label>Friends</ion-label>
+        </ion-item>
+        <ion-item (click)="GoTo('teams')">
+          <ion-icon name="people-outline" slot="start"></ion-icon>
+          <ion-label>Teams</ion-label>
+        </ion-item>
+        <ion-item (click)="GoTo('messages')">
+          <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
+          <ion-label>Messages</ion-label>
+        </ion-item>
+        <ion-item (click)="GoTo('inventory')">
+          <ion-icon name="grid-outline" slot="start"></ion-icon>
+          <ion-label>Inventory</ion-label>
+        </ion-item>
+        <ion-item (click)="GoTo('settings')">
+          <ion-icon name="settings-outline" slot="start"></ion-icon>
+          <ion-label>Settings</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Home</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+
+  <!-- <span style="font-size:60px;cursor:pointer;  color: white; background-color: rgba(15, 15, 15, 0.74);
   color: #fff;
-  border-radius: 70px;" (click)="openNav()">&#9776;</span>
+  border-radius: 70px;" (click)="openNav()">&#9776;</span> -->
+
   <ion-button i color="light" (click)="loginservice.logout()" style="float: right;">
     Log Out
   </ion-button>
@@ -86,6 +134,7 @@
         </form>
 
       </div>  -->
+
       <div *ngIf="!showPage">
         <div *ngIf="friends">
           <div *ngIf="friends.length===1">

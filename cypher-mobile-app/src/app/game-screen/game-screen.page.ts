@@ -66,6 +66,12 @@ export class GameScreenPage implements OnInit, OnDestroy {
     this.router.navigate(['map-screen'],
     ).then(() => { window.location.reload(); });
   }
+
+  GoTo(page : string){
+    console.log("Called open " + page);
+    this.router.navigate([page]).then(() => window.location.reload());
+  }
+
   async getUserItems() {
     console.log(this.loginservice.displayName);
     this.speler.players.data.forEach(m => {
@@ -100,6 +106,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
     }
     this.getPlayerbyId();
   }
+
   getPlayerbyId() {
     this.speler.getPlayerById(this.id).subscribe(
       u => {
@@ -116,6 +123,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   setShowPageToFriends() {
     this.showPage = 'friends';
   }
+
   search(name?: any) {
     console.log(this.playername);
     // console.log(this.)
@@ -138,6 +146,8 @@ export class GameScreenPage implements OnInit, OnDestroy {
     // eslint-disable-next-line max-len
     this.speler.addToPlayerFriends(this.id, newFriend).subscribe(f => { console.log('Friend Added'); this.generateRandomNumber(); this.ngOnInit(); });
   }
+
+
   // addItemToInventory(form) {
   //   let newItems: any = [];
   //   const item = [];
@@ -178,6 +188,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   closeNav() {
     document.getElementById('mySidenav').style.width = '0';
   }
+
   generateRandomNumber() {
     // eslint-disable-next-line prefer-const
     this.randomNumber = Math.floor((Math.random() * 3) + 1);
@@ -185,6 +196,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
     console.log(this.randomNumber);
     return this.randomNumber;
   }
+
   renderPage(page: any) {
     this.showPage = page;
     // if (this.showPage === 'friends') {

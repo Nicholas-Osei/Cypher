@@ -41,6 +41,11 @@ export class InventoryPage implements OnInit {
     this.inInventory = false;
   }
 
+  GoTo(page : string){
+    console.log("Called open " + page);
+    this.router.navigate([page]).then(() => window.location.reload());
+  }
+
   getPlayerbyId(pId) {
     this.speler.getPlayerById(pId).subscribe(
       u => {
