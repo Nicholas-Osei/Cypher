@@ -18,7 +18,6 @@ export class MapScreenPage implements OnInit {
 
   map: any;
   coords: any;
-  infoWindow: any;
   showPage: any;
   userMarker: any;
   inMapScreen = true;
@@ -81,7 +80,6 @@ export class MapScreenPage implements OnInit {
       styles: mapStyle
     };
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-    this.infoWindow = new google.maps.InfoWindow();
     this.userMarker = new google.maps.Marker({
       icon: playerMarker,
       position: location,
@@ -91,11 +89,12 @@ export class MapScreenPage implements OnInit {
 
     const locationButton = document.createElement('button');
 
-    locationButton.textContent = 'Pan to Current Location';
+    locationButton.textContent = 'Start game';
     locationButton.classList.add('custom-map-control-button');
 
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 
+    //Need eventlistener to trigger the updating geolocation (watchPosition() method)
     locationButton.addEventListener('click', () => {
       // Try HTML5 geolocation.
       if (navigator.geolocation) {
@@ -106,9 +105,8 @@ export class MapScreenPage implements OnInit {
               lng: position.coords.longitude,
             };
 
-            this.infoWindow.setPosition(pos);
-            this.infoWindow.setContent('Location found.');
-            this.infoWindow.open(this.map);
+            locationButton.style.display = 'none';
+
             this.map.setCenter(pos);
             this.userMarker.setPosition(pos);
             // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -121,29 +119,8 @@ export class MapScreenPage implements OnInit {
               console.log(pos);
               this.SearchRegionAreasForPlayer();
             });
-          },
-          () => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            handleLocationError(true, this.infoWindow, this.map.getCenter()!);
           }
         );
-      } else {
-        // Browser doesn't support Geolocation
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        handleLocationError(false, this.infoWindow, this.map.getCenter()!);
-      }
-      function handleLocationError(
-        browserHasGeolocation: boolean,
-        infoWindow: google.maps.InfoWindow,
-        pos: google.maps.LatLng
-      ) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(
-          browserHasGeolocation
-            ? 'Error: The Geolocation service failed.'
-            : 'Error: Your browser doesn\'t support geolocation.'
-        );
-        infoWindow.open(this.map);
       }
     });
 
