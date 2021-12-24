@@ -44,41 +44,40 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-
-  <div class="card-cli-wrapper">
-    <ion-card disabled="false" class="card-cli" *ngIf="activeCLI">
+  
+    <ion-card disabled="false" class="outputcard">
       <ion-card-content>
         <ion-textarea readonly=true #commandoutput class="command-output" id="command-output" name="command-output">
           <!--</ion-card-content>>ionScroll)="HandleScroll(*event)" scroll-events="true"-->
           {{ cliOutput }}
         </ion-textarea>
       </ion-card-content>
-      <ion-item>
-      </ion-item>
-
-
-      <ion-item class="cliInput">
-        <div class="fabemptyspace"></div>
-        <ion-input id="commandInput" name="commandInput" [(ngModel)]="commandInput" placeholder="Enter Input"
-          (keyup.enter)="CommandInput()"></ion-input>
-        <div *ngFor="let command of commands">
-          <ion-button fill="outline">{{ command }}</ion-button>
-        </div>
-      </ion-item>
+      
     </ion-card>
-  </div>
+    
+    <ion-card disabled="false" class="inputcard">
+      <ion-card-content>
+        <ion-item class="cliInput" lines="none">
+          <div style="width:30px"></div>
+      <ion-input id="commandInput" name="commandInput" [(ngModel)]="commandInput" placeholder="Enter Input"
+      (keyup.enter)="CommandInput()"></ion-input>
+      
+      <ion-select interface="popover">
+        <ion-select-option value="run">Launch item</ion-select-option>
+        <ion-select-option value="ls">List items</ion-select-option>
+        <ion-select-option value="rm">Remove item</ion-select-option>
+      </ion-select>
+    </ion-item>
+    </ion-card-content>
+    </ion-card>
+
 
   <!-- Fixed Floating Action Button that does not scroll with the content -->
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
-    <ion-fab-button size="small" color="light" size="medium" (click)="toggleCLI()">
-      <ng-template [ngIf]="activeCLI" [ngIfElse]="cliopen">
-        <ion-icon name="chevron-down-outline"></ion-icon>
-      </ng-template>
 
-      <ng-template #cliopen>
-        <ion-icon name="terminal-outline"></ion-icon>
-      </ng-template>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+    <ion-fab-button size="larger" color="light" (click)="GoTo('map-screen')">
+      <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
