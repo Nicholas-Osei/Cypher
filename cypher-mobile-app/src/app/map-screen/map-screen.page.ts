@@ -1,8 +1,11 @@
+/* eslint-disable no-var */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable guard-for-in */
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { markAsUntransferable } from 'worker_threads';
+import { MenuController } from '@ionic/angular';
 
 declare let google: any;
 
@@ -19,11 +22,12 @@ export class MapScreenPage implements OnInit {
   showPage: any;
   userMarker: any;
   inMapScreen = true;
+  getPlayerInArea = false;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(public router: Router) {
+  constructor(public router: Router, private menu: MenuController) {
 
   }
 
@@ -44,6 +48,12 @@ export class MapScreenPage implements OnInit {
     this.router.navigate(['game-screen']).then(() => window.location.reload());
     this.inMapScreen = false;
   }
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  GoTo(page: string) {
+    console.log('Called open ' + page);
+    this.router.navigate([page]).then(() => window.location.reload());
+    this.inMapScreen = false;
+  }
 
   async showMap() {
     if (!this.coords) {
@@ -52,16 +62,16 @@ export class MapScreenPage implements OnInit {
     }
 
     var mapStyle = [
-    {
-      featureType: "poi",
-      elementType: "labels",
-      stylers: [{ visibility: "off" }]
-    },
-    {  
-      featureType: "transit",
-      elementType: "labels",
-      stylers: [{ visibility: "off" }]
-    }];
+      {
+        featureType: 'poi',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      },
+      {
+        featureType: 'transit',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }]
+      }];
 
     const location = new google.maps.LatLng(this.coords.latitude, this.coords.longitude);
     const options = {
@@ -101,6 +111,7 @@ export class MapScreenPage implements OnInit {
             this.infoWindow.open(this.map);
             this.map.setCenter(pos);
             this.userMarker.setPosition(pos);
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             navigator.geolocation.watchPosition(position => {
               pos = {
                 lat: position.coords.latitude,
@@ -109,7 +120,7 @@ export class MapScreenPage implements OnInit {
               this.userMarker.setPosition(pos);
               console.log(pos);
               this.SearchRegionAreasForPlayer();
-            })
+            });
           },
           () => {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -150,15 +161,20 @@ export class MapScreenPage implements OnInit {
     }
   }
 
-  SearchRegionAreasForPlayer(){
-    for(const region in cityregions){
-      if(google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius){
-        if(cityregions[region].isGameStartable){
-          cityregions[region].isGameStartable = false
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  SearchRegionAreasForPlayer() {
+    for (const region in cityregions) {
+      // eslint-disable-next-line max-len
+      if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius) {
+        this.getPlayerInArea = cityregions[region].playerInArea;
+        console.log(cityregions[region].playerInArea);
+        if (cityregions[region].isGameStartable) {
+          cityregions[region].isGameStartable = false;
+          cityregions[region].playerInArea = true;
           cityregions[region].playGame();
         }
-      // } else {
-      //   console.log("You are NOT inside this circle");
+        // } else {
+        //   this.getPlayerInArea = false;
       }
     }
   }
@@ -166,7 +182,7 @@ export class MapScreenPage implements OnInit {
   openNav() {
 
     document.getElementById('mySidenav').style.width = '250px';
-    console.log('hmmm');
+    console.log('side nav opened');
   }
 
   closeNav() {
@@ -174,8 +190,19 @@ export class MapScreenPage implements OnInit {
   }
 
   openCLI() {
-    console.log('called open cli');
     this.router.navigate(['cli']);
+  }
+
+  openWITS() {
+    this.router.navigate(['worm-in-the-system']);
+  }
+
+  openGhostHacker() {
+    alert('The Ghost Hacker is on your tale!');
+  }
+
+  openDecryption() {
+    this.router.navigate(['decryption']);
   }
 
   renderPage(page: any) {
@@ -195,6 +222,7 @@ interface CityRegion {
   strokeColor: string;
   fillColor: string;
   isGameStartable?: boolean;
+  playerInArea: boolean;
 
   playGame(): void;
 }
@@ -205,9 +233,11 @@ const cityregions: Record<string, CityRegion> = {
     radius: 250,
     strokeColor: '#FF0000',
     fillColor: '#FF0000',
-    
-    playGame(){
-      console.log("Start Game 1");
+    isGameStartable: true,
+    playerInArea: false,
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    playGame() {
+      console.log('Start Game 1');
     },
   },
   eilandje: {
@@ -215,8 +245,11 @@ const cityregions: Record<string, CityRegion> = {
     radius: 200,
     strokeColor: '#FFF300',
     fillColor: '#FFF300',
-    playGame(){
-      console.log("Start Game 2");
+    isGameStartable: true,
+    playerInArea: false,
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    playGame() {
+      console.log('Start Game 2');
     },
   },
   meir: {
@@ -224,8 +257,10 @@ const cityregions: Record<string, CityRegion> = {
     radius: 220,
     strokeColor: '#27FF00',
     fillColor: '#27FF00',
-    playGame(){
-      console.log("Start Game 3");
+    isGameStartable: true,
+    playerInArea: false,
+    playGame() {
+      console.log('Start Game 3');
     },
   },
   test: {
@@ -233,8 +268,10 @@ const cityregions: Record<string, CityRegion> = {
     radius: 160,
     strokeColor: '#7E00FF',
     fillColor: '#7E00FF',
-    playGame(){
-      console.log("Start Game 4");
+    isGameStartable: true,
+    playerInArea: false,
+    playGame() {
+      console.log('Start Game 4');
     },
   },
   aphogeschool: {
@@ -242,8 +279,10 @@ const cityregions: Record<string, CityRegion> = {
     radius: 150,
     strokeColor: '#FF8000',
     fillColor: '#FF8000',
-    playGame(){
-      console.log("Start Game 5");
+    isGameStartable: true,
+    playerInArea: false,
+    playGame() {
+      console.log('Start Game 5');
     },
   },
   test2: {
@@ -252,10 +291,22 @@ const cityregions: Record<string, CityRegion> = {
     strokeColor: '#FF8000',
     fillColor: '#FF8000',
     isGameStartable: true,
-    playGame(){
-      console.log("Start Game 6");
+    playerInArea: false,
+    playGame() {
+      console.log('Start Game 6');
     },
-  }
+  },
+  test3: {
+    center: { lat: 51.229367, lng: 4.420595 },
+    radius: 100,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+    isGameStartable: true,
+    playerInArea: false,
+    playGame() {
+      console.log('Start Game 7');
+    },
+  },
 };
 
 const playerMarker = {
@@ -265,4 +316,4 @@ const playerMarker = {
   scale: 8,
   strokeColor: 'rgb(255,255,255)',
   strokeWeight: 2
-}
+};

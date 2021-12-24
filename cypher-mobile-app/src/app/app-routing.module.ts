@@ -27,6 +27,22 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'decryption',
+    loadChildren: () => import('./decryption/decryption.module').then( m => m.DecryptionPageModule)
+  },
+  {
+    path: 'worm-in-the-system',
+    loadChildren: () => import('./worm-in-the-system/worm-in-the-system.module').then( m => m.WormInTheSystemPageModule)
+  },
+  {
+    path: 'lobbies',
+    loadChildren: () => import('./lobbies/lobbies.module').then( m => m.LobbiesPageModule)
+  },
+  {
+    path: 'friends',
+    loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
+  },
 
 ];
 

@@ -11,6 +11,8 @@ export class PlayerService {
 
   inventory: any;
   players: Player;
+  friends: any;
+  playerId: any;
 
   constructor(private http: HttpClient, public loginservice: LoginService) {
     // const newtoken =

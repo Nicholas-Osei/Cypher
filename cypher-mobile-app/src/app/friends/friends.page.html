@@ -37,54 +37,58 @@
     </ion-list>
   </ion-content>
 </ion-menu>
-
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Inventory</ion-title>
+      <ion-title>Friends</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <!-- <h2 style="text-align: center;">Inventory</h2> -->
-
-    <div *ngFor="let all of inventory" class="Items">
-      <!-- <input type="radio" name="id">{{all.id}}</td> -->
-      <button (click)="deleteItem(all.id)" style="float: right; margin-top: 1%;">&times;</button>
-      <div style="text-align: center; margin-top: 30%; font-size: 20px;">
-        {{all.name}}
+    <div *ngFor="let all of friends;let i = index" class="Friends">
+      <div *ngIf="i===0">
+        <img src="./assets/icon/person1.jpeg" alt="Italian Trulli">
       </div>
-      <!-- <div></div>{{all.itemType}} -->
-
+      <div *ngIf="i===1">
+        <img src='./assets/icon/person2.jpeg' alt="Italian Trulli">
+      </div>
+      <div *ngIf="i===2">
+        <img src='./assets/icon/person3.jpeg' alt="Italian Trulli">
+      </div>
+      <div *ngIf="i>2">
+        <img [src]="imageUrl" alt="Italian Trulli">
+      </div>
+      <li style="color: black; font-size: 20px;">{{all.name}} <button (click)="deleteFriend(all.id)"
+          style="color: red; border-radius: 50%; border: 1px solid; width: 40px;height: 40px;"> &times;</button></li>
     </div>
-    <!-- </table> -->
-    <!-- <div *ngFor="let all of inventory">
-      <input type="radio"> Name: {{all.name}}
-      Type: {{all.itemType}} <br>
-    </div> -->
-    <div style="clear: both;" class="InventoryForm">
-      <h3 style=" text-align: center; ">Add new Item</h3>
-      <form #addItem="ngForm" (submit)="addItemToInventory(addItem)">
-        <p style=" text-align: center;">
-          <label for="float-input" style="margin-right: 13%;">Naam</label>
-          <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="naam" style="color: #000;"
-            required ngModel><br>
-        </p>
-        <p style=" text-align: center;">
-          <label for="float-input" style="margin-right: 5%;">Item Type</label>
-          <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="itemType" style="color: #000;"
-            required ngModel>
-        </p>
-        <ion-button type="submit" style="margin-left: 30%;">Add Item</ion-button>
-      </form>
+    <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%; color: #000;" required
+      [(ngModel)]="playername" (ngModelChange)="search(playername)">
+    <div *ngFor="let all of playerSearchResults">
+      <span *ngIf="playername">
+        <span *ngIf="playername !== loginservice.displayName">
+          <span *ngIf="friends.length===0">
+            <span style="font-size: 20px; margin-left: 30%; color: #000;">{{all.name}}
+            </span>
+            <ion-button size="small" (click)="addFriend(all.id)" color="primary">Add Friend
+            </ion-button>
+          </span>
+          <span *ngFor="let fr of friends">
+            <span *ngIf="playername !== fr.name">
+              <span style="font-size: 30px; margin-left: 30%; color: #000;">{{all.name}}
+              </span>
+              <ion-button size="small" (click)="addFriend(all.id)" color="primary">Add Friend
+              </ion-button>
+            </span>
+          </span>
+        </span>
+      </span>
     </div>
-
     <ion-fab slot="fixed" vertical="bottom" horizontal="start">
       <ion-fab-button size="larger" color="light" (click)="GoTo('game-screen')">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-
   </ion-content>
+</div>

@@ -1,201 +1,204 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>GameScreen</ion-title>
   </ion-toolbar>
   <span id="mySidenav" class="sidenav">
     <a class="closebtn" (click)="closeNav()">&#9776;</a>
-    <!-- <a (click)="renderPage('inventory')">Inventory</a>
     <a (click)="renderPage('friends')">Friends</a>
     <a (click)="renderPage('lobby')">Lobby</a>
-    <a (click)="renderPage('messages')">Messages</a> -->
-    <!-- <a (click)="renderPage('inventory')">Inventory</a> -->
-    <a (click)="renderPage('lobby')">Game Lobbies</a>
     <a (click)="renderPage('messages')">Messages</a>
-    <a (click)="renderPage('friends')">Friends</a>
+    <a (click)="renderPage('inventory')">Inventory</a>
+    <a (click)="renderPage('lobby')">Game Lobbies</a>
     <a (click)="renderPage('teams')">Teams</a>
     <a (click)="renderPage('settings')">Settings</a>
 
   </span>
 </ion-header>
-<ion-content>
+<ion-content> -->
 
-  <span style="font-size:60px;cursor:pointer;  color: white; background-color: rgba(15, 15, 15, 0.74);
+<ion-menu side="start" content-id="main-content">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="GoTo('lobbies')">
+        <ion-icon name="people-circle-outline" slot="start"></ion-icon>
+        <ion-label>Game Lobbies</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('friends')">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>Friends</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('teams')">
+        <ion-icon name="people-outline" slot="start"></ion-icon>
+        <ion-label>Teams</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('messages')">
+        <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
+        <ion-label>Messages</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('inventory')">
+        <ion-icon name="grid-outline" slot="start"></ion-icon>
+        <ion-label>Inventory</ion-label>
+      </ion-item>
+      <ion-item (click)="GoTo('settings')">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Home</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+
+    <!-- <span style="font-size:60px;cursor:pointer;  color: white; background-color: rgba(15, 15, 15, 0.74);
   color: #fff;
-  border-radius: 70px;" (click)="openNav()">&#9776;</span>
-  <ion-button i color="light" (click)="loginservice.logout()" style="float: right;">
-    Log Out
-  </ion-button>
-  <p style=" margin-left: 250px; margin-top: 5%; font-size: 20px; font-weight: bolder; color: green;">{{ time | date:
-    'hh:mm:ss a' }}
-  </p>
-  <div *ngIf="loginservice.isLoggedIn">
+  border-radius: 70px;" (click)="openNav()">&#9776;</span> -->
 
-    <h1 style="color: black; text-align: center;">{{titel}}
-    </h1>
-    <p>
-      <span *ngIf="loginservice.email">Email: {{loginservice.email}}</span><br />
-      <span *ngIf="loginservice.familyName">Family Name: {{loginservice.familyName}}</span><br />
-      <span *ngIf="loginservice.givenName">Given Name: {{loginservice.givenName}}</span><br />
-      <span *ngIf="loginservice.userId">User ID: {{loginservice.userId}}</span>
+    <ion-button i color="light" (click)="loginservice.logout()" style="float: right;">
+      Log Out
+    </ion-button>
+    <p style=" margin-left: 250px; margin-top: 15%; font-size: 20px; font-weight: bolder; color: green;">{{ time | date:
+      'hh:mm:ss a' }}
     </p>
-    <p *ngIf="loginservice.imageUrl">
-      <ion-avatar item-left>
-        <img src="{{loginservice.imageUrl}}" />
-      </ion-avatar>
-    </p>
+    <div *ngIf="loginservice.isLoggedIn">
+
+      <h1 style="color: black; text-align: center;">{{titel}}
+      </h1>
+      <p>
+        <span *ngIf="loginservice.email">Email: {{loginservice.email}}</span><br />
+        <span *ngIf="loginservice.familyName">Family Name: {{loginservice.familyName}}</span><br />
+        <span *ngIf="loginservice.givenName">Given Name: {{loginservice.givenName}}</span><br />
+        <span *ngIf="loginservice.userId">User ID: {{loginservice.userId}}</span>
+      </p>
+      <p *ngIf="loginservice.imageUrl">
+        <ion-avatar item-left>
+          <img src="{{loginservice.imageUrl}}" />
+        </ion-avatar>
+      </p>
 
 
-    <div *ngIf="speler.players">
-      <!-- <div *ngFor="let all of players.data">
-        {{players.data[0].name}}
-        {{all.name}}
+      <div *ngIf="speler.players">
+        <div *ngIf="!showPage">
+          <div *ngIf="friends">
+            <div *ngIf="friends.length===1">
+              <p style="color: black; font-size: 25px;  text-align: center;">You have just {{friends.length}} FRIEND so
+                far </p>
+              <ion-button style="margin-left: 25%" (click)="GoTo('friends')">ADD MORE FRIENDS</ion-button>
+            </div>
+            <div *ngIf="friends.length>1">
+              <p style="color: black; font-size: 25px; text-align: center;">You have {{friends.length}} FRIENDS so far
+              </p>
+            </div>
+            <div *ngIf="friends.length<1">
+              <p style="font-size: 25px;  text-align: center;"> You have No FRIENDS 😕</p>
+              <ion-button style="margin-left: 30%" (click)="GoTo('friends')">ADD FRIENDS</ion-button>
+            </div>
 
-      </div> -->
-
-      <!-- {{getUserItems()}} -->
-      <!-- <div *ngIf="showPage === 'inventory'">
-        <h2 style="text-align: center;">Inventory</h2>
-        <table class="InventoryTable">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Item Type</th>
-          </tr>
-          <tr *ngFor="let all of inventory">
-            <td><input type="radio" name="id">{{all.id}}</td>
-            <td>{{all.name}}</td>
-            <td>{{all.itemType}}</td>
-            <td style=" color: red;"><button (click)="deleteItem(all.id)">&times;</button></td>
-          </tr>
-        </table>
-         <div *ngFor="let all of inventory">
-          <input type="radio"> Name: {{all.name}}
-          Type: {{all.itemType}} <br>
-        </div> -->
-      <!-- <p style="margin: 5%; text-align: center;">Add new Item</p>
-        <form #addItem="ngForm" (submit)="addItemToInventory(addItem)">
-          <span>
-            <label for="float-input" style="margin-right: 13%;">Naam</label>
-            <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="naam" required ngModel><br>
-          </span>
-          <span>
-            <label for="float-input" style="margin-right: 5%;">Item Type</label>
-            <input type="text" pInputText class="p-inputtext-lg" id="float-input" name="itemType" required ngModel>
-          </span>
-          <ion-button type="submit" style="margin-left: 40%;">Add Item</ion-button>
-        </form>
-
-      </div>  -->
-      <div *ngIf="!showPage">
-        <div *ngIf="friends">
-          <div *ngIf="friends.length===1">
-            <p style="color: black; font-size: 25px;  text-align: center;">You have just {{friends.length}} FRIEND so
-              far </p>
-            <ion-button style="margin-left: 25%" (click)="setShowPageToFriends()">ADD MORE FRIENDS</ion-button>
-          </div>
-          <div *ngIf="friends.length>1">
-            <p style="color: black; font-size: 25px; text-align: center;">You have {{friends.length}} FRIENDS so far
-            </p>
-          </div>
-          <div *ngIf="friends.length<1">
-            <p style="font-size: 25px;  text-align: center;"> You have No FRIENDS 😕</p>
-            <ion-button style="margin-left: 30%" (click)="setShowPageToFriends()">ADD FRIENDS</ion-button>
+            <p style="color: black; font-size: 25px;  text-align: center;"> You have <span style="color: red;">0</span>
+              Messages</p>
+            <p style="color: black; font-size: 25px;  text-align: center;"> You are in <span
+                style="color: red;">0</span>
+              Lobby's</p>
+            <p style="color: black; font-size: 25px;  text-align: center;"> There is currently <span
+                style="color: red;">no</span> Teams to join</p>
           </div>
 
-          <p style="color: black; font-size: 25px;  text-align: center;"> You have <span style="color: red;">0</span>
-            Messages</p>
-          <p style="color: black; font-size: 25px;  text-align: center;"> You are in <span style="color: red;">0</span>
-            Lobby's</p>
-          <p style="color: black; font-size: 25px;  text-align: center;"> There is currently <span
-              style="color: red;">no</span> Teams to join</p>
+
         </div>
-
-
-      </div>
-      <div *ngIf="showPage === 'friends'">
-        <h2 style="text-align: center; color: black; font-size: 50px;">Friends</h2>
-        <div *ngFor="let all of friends;let i = index" class="Friends">
-          <!-- <ol> -->
-          <div *ngIf="i===0">
-            <img src="./assets/icon/person1.jpeg" alt="Italian Trulli">
+        <div *ngIf="showPage === 'friends'">
+          <!-- <h2 style="text-align: center; color: black; font-size: 50px;">Friends</h2>
+          <div *ngFor="let all of friends;let i = index" class="Friends">
+            <div *ngIf="i===0">
+              <img src="./assets/icon/person1.jpeg" alt="Italian Trulli">
+            </div>
+            <div *ngIf="i===1">
+              <img src='./assets/icon/person2.jpeg' alt="Italian Trulli">
+            </div>
+            <div *ngIf="i===2">
+              <img src='./assets/icon/person3.jpeg' alt="Italian Trulli">
+            </div>
+            <div *ngIf="i>2">
+              <img [src]="imageUrl" alt="Italian Trulli">
+            </div>
+            <li style="color: black; font-size: 20px;">{{all.name}} <button (click)="deleteFriend(all.id)"
+                style="color: red; border-radius: 50%; border: 1px solid;"> &times;</button></li>
           </div>
-          <div *ngIf="i===1">
-            <img src='./assets/icon/person2.jpeg' alt="Italian Trulli">
-          </div>
-          <div *ngIf="i===2">
-            <img src='./assets/icon/person3.jpeg' alt="Italian Trulli">
-          </div>
-          <div *ngIf="i>2">
-            <img [src]="imageUrl" alt="Italian Trulli">
-          </div>
-
-          <li style="color: black; font-size: 20px;">{{all.name}} <button (click)="deleteFriend(all.id)"
-              style="color: red; border-radius: 50%; border: 1px solid;"> &times;</button></li>
-          <!-- </ol> -->
-        </div>
-        <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%; color: #000;"
-          required [(ngModel)]="playername" (ngModelChange)="search(playername)">
-        <div *ngFor="let all of playerSearchResults">
-          <span *ngIf="playername">
-            <span *ngIf="playername !== loginservice.displayName">
-              <span *ngIf="friends.length===0">
-                <span style="font-size: 20px; margin-left: 30%; color: #000;">{{all.name}}
-                </span>
-                <ion-button size="small" (click)="addFriend(all.id)" color="primary">Add Friend
-                </ion-button>
-              </span>
-              <span *ngFor="let fr of friends">
-                <span *ngIf="playername !== fr.name">
-                  <span style="font-size: 30px; margin-left: 30%; color: #000;">{{all.name}}
+          <input type="text" placeholder="Search for players to Add " style="width: 90%; margin: 3%; color: #000;"
+            required [(ngModel)]="playername" (ngModelChange)="search(playername)">
+          <div *ngFor="let all of playerSearchResults">
+            <span *ngIf="playername">
+              <span *ngIf="playername !== loginservice.displayName">
+                <span *ngIf="friends.length===0">
+                  <span style="font-size: 20px; margin-left: 30%; color: #000;">{{all.name}}
                   </span>
                   <ion-button size="small" (click)="addFriend(all.id)" color="primary">Add Friend
                   </ion-button>
                 </span>
+                <span *ngFor="let fr of friends">
+                  <span *ngIf="playername !== fr.name">
+                    <span style="font-size: 30px; margin-left: 30%; color: #000;">{{all.name}}
+                    </span>
+                    <ion-button size="small" (click)="addFriend(all.id)" color="primary">Add Friend
+                    </ion-button>
+                  </span>
+                </span>
+
               </span>
-
             </span>
-          </span>
+          </div> -->
+
         </div>
-        <!-- <p>Friends</p> -->
-      </div>
-      <div *ngIf="showPage === 'lobby'">
+        <div *ngIf="showPage === 'lobby'">
 
-        <table class="LobbyTable">
-          <tr *ngFor="let fr of lol" (click)="goToMap()">
-            <td style="border-right:0px solid ;">
-              Lord of the rings
-            </td>
-            <td style="border-left:0px solid ;border-right:0px solid ;">
-              -public-
-            </td>
-            <td style="border-left:0px solid ;">
-              <i class="fa fa-bookmark" aria-hidden="true"></i> <span style="margin-left:25% ;">15</span>
-            </td>
-          </tr>
+          <table class="LobbyTable">
+            <tr *ngFor="let fr of tabel" (click)="goToMap()">
+              <td style="border-right:0px solid ;">
+                Lord of the rings
+              </td>
+              <td style="border-left:0px solid ;border-right:0px solid ;">
+                -public-
+              </td>
+              <td style="border-left:0px solid ;">
+                <i class="fa fa-bookmark" aria-hidden="true"></i> <span style="margin-left:25% ;">15</span>
+              </td>
+            </tr>
 
-        </table>
+          </table>
 
-        <!-- <div *ngFor="let all of lobbies"> -->
-        <!-- <li>Name:{{all.name}}</li>
+          <!-- <div *ngFor="let all of lobbies"> -->
+          <!-- <li>Name:{{all.name}}</li>
           <li>Type:{{all.itemType}}</li> -->
 
-        <!-- <a (click)="goToMap()">the holy gray</a>
+          <!-- <a (click)="goToMap()">the holy gray</a>
         <li>the holy gray 2</li> -->
 
-        <!-- </div> -->
-        <p>Lobby</p>
-      </div>
-      <div *ngIf="showPage === 'messages'">
+          <!-- </div> -->
+          <p>Lobby</p>
+        </div>
+        <div *ngIf="showPage === 'messages'">
 
 
-        <!-- <div *ngFor="let all of inventory">
+          <!-- <div *ngFor="let all of inventory">
           <li>Name:{{all.name}}</li>
           <li>Type:{{all.itemType}}</li>
         </div> -->
-        <p>Messages</p>
+          <p>Messages</p>
+        </div>
+
       </div>
 
     </div>
-
-  </div>
-</ion-content>
+  </ion-content>

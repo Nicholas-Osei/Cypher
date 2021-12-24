@@ -28,7 +28,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   time = new Date();
   rxTime = new Date();
   intervalId;
-  lol = Array(5);
+  tabel = Array(5);
   titel = '';
   teller = 0;
   notViaGoogle = false;
@@ -36,11 +36,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
   imageUrl = '';
 
   constructor(public loginservice: LoginService, public speler: PlayerService, public router: Router) {
-    // this.speler.getAllPlayers().subscribe(p => {
-    //   this.players = p; console
-    //     .log('Got all players');
-    //   console.log(this.players.data[0].name);
-    // });
     this.imageUrl = './assets/icon/person' + 1 + '.jpeg';
     this.titel = 'Welcome, ' + loginservice.displayName + '!';
   }
@@ -66,6 +61,13 @@ export class GameScreenPage implements OnInit, OnDestroy {
     this.router.navigate(['map-screen'],
     ).then(() => { window.location.reload(); });
   }
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  GoTo(page: string) {
+    console.log('Called open ' + page);
+    this.router.navigate([page]).then(() => window.location.reload());
+  }
+
   async getUserItems() {
     console.log(this.loginservice.displayName);
     this.speler.players.data.forEach(m => {
@@ -77,7 +79,8 @@ export class GameScreenPage implements OnInit, OnDestroy {
         // this.speler.inventory = m.inventory.items;
         // this.messages = m.messages;
         // this.lobbies = m.playerLobbies;
-        this.id = m.id;
+        // this.id = m.id;
+        this.speler.playerId = m.id;
         console.log(m.name);
         this.notViaGoogle = true;
       }
@@ -100,13 +103,15 @@ export class GameScreenPage implements OnInit, OnDestroy {
     }
     this.getPlayerbyId();
   }
+
   getPlayerbyId() {
-    this.speler.getPlayerById(this.id).subscribe(
+    this.speler.getPlayerById(this.speler.playerId).subscribe(
       u => {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.friends);
         this.friends = this.playerbyId.data.friends;
         this.speler.inventory = this.playerbyId.data.inventory;
+        // this.speler.friends = this.playerbyId.data.friends;
         // this.speler.messages = m.messages;
         // this.lobbies = m.playerLobbies;
       });
@@ -116,6 +121,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   setShowPageToFriends() {
     this.showPage = 'friends';
   }
+
   search(name?: any) {
     console.log(this.playername);
     // console.log(this.)
@@ -125,51 +131,22 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
 
   deleteFriend(id: number) {
-    this.speler.deleteFriend(this.id, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
+    this.speler.deleteFriend(this.speler.playerId, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
   }
 
   addFriend(id: number) {
-    console.log(this.id);
+    console.log(this.speler.playerId);
 
     const newFriend = {
-      playerId: this.id,
+      playerId: this.speler.playerId,
       friendId: id
     };
     // eslint-disable-next-line max-len
     this.speler.addToPlayerFriends(this.id, newFriend).subscribe(f => { console.log('Friend Added'); this.generateRandomNumber(); this.ngOnInit(); });
   }
-  // addItemToInventory(form) {
-  //   let newItems: any = [];
-  //   const item = [];
-  //   console.log('clicked');
-  //   this.players.data.forEach(m => {
-  //     if (m.name === this.loginservice.displayName) {
-  //       // eslint-disable-next-line @typescript-eslint/prefer-for-of
-  //       for (let index = 0; index < m.inventory.items.length; index++) {
-  //         item.push(
-  //           {
-  //             name: m.inventory.items[index].name,
-  //             itemType: m.inventory.items[index].itemType
-  //           },
-  //         );
-  //       }
-  //       item.push(
-  //         {
-  //           name: form.value.naam,
-  //           itemType: form.value.itemType
-  //         }
-  //       );
-  //       newItems = {
-  //         id: m.inventory.id,
-  //         items: item
-  //       };
-  //       return this.speler.updateInventoryItems(m.inventory.id, newItems).
-  //         subscribe(l => { console.log('added'); form.value.naam = ''; form.value.itemType = ''; this.ngOnInit(); });
-  //     }
 
-  //   });
 
-  // }
+
 
   openNav() {
     document.getElementById('mySidenav').style.width = '250px';
@@ -178,6 +155,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   closeNav() {
     document.getElementById('mySidenav').style.width = '0';
   }
+
   generateRandomNumber() {
     // eslint-disable-next-line prefer-const
     this.randomNumber = Math.floor((Math.random() * 3) + 1);
@@ -185,11 +163,10 @@ export class GameScreenPage implements OnInit, OnDestroy {
     console.log(this.randomNumber);
     return this.randomNumber;
   }
+
   renderPage(page: any) {
     this.showPage = page;
-    // if (this.showPage === 'friends') {
-    //   this.generateRandomNumber();
-    // }
+
     console.log(this.showPage);
     this.closeNav();
   }
