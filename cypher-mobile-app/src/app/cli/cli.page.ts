@@ -27,7 +27,7 @@ export class CliPage implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   CommandInput(command?: string) {
-    this.cliOutput += '\n ' + this.commandInput;
+    this.cliOutput += '\n ' + '> '+ this.commandInput;
     this.commandInput = ' ';
     // this.commandoutput.nativeElement.setAttribute(this.commandoutput.nativeElement);
   }
