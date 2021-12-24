@@ -21,7 +21,7 @@ export class MapScreenPage implements OnInit {
   showPage: any;
   userMarker: any;
   inMapScreen = true;
-  getPlayerInArea = false;
+  getPlayerInAnArea = false;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -140,18 +140,17 @@ export class MapScreenPage implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   SearchRegionAreasForPlayer() {
+    this.getPlayerInAnArea = false;
     for (const region in cityregions) {
       // eslint-disable-next-line max-len
       if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius) {
-        this.getPlayerInArea = cityregions[region].playerInArea;
+        this.getPlayerInAnArea = cityregions[region].playerInArea;
         console.log(cityregions[region].playerInArea);
         if (cityregions[region].isGameStartable) {
           cityregions[region].isGameStartable = false;
           cityregions[region].playerInArea = true;
           cityregions[region].playGame();
         }
-        // } else {
-        //   this.getPlayerInArea = false;
       }
     }
   }
