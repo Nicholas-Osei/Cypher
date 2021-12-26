@@ -43,8 +43,13 @@ namespace Cypher.Web.Areas.Cypher.Controllers
                 if (playersResponse.Succeeded)
                 {
                     var playerViewModel = _mapper.Map<List<Player>>(playersResponse.Data);
-                    lobbyViewModel.AllPlayers = new SelectList(playerViewModel, nameof(Player.Id)
+                    lobbyViewModel.AllPlayers = new SelectList(playerViewModel, nameof(Player.Id), nameof(Player.Name), null, null);
                 }
+                return new JsonResult(new { isValid = true, html = await _viewRenderer.RenderViewToStringAsync("_CreateOrEdit", lobbyViewModel) });
+            }
+            else
+            {
+                var response = await _mediator.Send(new Get)
             }
         }
 
