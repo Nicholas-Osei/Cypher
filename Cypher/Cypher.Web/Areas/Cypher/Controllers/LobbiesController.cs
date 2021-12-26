@@ -1,4 +1,6 @@
-﻿using Cypher.Web.Abstractions;
+﻿using Cypher.Domain.Entities.Cypher;
+using Cypher.Application.Features.Lobbies.Queries;
+using Cypher.Web.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,7 +16,19 @@ namespace Cypher.Web.Areas.Cypher.Controllers
         // GET: LobbiesController
         public IActionResult Index()
         {
-            return View();
+            var model = new Lobby();
+            return View(model);
+        }
+
+        public async Task<IActionResult> LoadAll()
+        {
+            var response = await _mediator.Send(new GetAllLobbiesQuery(null, null));
+            if (response.Succeeded)
+            {
+                var mappedModel = _mapper.Map<List<Lobby>>(response.Data);
+                return PartialView("_ViewAll", mappedModel);
+            }
+            return null;
         }
 
         // GET: LobbiesController/Details/5
