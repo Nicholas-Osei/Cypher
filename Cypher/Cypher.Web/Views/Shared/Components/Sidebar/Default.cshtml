@@ -86,6 +86,23 @@
                         </li>
                     </ul>
                 </li>
+                <li is-active-route asp-area="Cypher" class="nav-item has-treeview">
+                    <a is-active-route asp-area="Catalog" class="nav-link">
+                        <i class="nav-icon fas fa-archive"></i>
+                        <p>
+                            @localizer["Cypher"]
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a is-active-route asp-area="Cypher" asp-controller="Lobbies" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>@localizer["Lobbies"]</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>
