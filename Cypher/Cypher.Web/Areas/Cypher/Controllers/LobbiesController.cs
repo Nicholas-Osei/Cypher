@@ -1,5 +1,6 @@
 ﻿using Cypher.Domain.Entities.Cypher;
 using Cypher.Application.Features.Lobbies.Queries;
+using Cypher.Application.Features.Players.Queries.GetAllPaged;
 using Cypher.Web.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cypher.Web.Areas.Cypher.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Cypher.Web.Areas.Cypher.Controllers
 {
@@ -29,6 +32,20 @@ namespace Cypher.Web.Areas.Cypher.Controllers
                 return PartialView("_ViewAll", mappedModel);
             }
             return null;
+        }
+
+        public async Task<JsonResult> OnGetCreateOrEdit(int id = 0)
+        {
+            var playersResponse = await _mediator.Send(new GetAllPlayersQuery(null, null, null));
+            if (id == 0)
+            {
+                var lobbyViewModel = new LobbyViewModel();
+                if (playersResponse.Succeeded)
+                {
+                    var playerViewModel = _mapper.Map<List<Player>>(playersResponse.Data);
+                    lobbyViewModel.AllPlayers = new SelectList(playerViewModel, nameof(Player.Id)
+                }
+            }
         }
 
         // GET: LobbiesController/Details/5
