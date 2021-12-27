@@ -22,11 +22,14 @@ export class MapScreenPage implements OnInit {
   playerPosLng: number;
   showPage: any;
   userMarker: any;
+  playerArea: any;
   ghostHackerMarker: any;
   ghostHackerPosition: any;
-  ghostHackerPosLat: number = 51.329355;
-  ghostHackerPosLng: number = 4.925574;
-  moveCoord: number = 0.0005;
+  ghostHackerPosLat: number = 51.327253;
+  ghostHackerPosLng: number = 4.929911;
+  // ghostHackerPosLat: number = 50.928070;
+  // ghostHackerPosLng: number = 3.816487;
+  moveCoord: number = 0.0001;
   inMapScreen = true;
   getPlayerInAnArea = false;
 
@@ -116,6 +119,17 @@ export class MapScreenPage implements OnInit {
       icon: image,
     })
 
+    this.playerArea = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+      map: this.map,
+      center: location,
+      radius: 20,
+    });
+
     const locationButton = document.createElement('button');
 
     locationButton.textContent = 'Start game';
@@ -149,6 +163,7 @@ export class MapScreenPage implements OnInit {
               this.playerPosLat = pos.lat;
               this.playerPosLng = pos.lng;
               this.userMarker.setPosition(pos);
+              this.playerArea.setCenter(pos);
               //console.log(pos);
               this.SearchRegionAreasForPlayer();
             });
@@ -161,6 +176,7 @@ export class MapScreenPage implements OnInit {
 
         setInterval(() => {
           this.moveGhostHacker();
+          this.CheckHackerInRangeOfPlayer();
           console.log(this.ghostHackerPosLat, this.ghostHackerPosLng);
         }, 5000)
       }
@@ -194,6 +210,12 @@ export class MapScreenPage implements OnInit {
           cityregions[region].playGame();
         }
       }
+    }
+  }
+
+  CheckHackerInRangeOfPlayer(){
+    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerArea.center) <= this.playerArea.radius){
+      console.log("WARNING: The hacker is very close! Be careful, he might sabotage you!");
     }
   }
 
