@@ -1,5 +1,6 @@
 ﻿using Cypher.Domain.Entities.Cypher;
 using Cypher.Application.Features.Lobbies.Queries;
+using Cypher.Application.Features.Lobbies.Queries.GetById;
 using Cypher.Application.Features.Players.Queries.GetAllPaged;
 using Cypher.Web.Abstractions;
 using Microsoft.AspNetCore.Http;
@@ -28,7 +29,7 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             var response = await _mediator.Send(new GetAllLobbiesQuery(null, null));
             if (response.Succeeded)
             {
-                var mappedModel = _mapper.Map<List<Lobby>>(response.Data);
+                var mappedModel = _mapper.Map<List<LobbyViewModel>>(response.Data);
                 return PartialView("_ViewAll", mappedModel);
             }
             return null;
@@ -49,7 +50,18 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             }
             else
             {
-                var response = await _mediator.Send(new Get)
+                var response = await _mediator.Send(new GetLobbyByIdQuery() { Id = id });
+                if (response.Succeeded)
+                {
+                    var lobbyViewModel = _mapper.Map<LobbyViewModel>(response.Data);
+                    if (playersResponse.Succeeded)
+                    {
+                        var playerViewModel = _mapper.Map<List<Player>>(playersResponse.Data);
+                        lobbyViewModel.AllPlayers = new SelectList(playerViewModel, nameof(Player.Id), nameof(Player.Name), null, null);
+                    }
+                    return new JsonResult(new { IsValid = true, html = await _viewRenderer.RenderViewToStringAsync("_CreateOrEdit", lobbyViewModel) });
+                }
+                return null;
             }
         }
 
