@@ -20,6 +20,7 @@ export class MapScreenPage implements OnInit {
   coords: any;
   showPage: any;
   userMarker: any;
+  ghostHackerMarker: any;
   inMapScreen = true;
   getPlayerInAnArea = false;
 
@@ -87,6 +88,12 @@ export class MapScreenPage implements OnInit {
     });
     this.userMarker.setMap(this.map);
 
+    const image = "https://img.icons8.com/material-outlined/24/000000/skull.png";
+    this.ghostHackerMarker = new google.maps.Marker({
+      position: location,
+      icon: image,
+    })
+
     const locationButton = document.createElement('button');
 
     locationButton.textContent = 'Start game';
@@ -116,11 +123,15 @@ export class MapScreenPage implements OnInit {
                 lng: position.coords.longitude,
               };
               this.userMarker.setPosition(pos);
-              console.log(pos);
+              //console.log(pos);
               this.SearchRegionAreasForPlayer();
             });
           }
         );
+
+        setTimeout(() => {
+          this.ghostHackerMarker.setMap(this.map);
+        }, 5000)
       }
     });
 
