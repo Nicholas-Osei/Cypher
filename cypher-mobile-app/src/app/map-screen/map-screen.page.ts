@@ -18,9 +18,15 @@ export class MapScreenPage implements OnInit {
 
   map: any;
   coords: any;
+  playerPosLat: number;
+  playerPosLng: number;
   showPage: any;
   userMarker: any;
   ghostHackerMarker: any;
+  ghostHackerPosition: any;
+  ghostHackerPosLat: number = 51.329355;
+  ghostHackerPosLng: number = 4.925574;
+  moveCoord: number = 0.0005;
   inMapScreen = true;
   getPlayerInAnArea = false;
 
@@ -53,6 +59,22 @@ export class MapScreenPage implements OnInit {
     console.log('Called open ' + page);
     this.router.navigate([page]).then(() => window.location.reload());
     this.inMapScreen = false;
+  }
+
+  moveGhostHacker(){
+    if(this.ghostHackerPosLat > this.playerPosLat){
+      this.ghostHackerPosLat -= this.moveCoord;
+    } else {
+      this.ghostHackerPosLat += this.moveCoord; 
+    }
+
+    if(this.ghostHackerPosLng > this.playerPosLng){
+      this.ghostHackerPosLng -= this.moveCoord;
+    } else {
+      this.ghostHackerPosLng += this.moveCoord;
+    }
+    var ghostHackerMarkerLatLng = new google.maps.LatLng(this.ghostHackerPosLat, this.ghostHackerPosLng);
+    this.ghostHackerMarker.setPosition(ghostHackerMarkerLatLng);
   }
 
   async showMap() {
@@ -90,7 +112,7 @@ export class MapScreenPage implements OnInit {
 
     const image = "https://img.icons8.com/material-outlined/24/000000/skull.png";
     this.ghostHackerMarker = new google.maps.Marker({
-      position: location,
+      position: { lat: this.ghostHackerPosLat, lng: this.ghostHackerPosLng },
       icon: image,
     })
 
@@ -111,6 +133,8 @@ export class MapScreenPage implements OnInit {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
+            this.playerPosLat = pos.lat;
+            this.playerPosLng = pos.lng;
 
             locationButton.style.display = 'none';
 
@@ -122,6 +146,8 @@ export class MapScreenPage implements OnInit {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
               };
+              this.playerPosLat = pos.lat;
+              this.playerPosLng = pos.lng;
               this.userMarker.setPosition(pos);
               //console.log(pos);
               this.SearchRegionAreasForPlayer();
@@ -131,6 +157,11 @@ export class MapScreenPage implements OnInit {
 
         setTimeout(() => {
           this.ghostHackerMarker.setMap(this.map);
+        }, 5000)
+
+        setInterval(() => {
+          this.moveGhostHacker();
+          console.log(this.ghostHackerPosLat, this.ghostHackerPosLng);
         }, 5000)
       }
     });
