@@ -12,7 +12,8 @@ namespace Cypher.Web.Areas.Cypher.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int LobbyAdminId { get; set; }
-        //public List<Player> Players{ get; set; }
+        public Player LobbyAdmin { get; set; }
+        public List<Player> Players { get; set; }
         public SelectList AllPlayers { get; set; }
 
         public DateTime CreatedOn { get; set; }

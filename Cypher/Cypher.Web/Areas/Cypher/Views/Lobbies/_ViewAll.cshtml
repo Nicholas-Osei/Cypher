@@ -8,7 +8,9 @@
     <thead>
         <tr>
             <th>Name</th>
-            <th>Created on:</th>
+            <th>Lobby Admin</th>
+            <th>Created on</th>
+            <th>Players Joined</th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +21,20 @@
                     @lobby.Name
                 </td>
                 <td>
+                    @lobby.LobbyAdmin.Name
+                </td>
+                <td>
                     @lobby.CreatedOn
+                </td>
+                <td>
+                    @if (lobby.Players == null)
+                    {
+                        <p>0</p>
+                    }
+                    else
+                    {
+                        @lobby.Players.Count
+                    }
                 </td>
             </tr>
         }
