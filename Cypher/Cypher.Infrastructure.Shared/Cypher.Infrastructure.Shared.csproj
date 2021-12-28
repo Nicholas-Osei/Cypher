@@ -11,4 +11,10 @@
     <PackageReference Include="MailKit" Version="2.10.0" />
     <PackageReference Include="MimeKit" Version="2.10.1" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="launchSettings.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
 </Project>
