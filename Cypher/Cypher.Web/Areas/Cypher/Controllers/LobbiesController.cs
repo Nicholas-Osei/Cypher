@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cypher.Web.Areas.Cypher.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Cypher.Application.Features.Lobbies.CMDs.Create;
 
 namespace Cypher.Web.Areas.Cypher.Controllers
 {
@@ -61,6 +62,42 @@ namespace Cypher.Web.Areas.Cypher.Controllers
                     }
                     return new JsonResult(new { IsValid = true, html = await _viewRenderer.RenderViewToStringAsync("_CreateOrEdit", lobbyViewModel) });
                 }
+                return null;
+            }
+        }
+
+        public async Task<JsonResult> OnPostCreateOrEdit(int id, LobbyViewModel lobby)
+        {
+            if (id == 0)
+            {
+                var createLobbyCommand = _mapper.Map<CreateLobbyCommand>(lobby);
+                var result = await _mediator.Send(createLobbyCommand);
+                if (result.Succeeded)
+                {
+                    id = result.Data;
+                    _notify.Success($"Lobby with ID { result.Data } Created.");
+                }
+                else
+                {
+                    _notify.Error(result.Message);
+                }
+            }
+            else
+            {
+                // Update with update command
+                //var updateLobbyCommmand = _mapper.Map<>
+            }
+
+            var response = await _mediator.Send(new GetAllLobbiesQuery(null, null));
+            if (response.Succeeded)
+            {
+                var viewModel = _mapper.Map<List<LobbyViewModel>>(response.Data);
+                var html = await _viewRenderer.RenderViewToStringAsync("_ViewAll", viewModel);
+                return new JsonResult(new { isValid = true, html = html });
+            }
+            else
+            {
+                _notify.Error(response.Message);
                 return null;
             }
         }

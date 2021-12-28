@@ -20,6 +20,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Lobby Admin</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <select name="LobbyAdminId" class="form-control select2bs4" id="LobbyAdminId" asp-for="LobbyAdminId" asp-items="@Model.AllPlayers">
+                        </select>
+                    </div>
+                    <span asp-validation-for="LobbyAdminId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="form-group justify-content-between" style="margin-bottom: 0px !important">
