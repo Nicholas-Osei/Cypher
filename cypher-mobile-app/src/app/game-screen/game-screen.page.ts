@@ -2,7 +2,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../Services/login.service';
-import { Inventory, Player, PlayerService } from '../Services/player.service';
+import { Inventory, Player, ApiService } from '../Services/api.service';
 
 
 
@@ -35,18 +35,18 @@ export class GameScreenPage implements OnInit, OnDestroy {
   randomNumber = 0;
   imageUrl = '';
 
-  constructor(public loginservice: LoginService, public speler: PlayerService, public router: Router) {
+  constructor(public loginservice: LoginService, public api: ApiService, public router: Router) {
     this.imageUrl = './assets/icon/person' + 1 + '.jpeg';
     this.titel = 'Welcome, ' + loginservice.displayName + '!';
   }
   ngOnInit(): void {
-    this.speler.getAllPlayers().subscribe(p => {
-      this.speler.players = p; console
+    this.api.getAllPlayers().subscribe(p => {
+      this.api.players = p; console
         .log('Got all players');
-      console.log(this.speler.players.data[0].name);
+      console.log(this.api.players.data[0].name);
       this.getUserItems();
       // this.getPlayerbyId();
-      console.log(this.speler.inventory);
+      console.log(this.api.inventory);
     });
 
     this.intervalId = setInterval(() => {
@@ -70,17 +70,17 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   async getUserItems() {
     console.log(this.loginservice.displayName);
-    this.speler.players.data.forEach(m => {
+    this.api.players.data.forEach(m => {
       this.teller++;
       // console.log(this.loginservice.displayName);
-      console.log(this.speler.players.data.length, this.teller);
+      console.log(this.api.players.data.length, this.teller);
       if (m.name === this.loginservice.displayName) {
         //
         // this.speler.inventory = m.inventory.items;
         // this.messages = m.messages;
         // this.lobbies = m.playerLobbies;
         // this.id = m.id;
-        this.speler.playerId = m.id;
+        this.api.playerId = m.id;
         console.log(m.name);
         this.notViaGoogle = true;
       }
@@ -99,18 +99,18 @@ export class GameScreenPage implements OnInit, OnDestroy {
         playerLobbies: []
 
       };
-      this.speler.postPlayer(credentials).subscribe(a => { console.log('Player Added'); window.location.reload(); });
+      this.api.postPlayer(credentials).subscribe(a => { console.log('Player Added'); window.location.reload(); });
     }
     this.getPlayerbyId();
   }
 
   getPlayerbyId() {
-    this.speler.getPlayerById(this.speler.playerId).subscribe(
+    this.api.getPlayerById(this.api.playerId).subscribe(
       u => {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.friends);
         this.friends = this.playerbyId.data.friends;
-        this.speler.inventory = this.playerbyId.data.inventory;
+        this.api.inventory = this.playerbyId.data.inventory;
         // this.speler.friends = this.playerbyId.data.friends;
         // this.speler.messages = m.messages;
         // this.lobbies = m.playerLobbies;
@@ -125,24 +125,24 @@ export class GameScreenPage implements OnInit, OnDestroy {
   search(name?: any) {
     console.log(this.playername);
     // console.log(this.)
-    this.speler.searchForFriends(this.playername).
+    this.api.searchForFriends(this.playername).
       subscribe(s => { this.playerSearchResults = s.data; console.log(this.playerSearchResults); });
   }
 
 
   deleteFriend(id: number) {
-    this.speler.deleteFriend(this.speler.playerId, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
+    this.api.deleteFriend(this.api.playerId, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
   }
 
   addFriend(id: number) {
-    console.log(this.speler.playerId);
+    console.log(this.api.playerId);
 
     const newFriend = {
-      playerId: this.speler.playerId,
+      playerId: this.api.playerId,
       friendId: id
     };
     // eslint-disable-next-line max-len
-    this.speler.addToPlayerFriends(this.id, newFriend).subscribe(f => { console.log('Friend Added'); this.generateRandomNumber(); this.ngOnInit(); });
+    this.api.addToPlayerFriends(this.id, newFriend).subscribe(f => { console.log('Friend Added'); this.generateRandomNumber(); this.ngOnInit(); });
   }
 
 
@@ -175,7 +175,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
     console.log(id);
     const todelete = confirm('Are you sure you want to delete');
     if (todelete) {
-      this.speler.deleteInventoryItem(id).subscribe(d => { console.log('Deleted'); this.ngOnInit(); });
+      this.api.deleteInventoryItem(id).subscribe(d => { console.log('Deleted'); this.ngOnInit(); });
     }
   }
 }

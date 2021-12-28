@@ -5,7 +5,7 @@ import { NavController } from '@ionic/angular';
 import { LoginService, RootObject, UserCredentials } from '../Services/login.service';
 import { Buffer } from 'buffer';
 import { render } from 'creditcardpayments/creditCardPayments';
-import { PlayerService } from '../Services/player.service';
+import { ApiService } from '../Services/api.service';
 import { ThisReceiver } from '@angular/compiler';
 
 
@@ -26,7 +26,7 @@ export class HomePage implements OnInit {
   moneyToPay = 10;
 
   constructor(public googlePlus: GooglePlus, private router: Router,
-    public nav: NavController, public loginservice: LoginService, public playerservice: PlayerService) {
+    public nav: NavController, public loginservice: LoginService, public apiservice: ApiService) {
 
     // render({
     //   id: '#myPaypalButtons',
@@ -133,7 +133,7 @@ export class HomePage implements OnInit {
               playerLobbies: []
 
             };
-            this.playerservice.postPlayer(credentials).subscribe(a => console.log('Player Added'));
+            this.apiservice.postPlayer(credentials).subscribe(a => console.log('Player Added'));
             this.ngOnInit();
           }
         }
