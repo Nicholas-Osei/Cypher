@@ -33,7 +33,11 @@ namespace Cypher.Infrastructure.Repositories
 
         public async Task<Lobby> GetByIdAsync(int lobbyId)
         {
-            throw new NotImplementedException();
+            return await _repo.Entities
+                .Where(l => l.Id == lobbyId)
+                .Include(l => l.LobbyAdmin)
+                .Include(l => l.Players)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<int> InsertAsync(Lobby lobby)

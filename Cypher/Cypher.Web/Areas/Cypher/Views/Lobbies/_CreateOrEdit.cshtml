@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+@using Cypher.Web.Areas.Cypher.Models
+@model LobbyViewModel
+
+<form id="create-form" method="post" asp-controller="Lobbies" asp-action="OnPostCreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryModalPost(this);" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">@localizer["Name"]</label>
+                <div class="col-md-9">
+                    <input type="text" asp-for="Name" name="Name" class="form-control" />
+                    @*<span asp-validation-for="Name" class="text-danger"></span>*@
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Lobby Admin</label>
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <select name="LobbyAdminId" class="form-control select2bs4" id="LobbyAdminId" asp-for="LobbyAdminId" asp-items="@Model.AllPlayers">
+                        </select>
+                    </div>
+                    <span asp-validation-for="LobbyAdminId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group justify-content-between" style="margin-bottom: 0px !important">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-default close-button" data-dismiss="modal">Cancel</button>
+    </div>
+</form>

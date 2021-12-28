@@ -3,6 +3,7 @@ using Cypher.Application.Extensions;
 using Cypher.Application.Interfaces.Repositories;
 using Cypher.Domain.Entities.Cypher;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,7 @@ namespace Cypher.Application.Features.Lobbies.Queries
                 };
 
                 var paginatedList = await _repo.Lobbies
+                    .Include(l => l.LobbyAdmin)
                     .Select(expression)
                     .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
