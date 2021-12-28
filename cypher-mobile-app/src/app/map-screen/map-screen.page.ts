@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { markAsUntransferable } from 'worker_threads';
 import { MenuController } from '@ionic/angular';
+import { PlayerService } from '../Services/player.service';
 
 declare let google: any;
 
@@ -25,18 +26,20 @@ export class MapScreenPage implements OnInit {
   playerArea: any;
   ghostHackerMarker: any;
   ghostHackerPosition: any;
-  ghostHackerPosLat: number = 51.327253;
-  ghostHackerPosLng: number = 4.929911;
-  // ghostHackerPosLat: number = 50.928070;
-  // ghostHackerPosLng: number = 3.816487;
-  moveCoord: number = 0.0001;
+  // ghostHackerPosLat: number = 51.327253;
+  // ghostHackerPosLng: number = 4.929911;
+  // Back-up coords for when laptop is being a drama queen
+  ghostHackerPosLat: number = 51.217299;
+  ghostHackerPosLng: number = 3.747903;
+  moveCoord: number = 0.0002;
+  ghostHackerStoleSomething = false;
   inMapScreen = true;
   getPlayerInAnArea = false;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(public router: Router, private menu: MenuController) {
+  constructor(public router: Router, private menu: MenuController, public inventoryItem: PlayerService) {
 
   }
 
@@ -216,6 +219,11 @@ export class MapScreenPage implements OnInit {
   CheckHackerInRangeOfPlayer(){
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerArea.center) <= this.playerArea.radius){
       console.log("WARNING: The hacker is very close! Be careful, he might sabotage you!");
+      if (!this.ghostHackerStoleSomething){
+        this.inventoryItem.deleteInventoryItem(7).subscribe(d => {console.log("The hacker stole an item!");
+        })
+        this.ghostHackerStoleSomething = true;
+      }
     }
   }
 
