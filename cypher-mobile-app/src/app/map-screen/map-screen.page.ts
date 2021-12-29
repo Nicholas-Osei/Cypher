@@ -124,66 +124,53 @@ export class MapScreenPage implements OnInit {
 
     this.playerArea = new google.maps.Circle({
       strokeColor: "#FF0000",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
+      strokeOpacity: 0,
+      strokeWeight: 0,
       fillColor: "#FF0000",
-      fillOpacity: 0.35,
+      fillOpacity: 0,
       map: this.map,
       center: location,
       radius: 20,
     });
 
-    const locationButton = document.createElement('button');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          this.playerPosLat = pos.lat;
+          this.playerPosLng = pos.lng;
 
-    locationButton.textContent = 'Start game';
-    locationButton.classList.add('custom-map-control-button');
-
-    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-
-    //Need eventlistener to trigger the updating geolocation (watchPosition() method)
-    locationButton.addEventListener('click', () => {
-      // Try HTML5 geolocation.
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position: GeolocationPosition) => {
-            var pos = {
+          this.map.setCenter(pos);
+          this.userMarker.setPosition(pos);
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+          navigator.geolocation.watchPosition(position => {
+            pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
             this.playerPosLat = pos.lat;
             this.playerPosLng = pos.lng;
-
-            locationButton.style.display = 'none';
-
-            this.map.setCenter(pos);
             this.userMarker.setPosition(pos);
-            // eslint-disable-next-line @typescript-eslint/no-shadow
-            navigator.geolocation.watchPosition(position => {
-              pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-              this.playerPosLat = pos.lat;
-              this.playerPosLng = pos.lng;
-              this.userMarker.setPosition(pos);
-              this.playerArea.setCenter(pos);
-              //console.log(pos);
-              this.SearchRegionAreasForPlayer();
-            });
-          }
-        );
+            this.playerArea.setCenter(pos);
 
-        setTimeout(() => {
-          this.ghostHackerMarker.setMap(this.map);
-        }, 5000)
+            this.SearchRegionAreasForPlayer();
+          });
+        }
+      );
 
-        setInterval(() => {
-          this.moveGhostHacker();
-          this.CheckHackerInRangeOfPlayer();
-          console.log(this.ghostHackerPosLat, this.ghostHackerPosLng);
-        }, 5000)
-      }
-    });
+      setTimeout(() => {
+        this.ghostHackerMarker.setMap(this.map);
+      }, 5000)
+
+      setInterval(() => {
+        this.moveGhostHacker();
+        this.CheckHackerInRangeOfPlayer();
+        console.log(this.ghostHackerPosLat, this.ghostHackerPosLng);
+      }, 5000)
+    }
 
     for (const region in cityregions) {
       const regionCircle = new google.maps.Circle({
