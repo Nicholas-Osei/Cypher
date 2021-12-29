@@ -189,7 +189,7 @@ export class MapScreenPage implements OnInit {
       setInterval(() => {
         this.moveGhostHacker();
         this.CheckHackerInRangeOfPlayer();
-      }, 1000)
+      }, 8000)
     }
 
     for (const region in cityregions) {
@@ -238,6 +238,9 @@ export class MapScreenPage implements OnInit {
         this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {window.alert("The hacker stole an item!");
         })
         this.ghostHackerStoleSomething = true;
+        setInterval(() => {
+          this.ghostHackerMarker.setMap(null);
+        }, 5000)
       }
     }
   }
