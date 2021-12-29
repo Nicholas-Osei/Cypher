@@ -24,7 +24,8 @@ export class MapScreenPage implements OnInit {
   playerPosLng: number;
   showPage: any;
   userMarker: any;
-  playerArea: any;
+  playerWarningArea: any;
+  playerStealArea: any;
   ghostHackerMarker: any;
   ghostHackerPosition: any;
   // ghostHackerPosLat: number = 51.327253;
@@ -33,6 +34,7 @@ export class MapScreenPage implements OnInit {
   ghostHackerPosLat: number = 51.217299;
   ghostHackerPosLng: number = 3.747903;
   moveCoord: number = 0.0002;
+  ghostHackerWarning = false;
   ghostHackerStoleSomething = false;
   inMapScreen = true;
   getPlayerInAnArea = false;
@@ -46,7 +48,6 @@ export class MapScreenPage implements OnInit {
 
   constructor(public router: Router, private menu: MenuController, public inventoryItem: PlayerService) {
     this.inventoryItemToDelete = localStorage.getItem('inventoryItems');
-    console.log(this.inventoryItemToDelete);
     this.GetInventoryId();
   }
 
@@ -131,7 +132,17 @@ export class MapScreenPage implements OnInit {
       icon: image,
     })
 
-    this.playerArea = new google.maps.Circle({
+    this.playerWarningArea = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0,
+      strokeWeight: 0,
+      fillColor: "#FF0000",
+      fillOpacity: 0,
+      map: this.map,
+      center: location,
+      radius: 50,
+    });
+    this.playerStealArea = new google.maps.Circle({
       strokeColor: "#FF0000",
       strokeOpacity: 0,
       strokeWeight: 0,
@@ -163,7 +174,8 @@ export class MapScreenPage implements OnInit {
             this.playerPosLat = pos.lat;
             this.playerPosLng = pos.lng;
             this.userMarker.setPosition(pos);
-            this.playerArea.setCenter(pos);
+            this.playerWarningArea.setCenter(pos);
+            this.playerStealArea.setCenter(pos);
 
             this.SearchRegionAreasForPlayer();
           });
@@ -212,11 +224,18 @@ export class MapScreenPage implements OnInit {
   }
 
   CheckHackerInRangeOfPlayer(){
-    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerArea.center) <= this.playerArea.radius){
-      console.log("WARNING: The hacker is very close! Be careful, he might sabotage you!");
+    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerWarningArea.center) <= this.playerWarningArea.radius){
+      if (!this.ghostHackerWarning){
+        window.alert("WARNING: The hacker is very close! Be careful, he might sabotage you!")
+        this.ghostHackerWarning = true;
+      }
+    } else {
+      this.ghostHackerWarning = false;
+    }
+    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerStealArea.center) <= this.playerStealArea.radius){
       if (!this.ghostHackerStoleSomething){
         this.randomNumber = localStorage.getItem('itemLength');
-        this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {console.log("The hacker stole an item!", this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id);
+        this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {window.alert("The hacker stole an item!");
         })
         this.ghostHackerStoleSomething = true;
       }
@@ -227,8 +246,6 @@ export class MapScreenPage implements OnInit {
     this.inventoryItem.getPlayerById(localStorage.getItem('playerId')).subscribe(i => {
       this.playerId = i;
       this.inventory = this.playerId.data.inventory.items;
-      console.log(this.inventory);
-      
     });
   }
 
