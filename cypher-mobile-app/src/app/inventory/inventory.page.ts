@@ -56,7 +56,7 @@ export class InventoryPage implements OnInit {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.inventory);
         this.inventory = this.playerbyId.data.inventory.items;
-        this.itemLength = localStorage.setItem('itemLength', this.playerbyId.data.inventory.items.length);
+        this.itemLength = localStorage.setItem('inventoryLength', this.playerbyId.data.inventory.items.length);
         this.invInLocalStorage = localStorage.setItem('inventoryItems', this.inventory);
         console.log(this.inventory);
         

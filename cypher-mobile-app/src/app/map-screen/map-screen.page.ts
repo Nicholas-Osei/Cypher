@@ -55,8 +55,13 @@ export class MapScreenPage implements OnInit {
 
   }
 
-
-
+  GetInventoryId(){
+    this.inventoryItem.getPlayerById(localStorage.getItem('playerId')).subscribe(i => {
+      this.playerId = i;
+      this.inventory = this.playerId.data.inventory.items;
+    });
+  }
+  
   async locate() {
     const coordinates = await Geolocation.getCurrentPosition();
     this.coords = coordinates.coords;
@@ -184,12 +189,12 @@ export class MapScreenPage implements OnInit {
 
       setTimeout(() => {
         this.ghostHackerMarker.setMap(this.map);
-      }, 5000)
+      }, 10000)
 
       setInterval(() => {
         this.moveGhostHacker();
         this.CheckHackerInRangeOfPlayer();
-      }, 8000)
+      }, 10000)
     }
 
     for (const region in cityregions) {
@@ -234,8 +239,8 @@ export class MapScreenPage implements OnInit {
     }
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerStealArea.center) <= this.playerStealArea.radius){
       if (!this.ghostHackerStoleSomething){
-        this.randomNumber = localStorage.getItem('itemLength');
-        this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {window.alert("The hacker stole an item!");
+        this.randomNumber = localStorage.getItem('inventoryLength');
+        this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {window.alert("The hacker stole one of your items!");
         })
         this.ghostHackerStoleSomething = true;
         setInterval(() => {
@@ -243,13 +248,6 @@ export class MapScreenPage implements OnInit {
         }, 5000)
       }
     }
-  }
-
-  GetInventoryId(){
-    this.inventoryItem.getPlayerById(localStorage.getItem('playerId')).subscribe(i => {
-      this.playerId = i;
-      this.inventory = this.playerId.data.inventory.items;
-    });
   }
 
   GenerateIdForHacker(min, max){
