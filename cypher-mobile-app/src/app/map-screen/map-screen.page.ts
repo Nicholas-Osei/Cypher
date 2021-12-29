@@ -7,6 +7,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { markAsUntransferable } from 'worker_threads';
 import { MenuController } from '@ionic/angular';
 import { PlayerService } from '../Services/player.service';
+import { getTranslationDeclStmts } from '@angular/compiler/src/render3/view/template';
 
 declare let google: any;
 
@@ -35,17 +36,25 @@ export class MapScreenPage implements OnInit {
   ghostHackerStoleSomething = false;
   inMapScreen = true;
   getPlayerInAnArea = false;
+  randomNumber: any;
+  inventoryItemToDelete: any;
+  inventory: any;
+  playerId: any;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
   constructor(public router: Router, private menu: MenuController, public inventoryItem: PlayerService) {
-
+    this.inventoryItemToDelete = localStorage.getItem('inventoryItems');
+    console.log(this.inventoryItemToDelete);
+    this.GetInventoryId();
   }
 
   ngOnInit() {
 
   }
+
+
 
   async locate() {
     const coordinates = await Geolocation.getCurrentPosition();
@@ -168,8 +177,7 @@ export class MapScreenPage implements OnInit {
       setInterval(() => {
         this.moveGhostHacker();
         this.CheckHackerInRangeOfPlayer();
-        console.log(this.ghostHackerPosLat, this.ghostHackerPosLng);
-      }, 5000)
+      }, 1000)
     }
 
     for (const region in cityregions) {
@@ -207,11 +215,25 @@ export class MapScreenPage implements OnInit {
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerArea.center) <= this.playerArea.radius){
       console.log("WARNING: The hacker is very close! Be careful, he might sabotage you!");
       if (!this.ghostHackerStoleSomething){
-        this.inventoryItem.deleteInventoryItem(7).subscribe(d => {console.log("The hacker stole an item!");
+        this.randomNumber = localStorage.getItem('itemLength');
+        this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {console.log("The hacker stole an item!", this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id);
         })
         this.ghostHackerStoleSomething = true;
       }
     }
+  }
+
+  GetInventoryId(){
+    this.inventoryItem.getPlayerById(localStorage.getItem('playerId')).subscribe(i => {
+      this.playerId = i;
+      this.inventory = this.playerId.data.inventory.items;
+      console.log(this.inventory);
+      
+    });
+  }
+
+  GenerateIdForHacker(min, max){
+    return(Math.floor(Math.random() * (max - min + 1) + min));
   }
 
   openNav() {
