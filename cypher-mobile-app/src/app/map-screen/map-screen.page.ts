@@ -27,13 +27,14 @@ export class MapScreenPage implements OnInit {
   playerWarningArea: any;
   playerStealArea: any;
   ghostHackerMarker: any;
-  ghostHackerPosition: any;
+  ghostHackerPos: any;
   // ghostHackerPosLat: number = 51.327253;
   // ghostHackerPosLng: number = 4.929911;
   // Back-up coords for when laptop is being a drama queen
-  ghostHackerPosLat: number = 51.217299;
-  ghostHackerPosLng: number = 3.747903;
+  ghostHackerPosLat: number = 51.218;
+  ghostHackerPosLng: number = 3.748;
   moveCoord: number = 0.0002;
+  ghostHackerActivated = false;
   ghostHackerWarning = false;
   ghostHackerStoleSomething = false;
   inMapScreen = true;
@@ -42,6 +43,12 @@ export class MapScreenPage implements OnInit {
   inventoryItemToDelete: any;
   inventory: any;
   playerId: any;
+  storeHackerActive: any;
+  storeHackerPosLat: any;
+  storeHackerPosLng: any;
+  storeHackerSteal: any;
+  getBoolActiveHacker: string;
+  getBoolStealHacker: string;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -68,6 +75,20 @@ export class MapScreenPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.getBoolActiveHacker = localStorage.getItem('hackerActive');
+    if(this.getBoolActiveHacker != null){
+      this.ghostHackerActivated = (this.getBoolActiveHacker.toLowerCase() === 'true');
+    } else {
+      this.ghostHackerActivated = false;
+    }
+
+    this.getBoolStealHacker = localStorage.getItem('hackerSteal');
+    if(this.getBoolStealHacker != null){
+      this.ghostHackerStoleSomething = (this.getBoolStealHacker.toLowerCase() === 'true');
+    } else {
+      this.ghostHackerStoleSomething = false;
+    }
+
     this.showMap();
   }
 
@@ -83,19 +104,21 @@ export class MapScreenPage implements OnInit {
   }
 
   moveGhostHacker(){
-    if(this.ghostHackerPosLat > this.playerPosLat){
-      this.ghostHackerPosLat -= this.moveCoord;
-    } else {
-      this.ghostHackerPosLat += this.moveCoord; 
-    }
+    if(this.ghostHackerActivated && !this.ghostHackerStoleSomething){
+      if(this.ghostHackerPosLat > this.playerPosLat){
+        this.ghostHackerPosLat -= this.moveCoord;
+      } else {
+        this.ghostHackerPosLat += this.moveCoord; 
+      }
 
-    if(this.ghostHackerPosLng > this.playerPosLng){
-      this.ghostHackerPosLng -= this.moveCoord;
-    } else {
-      this.ghostHackerPosLng += this.moveCoord;
+      if(this.ghostHackerPosLng > this.playerPosLng){
+        this.ghostHackerPosLng -= this.moveCoord;
+      } else {
+        this.ghostHackerPosLng += this.moveCoord;
+      }
+      var ghostHackerMarkerLatLng = new google.maps.LatLng(this.ghostHackerPosLat, this.ghostHackerPosLng);
+      this.ghostHackerMarker.setPosition(ghostHackerMarkerLatLng);
     }
-    var ghostHackerMarkerLatLng = new google.maps.LatLng(this.ghostHackerPosLat, this.ghostHackerPosLng);
-    this.ghostHackerMarker.setPosition(ghostHackerMarkerLatLng);
   }
 
   async showMap() {
@@ -131,9 +154,17 @@ export class MapScreenPage implements OnInit {
     });
     this.userMarker.setMap(this.map);
 
+    if(!this.ghostHackerActivated){
+      this.ghostHackerPos = { lat: this.ghostHackerPosLat, lng: this.ghostHackerPosLng }
+    } else {
+      this.ghostHackerPosLat = Number(localStorage.getItem('hackerLat'));
+      this.ghostHackerPosLng = Number(localStorage.getItem('hackerLng'));
+      this.ghostHackerPos = { lat: this.ghostHackerPosLat, lng: this.ghostHackerPosLng }
+    }
+
     const image = "https://img.icons8.com/material-outlined/24/000000/skull.png";
     this.ghostHackerMarker = new google.maps.Marker({
-      position: { lat: this.ghostHackerPosLat, lng: this.ghostHackerPosLng },
+      position: this.ghostHackerPos,
       icon: image,
     })
 
@@ -186,15 +217,20 @@ export class MapScreenPage implements OnInit {
           });
         }
       );
-
-      setTimeout(() => {
+      
+      if(!this.ghostHackerActivated && !this.ghostHackerStoleSomething){
+        setTimeout(() => {
+          this.ghostHackerActivated = true;
+          this.ghostHackerMarker.setMap(this.map);
+        }, 10000)
+      } else if(!this.ghostHackerStoleSomething) {
         this.ghostHackerMarker.setMap(this.map);
-      }, 10000)
+      }
 
-      setInterval(() => {
-        this.moveGhostHacker();
-        this.CheckHackerInRangeOfPlayer();
-      }, 10000)
+        setInterval(() => {
+          this.moveGhostHacker();
+          this.CheckHackerInRangeOfPlayer();
+        }, 10000)
     }
 
     for (const region in cityregions) {
@@ -288,6 +324,13 @@ export class MapScreenPage implements OnInit {
     this.showPage = page;
 
     this.closeNav();
+  }
+
+  ionViewWillLeave(){
+    this.storeHackerActive = localStorage.setItem('hackerActive', JSON.stringify(this.ghostHackerActivated));
+    this.storeHackerSteal = localStorage.setItem('hackerSteal', JSON.stringify(this.ghostHackerStoleSomething));
+    this.storeHackerPosLat = localStorage.setItem('hackerLat', JSON.stringify(this.ghostHackerPosLat));
+    this.storeHackerPosLng = localStorage.setItem('hackerLng', JSON.stringify(this.ghostHackerPosLng));
   }
 }
 
