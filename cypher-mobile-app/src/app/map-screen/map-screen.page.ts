@@ -31,6 +31,11 @@ export class MapScreenPage implements OnInit {
   //Antwerpen: Rooseveltplein
   ghostHackerPosLat: number = 51.219783;
   ghostHackerPosLng: number = 4.416215;
+  //Coords for testing
+  // ghostHackerPosLat: number = 51.3275;
+  // ghostHackerPosLng: number = 4.9297;
+  // ghostHackerPosLat: number = 51.2174;
+  // ghostHackerPosLng: number = 3.7484;
   moveCoord: number = 0.0002;
   ghostHackerActivated = false;
   ghostHackerWarning = false;
@@ -264,7 +269,7 @@ export class MapScreenPage implements OnInit {
 
   CheckHackerInRangeOfPlayer(){
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerWarningArea.center) <= this.playerWarningArea.radius){
-      if (!this.ghostHackerWarning){
+      if (!this.ghostHackerWarning && !this.ghostHackerStoleSomething){
         window.alert("WARNING: The hacker is very close! Be careful, he might sabotage you!")
         this.ghostHackerWarning = true;
       }
