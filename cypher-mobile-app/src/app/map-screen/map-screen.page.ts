@@ -28,11 +28,9 @@ export class MapScreenPage implements OnInit {
   playerStealArea: any;
   ghostHackerMarker: any;
   ghostHackerPos: any;
-  // ghostHackerPosLat: number = 51.327253;
-  // ghostHackerPosLng: number = 4.929911;
-  // Back-up coords for when laptop is being a drama queen
-  ghostHackerPosLat: number = 51.218;
-  ghostHackerPosLng: number = 3.748;
+  //Antwerpen: Rooseveltplein
+  ghostHackerPosLat: number = 51.219783;
+  ghostHackerPosLng: number = 4.416215;
   moveCoord: number = 0.0002;
   ghostHackerActivated = false;
   ghostHackerWarning = false;
