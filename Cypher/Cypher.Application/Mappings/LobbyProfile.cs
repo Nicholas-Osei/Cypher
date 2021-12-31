@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.EquivalencyExpression;
 using Cypher.Application.Features.Lobbies.CMDs.Create;
 using Cypher.Domain.Entities.Cypher;
 using System;
@@ -13,7 +14,8 @@ namespace Cypher.Application.Mappings
     {
         public LobbyProfile()
         {
-            CreateMap<CreateLobbyCommand, Lobby>().ReverseMap();
+            CreateMap<CreateLobbyCommand, Lobby>()
+                .ReverseMap();
         }
     }
 }

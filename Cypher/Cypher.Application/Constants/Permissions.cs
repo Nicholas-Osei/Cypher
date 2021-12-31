@@ -46,5 +46,13 @@ namespace Cypher.Application.Constants
             public const string Edit = "Permissions.Brands.Edit";
             public const string Delete = "Permissions.Brands.Delete";
         }
+
+        public static class Lobbies
+        {
+            public const string View = "Permissions.Lobbies.View";
+            public const string Create = "Permissions.Lobbies.Create";
+            public const string Edit = "Permissions.Lobbies.Edit";
+            public const string Delete = "Permissions.Lobbies.Delete";
+        }
     }
 }

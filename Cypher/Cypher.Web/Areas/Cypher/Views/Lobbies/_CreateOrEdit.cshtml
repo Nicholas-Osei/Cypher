@@ -28,7 +28,7 @@
                         <select name="LobbyAdminId" class="form-control select2bs4" id="LobbyAdminId" asp-for="LobbyAdminId" asp-items="@Model.AllPlayers">
                         </select>
                     </div>
-                    <span asp-validation-for="LobbyAdminId" class="text-danger"></span>
+                    @*<span asp-validation-for="LobbyAdminId" class="text-danger"></span>*@
                 </div>
             </div>
             <div class="row">
@@ -36,22 +36,25 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label">Players</label>
-                <div class="col-md-9">
-                    <div class="input-group">
-                        <select name="JoinedPlayers" class="form-control select2bs4" id="JoinedPlayers" asp-for="Players" asp-items="@Model.AllPlayers">
-                        </select>
+        @if (Model.Id != 0)
+        {
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Players</label>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <select name="Players" class="form-control select2bs4" id="Players" asp-for="Players" asp-items="@Model.AllPlayers">
+                            </select>
+                        </div>
+                        @*<span asp-validation-for="PlayerIds" class="text-danger"></span>*@
                     </div>
-                    @*<span asp-validation-for="Players" class="text-danger"></span>*@
+                </div>
+                <div class="row">
+                    <div class="col-md-3">  
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3">
-                </div>
-            </div>
-        </div>
+        }
     </div>
 
     <div class="form-group justify-content-between" style="margin-bottom: 0px !important">
@@ -67,7 +70,7 @@
             return m;
         }
     });
-    $("#JoinedPlayers").select2({
+    $("#Players").select2({
         placeholder: "Select Players",
         theme: "bootstrap4",
         escapeMarkup: function (m) {
