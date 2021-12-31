@@ -2,4 +2,13 @@ ion-content{
     .outputcard{
         height: 85%;
     }
+    #command-output, #cardcontent{
+        height: 100%;
+    }
+    #cliOutput {
+        width: calc(100% - 10px);
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+    }
 }
