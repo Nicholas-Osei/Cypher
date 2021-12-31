@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Cypher.Application.Features.Lobbies.CMDs.Create;
 using Cypher.Application.Features.Lobbies.Queries;
+using Cypher.Application.Features.Lobbies.Queries.GetById;
+using Cypher.Domain.Entities.Cypher;
 using Cypher.Web.Areas.Cypher.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,9 @@ namespace Cypher.Web.Areas.Cypher.Mappings
         {
             CreateMap<CreateLobbyCommand, LobbyViewModel>().ReverseMap();
             CreateMap<GetAllLobbiesResponse, LobbyViewModel>().ReverseMap();
+            CreateMap<GetLobbyByIdResponse, LobbyViewModel>().ReverseMap();
+            //CreateMap<Lobby, LobbyViewModel>().ReverseMap();
+            CreateMap<GetLobbyByIdResponse, Lobby>().ReverseMap();
         }
     }
 }
