@@ -17,6 +17,8 @@ export class InventoryPage implements OnInit {
   id: any;
   playerbyId: any;
   teller = 0;
+  itemLength: any;
+  invInLocalStorage: any;
   constructor(public api: ApiService, public loginservice: LoginService, public router: Router) { }
 
   ngOnInit() {
@@ -28,6 +30,7 @@ export class InventoryPage implements OnInit {
           console.log(m.name);
           // this.id = m.id;
           this.getPlayerbyId(m.id);
+          localStorage.setItem('playerId', JSON.stringify(m.id));
         }
         // else if (this.speler.players.data.length === this.teller) {
         //   console.log('ik ben hier');
@@ -53,6 +56,11 @@ export class InventoryPage implements OnInit {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.inventory);
         this.inventory = this.playerbyId.data.inventory.items;
+        this.itemLength = localStorage.setItem('inventoryLength', this.playerbyId.data.inventory.items.length);
+        this.invInLocalStorage = localStorage.setItem('inventoryItems', this.inventory);
+        console.log(this.inventory);
+        
+        
         // this.speler.inventory = this.playerbyId.data.inventory;
         // this.speler.messages = m.messages;
         // this.lobbies = m.playerLobbies;
