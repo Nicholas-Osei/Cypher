@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Cypher.Web.Areas.Cypher.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Cypher.Application.Features.Lobbies.CMDs.Create;
+using Cypher.Application.Features.Lobbies.CMDs.Delete;
 
 namespace Cypher.Web.Areas.Cypher.Controllers
 {
@@ -108,11 +109,11 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             var deleteCommand = await _mediator.Send(new DeleteLobbyCommand { Id = id });
             if (deleteCommand.Succeeded)
             {
-                _notify.Information($"Product with Id {id} Deleted.");
-                var response = await _mediator.Send(new GetAllProductsCachedQuery());
+                _notify.Information($"Lobby with Id {id} Deleted.");
+                var response = await _mediator.Send(new GetAllLobbiesQuery(null, null));
                 if (response.Succeeded)
                 {
-                    var viewModel = _mapper.Map<List<ProductViewModel>>(response.Data);
+                    var viewModel = _mapper.Map<List<LobbyViewModel>>(response.Data);
                     var html = await _viewRenderer.RenderViewToStringAsync("_ViewAll", viewModel);
                     return new JsonResult(new { isValid = true, html = html });
                 }
