@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.EquivalencyExpression;
 using Cypher.Application.Features.Lobbies.CMDs.Create;
 using Cypher.Domain.Entities.Cypher;
 using System;

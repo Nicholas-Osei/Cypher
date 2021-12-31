@@ -102,72 +102,30 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             }
         }
 
-        // GET: LobbiesController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: LobbiesController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: LobbiesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<JsonResult> OnPostDelete(int id)
         {
-            try
+            var deleteCommand = await _mediator.Send(new DeleteLobbyCommand { Id = id });
+            if (deleteCommand.Succeeded)
             {
-                return RedirectToAction(nameof(Index));
+                _notify.Information($"Product with Id {id} Deleted.");
+                var response = await _mediator.Send(new GetAllProductsCachedQuery());
+                if (response.Succeeded)
+                {
+                    var viewModel = _mapper.Map<List<ProductViewModel>>(response.Data);
+                    var html = await _viewRenderer.RenderViewToStringAsync("_ViewAll", viewModel);
+                    return new JsonResult(new { isValid = true, html = html });
+                }
+                else
+                {
+                    _notify.Error(response.Message);
+                    return null;
+                }
             }
-            catch
+            else
             {
-                return View();
-            }
-        }
-
-        // GET: LobbiesController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: LobbiesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LobbiesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LobbiesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                _notify.Error(deleteCommand.Message);
+                return null;
             }
         }
     }

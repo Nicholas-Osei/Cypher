@@ -6,7 +6,6 @@
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.Results" Version="1.1.1" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AutoMapper.Collection" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.7" />
     <PackageReference Include="AspNetCoreHero.ThrowR" Version="1.0.0" />
@@ -52,7 +51,6 @@
     <None Remove="Features\Messages\Queries\GetById\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\Lobbies\CMDs\Delete\" />
     <Folder Include="Features\UserCredentials\" />
     <Folder Include="Features\UserCredentials\Commands\" />
     <Folder Include="Features\UserCredentials\Queries\" />

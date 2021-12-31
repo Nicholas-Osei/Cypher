@@ -1,5 +1,6 @@
 ﻿using Cypher.API.Controllers;
 using Cypher.Application.Features.Lobbies.CMDs.Create;
+using Cypher.Application.Features.Lobbies.CMDs.Delete;
 using Cypher.Application.Features.Lobbies.CMDs.Update;
 using Cypher.Application.Features.Lobbies.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ namespace Cypher.Api.Controllers.v1
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            throw new NotImplementedException();
+            return Ok(await _mediator.Send(new DeleteLobbyCommand { Id = id }));
         }
     }
 }
