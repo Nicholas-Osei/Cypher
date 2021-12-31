@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { markAsUntransferable } from 'worker_threads';
 import { MenuController } from '@ionic/angular';
-import { PlayerService } from '../Services/player.service';
+import { ApiService } from '../Services/api.service';
 import { getTranslationDeclStmts } from '@angular/compiler/src/render3/view/template';
 
 declare let google: any;
@@ -56,7 +56,7 @@ export class MapScreenPage implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(public router: Router, private menu: MenuController, public inventoryItem: PlayerService) {
+  constructor(public router: Router, private menu: MenuController, public inventoryItem: ApiService) {
     this.inventoryItemToDelete = localStorage.getItem('inventoryItems');
     this.GetInventoryId();
   }

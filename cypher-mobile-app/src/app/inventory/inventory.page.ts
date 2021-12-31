@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../Services/login.service';
-import { Player, PlayerService } from '../Services/player.service';
+import { Player, ApiService } from '../Services/api.service';
 
 @Component({
   selector: 'app-inventory',
@@ -19,13 +19,13 @@ export class InventoryPage implements OnInit {
   teller = 0;
   itemLength: any;
   invInLocalStorage: any;
-  constructor(public speler: PlayerService, public loginservice: LoginService, public router: Router) { }
+  constructor(public api: ApiService, public loginservice: LoginService, public router: Router) { }
 
   ngOnInit() {
-    this.speler.getAllPlayers().subscribe(p => {
-      this.speler.players = p; console
+    this.api.getAllPlayers().subscribe(p => {
+      this.api.players = p; console
         .log('Got all players');
-      this.speler.players.data.forEach(m => {
+      this.api.players.data.forEach(m => {
         if (m.name === this.loginservice.displayName) {
           console.log(m.name);
           // this.id = m.id;
@@ -51,7 +51,7 @@ export class InventoryPage implements OnInit {
   }
 
   getPlayerbyId(pId) {
-    this.speler.getPlayerById(pId).subscribe(
+    this.api.getPlayerById(pId).subscribe(
       u => {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.inventory);
@@ -91,7 +91,7 @@ export class InventoryPage implements OnInit {
       id: this.playerbyId.data.inventory.id,
       items: item
     };
-    return this.speler.updateInventoryItems(this.playerbyId.data.inventory.id, newItems).
+    return this.api.updateInventoryItems(this.playerbyId.data.inventory.id, newItems).
       subscribe(l => { console.log('added'); form.value.naam = ''; form.value.itemType = ''; this.ngOnInit(); });
     //}
 
@@ -102,7 +102,7 @@ export class InventoryPage implements OnInit {
     console.log(id);
     const todelete = confirm('Are you sure you want to delete');
     if (todelete) {
-      this.speler.deleteInventoryItem(id).subscribe(d => { console.log('Deleted'); this.ngOnInit(); });
+      this.api.deleteInventoryItem(id).subscribe(d => { console.log('Deleted'); this.ngOnInit(); });
     }
   }
 
