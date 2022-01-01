@@ -12,39 +12,39 @@ import { ElementRef } from '@angular/core';
 export class CliPage implements OnInit {
   Output = 'Run CLI.startup... CLI started!';
   commandInput = '';
-  selection : string;
+  selection: string;
   activeCLI = false;
   storyActive = false;
   public options = ['run', 'list', 'decrypt', 'scout', 'clear'];
-  
+
   constructor(public router: Router, private cli: CliService) { }
-  
+
   ngOnInit() {
   }
 
   @ViewChild('cliOutput') cliOutput: ElementRef;
 
   resize() {
-      this.cliOutput.nativeElement.style.height = this.cliOutput.nativeElement.scrollHeight + 'px';
-      // this.cliOutput.nativeElement.style.scrollTop = this.cliOutput.nativeElement.style.scrollHeight;
+    this.cliOutput.nativeElement.style.height = this.cliOutput.nativeElement.scrollHeight + 'px';
+    // this.cliOutput.nativeElement.style.scrollTop = this.cliOutput.nativeElement.style.scrollHeight;
   }
 
   toggleCLI() {
     this.activeCLI = !this.activeCLI;
   }
-  
+
   //cliOutput = 'Run CLI.startup... CLI started!';
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   CommandInput(command?: string) {
     //Command check
-    if(this.commandInput.includes(' '))
+    if (this.commandInput.includes(' '))
       this.ProcesCommand(this.commandInput.split(' ')[0].toLowerCase());
     else
       this.ProcesCommand(this.commandInput.toLowerCase());
   }
 
-  onChange(event) {
+  onChange(event, select?) {
     if (this.selection === event) return;
     this.selection = event;
     console.log(this.selection);
@@ -52,10 +52,10 @@ export class CliPage implements OnInit {
   }
 
 
-  ProcesCommand(value : string){
+  ProcesCommand(value: string) {
     switch (value) {
       case 'run':
-        
+
         break;
       case 'list':
         this.cli.ListPlayerItems();
@@ -76,9 +76,9 @@ export class CliPage implements OnInit {
       case 'clear':
         this.Output = '';
         break;
-  
+
       default:
-        this.Output += '\n ' + '> '+ this.commandInput;
+        this.Output += '\n ' + '> ' + this.commandInput;
         if (this.storyActive) {
           console.log(this.commandInput);
           this.cli.ProgresStory(this.commandInput);
@@ -87,20 +87,20 @@ export class CliPage implements OnInit {
           this.ReadOutput();
         }
         break;
-      }
-      
-    this.commandInput = '';  
+    }
+
+    this.commandInput = '';
   }
 
-  ReadOutput(){
-    if (this.Output.slice(this.Output.length-1)=='~') {
+  ReadOutput() {
+    if (this.Output.slice(this.Output.length - 1) == '~') {
       this.storyActive = false;
     }
-    else{
+    else {
       this.Output += '\n' + this.cli.Output;
     }
 
-    console.log(this.Output.slice(this.Output.length-1))
+    console.log(this.Output.slice(this.Output.length - 1))
   }
 
   goToMapscreen() {
