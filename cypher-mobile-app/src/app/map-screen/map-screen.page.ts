@@ -62,16 +62,16 @@ export class MapScreenPage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.inventoryItem.lobbyNaam = localStorage.getItem('LobbyName');
   }
 
-  GetInventoryId(){
+  GetInventoryId() {
     this.inventoryItem.getPlayerById(localStorage.getItem('playerId')).subscribe(i => {
       this.playerId = i;
       this.inventory = this.playerId.data.inventory.items;
     });
   }
-  
+
   async locate() {
     const coordinates = await Geolocation.getCurrentPosition();
     this.coords = coordinates.coords;
@@ -79,14 +79,14 @@ export class MapScreenPage implements OnInit {
 
   ionViewDidEnter() {
     this.getBoolActiveHacker = localStorage.getItem('hackerActive');
-    if(this.getBoolActiveHacker != null){
+    if (this.getBoolActiveHacker != null) {
       this.ghostHackerActivated = (this.getBoolActiveHacker.toLowerCase() === 'true');
     } else {
       this.ghostHackerActivated = false;
     }
 
     this.getBoolStealHacker = localStorage.getItem('hackerSteal');
-    if(this.getBoolStealHacker != null){
+    if (this.getBoolStealHacker != null) {
       this.ghostHackerStoleSomething = (this.getBoolStealHacker.toLowerCase() === 'true');
     } else {
       this.ghostHackerStoleSomething = false;
@@ -106,15 +106,15 @@ export class MapScreenPage implements OnInit {
     this.inMapScreen = false;
   }
 
-  moveGhostHacker(){
-    if(this.ghostHackerActivated && !this.ghostHackerStoleSomething){
-      if(this.ghostHackerPosLat > this.playerPosLat){
+  moveGhostHacker() {
+    if (this.ghostHackerActivated && !this.ghostHackerStoleSomething) {
+      if (this.ghostHackerPosLat > this.playerPosLat) {
         this.ghostHackerPosLat -= this.moveCoord;
       } else {
-        this.ghostHackerPosLat += this.moveCoord; 
+        this.ghostHackerPosLat += this.moveCoord;
       }
 
-      if(this.ghostHackerPosLng > this.playerPosLng){
+      if (this.ghostHackerPosLng > this.playerPosLng) {
         this.ghostHackerPosLng -= this.moveCoord;
       } else {
         this.ghostHackerPosLng += this.moveCoord;
@@ -157,96 +157,101 @@ export class MapScreenPage implements OnInit {
     });
     this.userMarker.setMap(this.map);
 
-    if(!this.ghostHackerActivated){
-      this.ghostHackerPos = { lat: this.ghostHackerPosLat, lng: this.ghostHackerPosLng }
-    } else {
-      this.ghostHackerPosLat = Number(localStorage.getItem('hackerLat'));
-      this.ghostHackerPosLng = Number(localStorage.getItem('hackerLng'));
-      this.ghostHackerPos = { lat: this.ghostHackerPosLat, lng: this.ghostHackerPosLng }
+    if (this.inventoryItem.lobbyNaam === 'The cybercorn') {
+
     }
+    else {
+      if (!this.ghostHackerActivated) {
+        this.ghostHackerPos = { lat: this.ghostHackerPosLat, lng: this.ghostHackerPosLng }
+      } else {
+        this.ghostHackerPosLat = Number(localStorage.getItem('hackerLat'));
+        this.ghostHackerPosLng = Number(localStorage.getItem('hackerLng'));
+        this.ghostHackerPos = { lat: this.ghostHackerPosLat, lng: this.ghostHackerPosLng }
+      }
 
-    const image = "https://img.icons8.com/material-outlined/24/000000/skull.png";
-    this.ghostHackerMarker = new google.maps.Marker({
-      position: this.ghostHackerPos,
-      icon: image,
-    })
+      const image = "https://img.icons8.com/material-outlined/24/000000/skull.png";
+      this.ghostHackerMarker = new google.maps.Marker({
+        position: this.ghostHackerPos,
+        icon: image,
+      })
 
-    this.playerWarningArea = new google.maps.Circle({
-      strokeColor: "#FF0000",
-      strokeOpacity: 0,
-      strokeWeight: 0,
-      fillColor: "#FF0000",
-      fillOpacity: 0,
-      map: this.map,
-      center: location,
-      radius: 50,
-    });
-    this.playerStealArea = new google.maps.Circle({
-      strokeColor: "#FF0000",
-      strokeOpacity: 0,
-      strokeWeight: 0,
-      fillColor: "#FF0000",
-      fillOpacity: 0,
-      map: this.map,
-      center: location,
-      radius: 20,
-    });
+      this.playerWarningArea = new google.maps.Circle({
+        strokeColor: "#FF0000",
+        strokeOpacity: 0,
+        strokeWeight: 0,
+        fillColor: "#FF0000",
+        fillOpacity: 0,
+        map: this.map,
+        center: location,
+        radius: 50,
+      });
+      this.playerStealArea = new google.maps.Circle({
+        strokeColor: "#FF0000",
+        strokeOpacity: 0,
+        strokeWeight: 0,
+        fillColor: "#FF0000",
+        fillOpacity: 0,
+        map: this.map,
+        center: location,
+        radius: 20,
+      });
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position: GeolocationPosition) => {
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          this.playerPosLat = pos.lat;
-          this.playerPosLng = pos.lng;
-
-          this.map.setCenter(pos);
-          this.userMarker.setPosition(pos);
-          // eslint-disable-next-line @typescript-eslint/no-shadow
-          navigator.geolocation.watchPosition(position => {
-            pos = {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position: GeolocationPosition) => {
+            var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             };
             this.playerPosLat = pos.lat;
             this.playerPosLng = pos.lng;
-            this.userMarker.setPosition(pos);
-            this.playerWarningArea.setCenter(pos);
-            this.playerStealArea.setCenter(pos);
 
-            this.SearchRegionAreasForPlayer();
-          });
-        }
-      );
-      
-      if(!this.ghostHackerActivated && !this.ghostHackerStoleSomething){
-        setTimeout(() => {
-          this.ghostHackerActivated = true;
+            this.map.setCenter(pos);
+            this.userMarker.setPosition(pos);
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            navigator.geolocation.watchPosition(position => {
+              pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+              this.playerPosLat = pos.lat;
+              this.playerPosLng = pos.lng;
+              this.userMarker.setPosition(pos);
+              this.playerWarningArea.setCenter(pos);
+              this.playerStealArea.setCenter(pos);
+
+              this.SearchRegionAreasForPlayer();
+            });
+          }
+        );
+
+        if (!this.ghostHackerActivated && !this.ghostHackerStoleSomething) {
+          setTimeout(() => {
+            this.ghostHackerActivated = true;
+            this.ghostHackerMarker.setMap(this.map);
+          }, 10000)
+        } else if (!this.ghostHackerStoleSomething) {
           this.ghostHackerMarker.setMap(this.map);
-        }, 10000)
-      } else if(!this.ghostHackerStoleSomething) {
-        this.ghostHackerMarker.setMap(this.map);
-      }
+        }
 
         setInterval(() => {
           this.moveGhostHacker();
           this.CheckHackerInRangeOfPlayer();
         }, 10000)
-    }
+      }
 
-    for (const region in cityregions) {
-      const regionCircle = new google.maps.Circle({
-        strokeColor: cityregions[region].strokeColor,
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: cityregions[region].fillColor,
-        fillOpacity: 0.35,
-        map: this.map,
-        center: cityregions[region].center,
-        radius: cityregions[region].radius,
-      });
+      for (const region in cityregions) {
+        const regionCircle = new google.maps.Circle({
+          strokeColor: cityregions[region].strokeColor,
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: cityregions[region].fillColor,
+          fillOpacity: 0.35,
+          map: this.map,
+          center: cityregions[region].center,
+          radius: cityregions[region].radius,
+        });
+      }
     }
   }
 
@@ -267,19 +272,20 @@ export class MapScreenPage implements OnInit {
     }
   }
 
-  CheckHackerInRangeOfPlayer(){
-    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerWarningArea.center) <= this.playerWarningArea.radius){
-      if (!this.ghostHackerWarning && !this.ghostHackerStoleSomething){
+  CheckHackerInRangeOfPlayer() {
+    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerWarningArea.center) <= this.playerWarningArea.radius) {
+      if (!this.ghostHackerWarning && !this.ghostHackerStoleSomething) {
         window.alert("WARNING: The hacker is very close! Be careful, he might sabotage you!")
         this.ghostHackerWarning = true;
       }
     } else {
       this.ghostHackerWarning = false;
     }
-    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerStealArea.center) <= this.playerStealArea.radius){
-      if (!this.ghostHackerStoleSomething){
+    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerStealArea.center) <= this.playerStealArea.radius) {
+      if (!this.ghostHackerStoleSomething) {
         this.randomNumber = localStorage.getItem('inventoryLength');
-        this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {window.alert("The hacker stole one of your items!");
+        this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
+          window.alert("The hacker stole one of your items!");
         })
         this.ghostHackerStoleSomething = true;
         setInterval(() => {
@@ -289,8 +295,8 @@ export class MapScreenPage implements OnInit {
     }
   }
 
-  GenerateIdForHacker(min, max){
-    return(Math.floor(Math.random() * (max - min + 1) + min));
+  GenerateIdForHacker(min, max) {
+    return (Math.floor(Math.random() * (max - min + 1) + min));
   }
 
   openNav() {
@@ -329,7 +335,7 @@ export class MapScreenPage implements OnInit {
     this.closeNav();
   }
 
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     this.storeHackerActive = localStorage.setItem('hackerActive', JSON.stringify(this.ghostHackerActivated));
     this.storeHackerSteal = localStorage.setItem('hackerSteal', JSON.stringify(this.ghostHackerStoleSomething));
     this.storeHackerPosLat = localStorage.setItem('hackerLat', JSON.stringify(this.ghostHackerPosLat));

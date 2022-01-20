@@ -12,7 +12,7 @@ export class ApiService {
   players: Player;
   friends: any;
   playerId: any;
-
+  lobbyNaam: string;
   constructor(private http: HttpClient, public loginservice: LoginService) {
     // const newtoken =
     // {
