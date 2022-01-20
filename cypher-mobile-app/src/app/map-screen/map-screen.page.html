@@ -59,7 +59,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Map ({{inventoryItem.lobbyNaam}})</ion-title>
+      <ion-title>{{inventoryItem.lobbyNaam}}</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -79,12 +79,14 @@
       </ion-fab-button>
     </ion-fab> -->
 
-    <!-- <a class="float"> -->
-    <!-- <span (click)="openCLI()">>_</span> -->
+    <a class="float" *ngIf="inventoryItem.lobbyNaam === 'The Flash'">
+      <span class="Timer">{{timeLeft}}</span>
+    </a>
+
     <!-- <input type="image" name="Name of image button" src="Path of the Image file? border=" Specfiy Image Border " alt="
         text"> -->
     <!-- <input type="image" src="../../assets/icon/person1.jpeg" height="50" width="30"
-        style="margin-top:20%; background-color: green;" (click)="openCLI()"> -->
+        style="margin-top:20%; background-color: green;" (click)="openCLI()">
 
 
 
@@ -113,7 +115,7 @@
         <ion-icon name="game-controller-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-    <!-- </a> -->
+     </a> -->
   </ion-content>
 
 </div>

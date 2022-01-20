@@ -56,16 +56,16 @@
 .float {
   position: fixed;
   width: 70px;
-  height: 90px;
+  height: 70px;
   bottom: 40px;
-  left: 0px;
+  left: 45%;
   background-color: #0c9;
   color: #fff;
-  border-radius: 50px;
+  border-radius: 70px;
   text-align: center;
   align-content: center;
   box-shadow: 2px 2px 3px #999;
-  font-size: 60px;
+  font-size: 40px;
 }
 .menu {
   position: fixed;
@@ -84,4 +84,8 @@
 
 .my-float {
   margin-left: 12px;
+}
+.Timer {
+  // margin-top: 90%;
+  font-size: 20px;
 }
