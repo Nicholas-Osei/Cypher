@@ -302,10 +302,16 @@ export class MapScreenPage implements OnInit {
           else {
             this.moveGhostToPlayer();
           }
+          this.CheckHackerInRangeOfPlayer();
+          this.CheckHackerInRangeOfLocation();
+        }
+        else {
+          this.moveGhostHacker();
+          this.CheckHackerInRangeOfPlayer();
         }
 
-        this.CheckHackerInRangeOfPlayer();
-        this.CheckHackerInRangeOfLocation();
+
+
       }, 1000)
 
 
@@ -344,23 +350,32 @@ export class MapScreenPage implements OnInit {
 
 
       }
-
-    }
-
-    else {
-      for (const region in cityregions) {
-        const regionCircle = new google.maps.Circle({
-          strokeColor: cityregions[region].strokeColor,
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: cityregions[region].fillColor,
-          fillOpacity: 0.35,
-          map: this.map,
-          center: cityregions[region].center,
-          radius: cityregions[region].radius,
-        });
+      else {
+        if (!this.ghostHackerActivated && !this.ghostHackerStoleSomething) {
+          setTimeout(() => {
+            this.ghostHackerActivated = true;
+            this.ghostHackerMarker.setMap(this.map);
+          }, 10000)
+        } else if (!this.ghostHackerStoleSomething) {
+          this.ghostHackerMarker.setMap(this.map);
+        }
+        for (const region in cityregions) {
+          const regionCircle = new google.maps.Circle({
+            strokeColor: cityregions[region].strokeColor,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: cityregions[region].fillColor,
+            fillOpacity: 0.35,
+            map: this.map,
+            center: cityregions[region].center,
+            radius: cityregions[region].radius,
+          });
+        }
       }
+
     }
+
+
 
   }
 
@@ -369,27 +384,35 @@ export class MapScreenPage implements OnInit {
   SearchRegionAreasForPlayer() {
     // this.getPlayerInAnArea = false;
     console.log(this.ItemToTake.center);
-    // eslint-disable-next-line max-len
-    if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), this.ItemToTake.center) <= this.ItemToTake.radius) {
-      console.log('i am here');
-      this.playerStoleItem = true;
-      console.log(this.ItemToTake.center.lat);
-      this.level = 2;
-      this.level2();
+
+    if ((this.inventoryItem.lobbyNaam === 'The Flash')) {
+      // eslint-disable-next-line max-len
+      if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), this.ItemToTake.center) <= this.ItemToTake.radius) {
+        console.log('i am here');
+        this.playerStoleItem = true;
+        console.log(this.ItemToTake.center.lat);
+        this.level = 2;
+        this.level2();
+      }
+    }
+    else {
+      this.getPlayerInAnArea = false;
+      for (const region in cityregions) {
+        // eslint-disable-next-line max-len
+        if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius) {
+          this.getPlayerInAnArea = cityregions[region].playerInArea;
+          console.log(cityregions[region].playerInArea);
+          if (cityregions[region].isGameStartable) {
+            cityregions[region].isGameStartable = false;
+            cityregions[region].playerInArea = true;
+            cityregions[region].playGame();
+          }
+        }
+      }
     }
 
-    // for (const region in cityregions) {
-    //   // eslint-disable-next-line max-len
-    //   if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius) {
-    //     this.getPlayerInAnArea = cityregions[region].playerInArea;
-    //     console.log(cityregions[region].playerInArea);
-    //     if (cityregions[region].isGameStartable) {
-    //       cityregions[region].isGameStartable = false;
-    //       cityregions[region].playerInArea = true;
-    //       cityregions[region].playGame();
-    //     }
-    //   }
-    // }
+
+
   }
 
   level2() {
@@ -426,8 +449,8 @@ export class MapScreenPage implements OnInit {
 
         this.ghostHackerStoleSomething = true;
         this.playerStoleItem = false;
-        // this.level = 2;
-        // this.level2();
+        this.level = 2;
+        this.level2();
         console.log('loll');
         if (this.inventoryItem.lobbyNaam === 'The Flash') {
           return;
@@ -445,45 +468,9 @@ export class MapScreenPage implements OnInit {
 
   CheckHackerInRangeOfLocation() {
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.ItemToTake.center) <= this.ItemToTake.radius) {
-      //   if (!this.ghostHackerWarning && !this.ghostHackerStoleSomething) {
-      //     window.alert("WARNING: The hacker is very close! Be careful, he might sabotage you!")
-      //     this.ghostHackerWarning = true;
-      //   }
-      // } else {
-      //   this.ghostHackerWarning = false;
-      // }
-      // if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerStealArea.center) <= this.playerStealArea.radius) {
-      //   if (!this.ghostHackerStoleSomething) {
-      //     this.randomNumber = localStorage.getItem('inventoryLength');
-      //     this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
-      //       window.alert("The hacker stole one of your items!");
-      //     })
-      //     this.ghostHackerStoleSomething = true;
-      //     setInterval(() => {
-      //       this.ghostHackerMarker.setMap(null);
-      //     }, 5000)
-      //   }
-      // }
-
       if (this.playerStoleItem) {
         this.moveGhostToPlayer();
       }
-
-
-
-      // if (!this.ghostHackerStoleSomething) {
-      //   console.log('i have steal it');
-      //   this.ItemToTake.setMap(null);
-      //   this.level = 2;
-      //   this.level2();
-
-      // }
-      // else {
-      //   this.ItemToTake.setMap(null);
-      //   this.moveGhostToPlayer();
-      // }
-
-
     }
   }
   GenerateIdForHacker(min, max) {
