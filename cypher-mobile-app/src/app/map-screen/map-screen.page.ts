@@ -587,6 +587,9 @@ export class MapScreenPage implements OnInit {
       this.level4();
     }
     else if (this.level === 4) {
+      this.level = 5;
+    }
+    else if (this.level === 5) {
       this.gameOver = true;
       console.log('game over');
       this.level = 0;
