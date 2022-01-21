@@ -82,40 +82,55 @@
     <a class="float" *ngIf="inventoryItem.lobbyNaam === 'The Flash'">
       <span class="Timer">{{timeLeft}}</span>
     </a>
+    <a class="PointsBorder" *ngIf="inventoryItem.lobbyNaam === 'The Flash'"
+      style="top: 10%; left: 70%;border-radius: 0%;">
+      <img src="./assets/icon/user.png" alt="" srcset="" height="50px">
+      <!-- <span class="Points">Player point </span> -->
+      <span class="Points">{{playerPoint}}</span>
+    </a>
+    <a class="PointsBorder" *ngIf="inventoryItem.lobbyNaam === 'The Flash'"
+      style="top: 17%; left: 70%;border-radius: 0%;">
+      <img src="./assets/icon/ghost.png" alt="" srcset="" height="50px" width="50px">
+      <!-- <span class="Points">Player point </span> -->
+      <span class="Points">{{ghostPoint}}</span>
+    </a>
 
     <!-- <input type="image" name="Name of image button" src="Path of the Image file? border=" Specfiy Image Border " alt="
         text"> -->
     <!-- <input type="image" src="../../assets/icon/person1.jpeg" height="50" width="30"
-        style="margin-top:20%; background-color: green;" (click)="openCLI()">
+        style="margin-top:20%; background-color: green;" (click)="openCLI()">-->
 
 
+    <div *ngIf="inventoryItem.lobbyNaam !== 'The Flash'">
 
-    <ion-fab horizontal="start" vertical="bottom" slot="fixed">
-      <ion-fab-button color="light" size="larger">
-        <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-list side="top">
-        <ion-fab-button color="light" (click)="openCLI()">
-          <ion-icon name="terminal-outline"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-button color="light" (click)="openGhostHacker()">
-          <ion-icon name="skull-outline"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-button color="light" (click)="openWITS()">
-          <ion-icon name="server-outline"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-button color="light" (click)="openDecryption()">
-          <ion-icon name="document-lock-outline"></ion-icon>
-        </ion-fab-button>
-      </ion-fab-list>
-    </ion-fab>
 
-    <ion-fab *ngIf="getPlayerInAnArea;" slot="fixed" vertical="end" horizontal="end">
-      <ion-fab-button size="larger" color="light" (click)="goToGamescreen()">
-        <ion-icon name="game-controller-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-     </a> -->
+      <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+        <ion-fab-button color="light" size="larger">
+          <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+          <ion-fab-button color="light" (click)="openCLI()">
+            <ion-icon name="terminal-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="light" (click)="openGhostHacker()">
+            <ion-icon name="skull-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="light" (click)="openWITS()">
+            <ion-icon name="server-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="light" (click)="openDecryption()">
+            <ion-icon name="document-lock-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab-list>
+      </ion-fab>
+
+      <ion-fab *ngIf="getPlayerInAnArea;" slot="fixed" vertical="end" horizontal="end">
+        <ion-fab-button size="larger" color="light" (click)="goToGamescreen()">
+          <ion-icon name="game-controller-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <!-- </a> -->
+    </div>
   </ion-content>
 
 </div>

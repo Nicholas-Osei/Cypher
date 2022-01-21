@@ -28,9 +28,11 @@ export class MapScreenPage implements OnInit {
   playerStealArea: any;
   ghostHackerMarker: any;
   ghostHackerPos: any;
-  stolen: boolean
+  stolen: boolean;
   level = 1;
   playerStoleItem = false;
+  playerPoint = 0;
+  ghostPoint = 0;
   //Antwerpen: Rooseveltplein
   ghostHackerPosLat: number = 51.219783;
   ghostHackerPosLng: number = 4.416215;
@@ -55,9 +57,10 @@ export class MapScreenPage implements OnInit {
   storeHackerSteal: any;
   getBoolActiveHacker: string;
   getBoolStealHacker: string;
-  timeLeft = 5;
+  timeLeft = 180;
   interval;
-  ItemToTake: any
+  ItemToTake: any;
+  gameOver = false;
 
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -70,6 +73,8 @@ export class MapScreenPage implements OnInit {
 
   ngOnInit() {
     this.inventoryItem.lobbyNaam = localStorage.getItem('LobbyName');
+
+
 
   }
 
@@ -85,6 +90,7 @@ export class MapScreenPage implements OnInit {
         this.timeLeft--;
       } else if (this.timeLeft === 0) {
         console.log('time is up ');
+        this.gameOver = true
         this.pauseTimer();
       }
       console.log(this.timeLeft);
@@ -283,35 +289,60 @@ export class MapScreenPage implements OnInit {
         setTimeout(() => {
           this.ghostHackerActivated = true;
           this.ghostHackerMarker.setMap(this.map);
-        }, 1000)
+        }, 1000);
       } else if (!this.ghostHackerStoleSomething) {
         this.ghostHackerMarker.setMap(this.map);
       }
 
       setInterval(() => {
-        if (this.inventoryItem.lobbyNaam === 'The Flash') {
-          if (!this.playerStoleItem) {
-            if (this.level === 1) {
-              // this.ghostToLocation(51.221814, 4.413618);
-              this.ghostToLocation(51.242570, 4.444350);
-            }
-            else if (this.level === 2) {
-              this.ghostToLocation(51.257780, 4.452110);
-            };
+        if (this.gameOver) {
+          // alert('Game over !');
+          const confirm = window.confirm('Game over!  Play again ?');
+          if (confirm) {
+            window.location.reload();
+            console.log('yes');
+            this.gameOver = false;
+          } else {
+            this.gameOver = false;
+            this.router.navigate(['lobbies']).then(() => window.location.reload());
           }
-          else {
-            this.moveGhostToPlayer();
-          }
-          this.CheckHackerInRangeOfPlayer();
-          this.CheckHackerInRangeOfLocation();
+
         }
         else {
-          this.moveGhostHacker();
-          this.CheckHackerInRangeOfPlayer();
+          if (this.inventoryItem.lobbyNaam === 'The Flash') {
+            if (!this.playerStoleItem) {
+              if (this.level === 1) {
+                // this.ghostToLocation(51.221814, 4.413618);
+                this.ghostToLocation(51.242570, 4.444350);
+                console.log('going to location 1');
+
+              }
+              else if (this.level === 2) {
+                this.ghostToLocation(51.257780, 4.452110);
+                console.log('going to location 2');
+
+              }
+              else if (this.level === 3) {
+                this.ghostToLocation(51.230060, 4.413730);
+                console.log('going to location 3');
+              }
+              else if (this.level === 4) {
+                this.ghostToLocation(51.025875, 4.477536);
+                console.log('going to location 4');
+              };
+            }
+            else {
+              this.moveGhostToPlayer();
+            }
+            this.CheckHackerInRangeOfPlayer();
+            this.CheckHackerInRangeOfLocation();
+          }
+          else {
+            this.moveGhostHacker();
+            this.CheckHackerInRangeOfPlayer();
+          }
+
         }
-
-
-
       }, 1000)
 
 
@@ -319,9 +350,9 @@ export class MapScreenPage implements OnInit {
 
 
       if (this.inventoryItem.lobbyNaam === 'The Flash') {
-        // window.alert('Welcome to ' + this.inventoryItem.lobbyNaam + ' game. ' +
-        //   'The Goal is to get all items before the Ghost does. All within 180 seconds(3 minutes)!');
-        // window.alert('Go to the Green circle  on the map to get the Item. The time starts NOW!!');
+        window.alert('Welcome to ' + this.inventoryItem.lobbyNaam + ' game. ' +
+          'The Goal is to get all items before the Ghost does. All within 180 seconds(3 minutes)!');
+        window.alert('Go to the Green circle  on the map to get the Item. The time starts NOW!!');
         this.ghostHackerMarker = new google.maps.Marker({
           position: this.ghostHackerPos,
           icon: image,
@@ -390,9 +421,20 @@ export class MapScreenPage implements OnInit {
       if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), this.ItemToTake.center) <= this.ItemToTake.radius) {
         console.log('i am here');
         this.playerStoleItem = true;
+        this.playerPoint += 1;
         console.log(this.ItemToTake.center.lat);
-        this.level = 2;
-        this.level2();
+        // if (this.level === 2) {
+        //   this.level = 3;
+        //   console.log('level 3');
+        //   this.level3();
+        // }
+        // else {
+        //   this.level = 2;
+        //   this.level2();
+        // }
+        ///
+        this.levelChanger();
+        this.playerStoleItem = false;
       }
     }
     else {
@@ -431,6 +473,37 @@ export class MapScreenPage implements OnInit {
       radius: 250,
     });
   }
+  level3() {
+    // center: { lat: 51.229853, lng: 4.415807 },
+    console.log('level 3');
+    this.ItemToTake.setMap(null);
+    this.ItemToTake = new google.maps.Circle({
+      strokeColor: '#00FF00',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#00FF00',
+      fillOpacity: 0.35,
+      map: this.map,
+      // center: { lat: 51.257780, lng: 4.452110 },
+      center: { lat: 51.230060, lng: 4.413730 },
+      radius: 250,
+    });
+  }
+  level4() {
+    console.log('level 4');
+    this.ItemToTake.setMap(null);
+    this.ItemToTake = new google.maps.Circle({
+      strokeColor: '#00FF00',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#00FF00',
+      fillOpacity: 0.35,
+      map: this.map,
+      // center: { lat: 51.257780, lng: 4.452110 },
+      center: { lat: 51.025875, lng: 4.477536 },
+      radius: 250,
+    });
+  }
   CheckHackerInRangeOfPlayer() {
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerWarningArea.center) <= this.playerWarningArea.radius) {
       if (!this.ghostHackerWarning && !this.ghostHackerStoleSomething) {
@@ -441,38 +514,98 @@ export class MapScreenPage implements OnInit {
       this.ghostHackerWarning = false;
     }
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerStealArea.center) <= this.playerStealArea.radius) {
-      if (!this.ghostHackerStoleSomething) {
-        this.randomNumber = localStorage.getItem('inventoryLength');
-        // this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
-        //   window.alert("The hacker stole one of your items!");
-        // })
-
-        this.ghostHackerStoleSomething = true;
-        this.playerStoleItem = false;
-        this.level = 2;
-        this.level2();
-        console.log('loll');
-        if (this.inventoryItem.lobbyNaam === 'The Flash') {
-          return;
-        }
-        else {
-          setInterval(() => {
-            this.ghostHackerMarker.setMap(null);
-          }, 5000)
-        }
-
+      // if (!this.ghostHackerStoleSomething) {
+      this.randomNumber = localStorage.getItem('inventoryLength');
+      // this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
+      //   window.alert("The hacker stole one of your items!");
+      // })
+      console.log('again')
+      this.ghostHackerStoleSomething = true;
+      this.playerStoleItem = false;
+      // if (this.level === 2) {
+      //   this.level = 3;
+      //   console.log('level 3');
+      //   this.level3();
+      // }
+      // else {
+      //   this.level = 2;
+      //   this.level2();
+      // }
+      console.log(this.level)
+      if (this.playerPoint > 0) {
+        this.playerPoint -= 1;
       }
+      else {
+        this.playerPoint = 0;
+      }
+      this.ghostPoint += 1;
+      console.log('stolen');
+      if (this.inventoryItem.lobbyNaam === 'The Flash') {
+        return;
+      }
+      else {
+        setInterval(() => {
+          this.ghostHackerMarker.setMap(null);
+        }, 5000)
+      }
+
+      //}
 
     }
   }
+  levelChanger() {
+    if (this.level === 1) {
+      this.level = 2;
+      console.log('level 2');
+      this.level2();
+    }
 
+    else if (this.level === 2) {
+      this.level = 3;
+      this.level3();
+    }
+    else if (this.level === 3) {
+      this.level = 4;
+      this.level4();
+    }
+    else if (this.level === 4) {
+      this.gameOver = true;
+      console.log('game over');
+      if (this.playerPoint > this.ghostPoint) {
+        window.alert('Congratulations! you won');
+      }
+      else {
+        window.alert('Sorry you got beaten by the GHOST');
+        // window.confirm('Sorry you got beaten by the GHOST');
+      }
+      this.level = 0;
+
+    }
+
+  }
   CheckHackerInRangeOfLocation() {
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.ItemToTake.center) <= this.ItemToTake.radius) {
       if (this.playerStoleItem) {
+        //Ghost goes and steal points from player
         this.moveGhostToPlayer();
       }
+      else {
+        //Ghost goes to location to take point
+        console.log('i am at the location');
+
+        this.levelChanger();
+      }
+      // else {
+      //   this.level = 2;
+      //   this.level2();
+      // }
+
+      this.ghostPoint += 1;
+      // this.moveGhostHacker();
     }
   }
+
+
   GenerateIdForHacker(min, max) {
     return (Math.floor(Math.random() * (max - min + 1) + min));
   }
