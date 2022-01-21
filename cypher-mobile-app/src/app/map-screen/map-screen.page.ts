@@ -57,7 +57,7 @@ export class MapScreenPage implements OnInit {
   storeHackerSteal: any;
   getBoolActiveHacker: string;
   getBoolStealHacker: string;
-  timeLeft = 180;
+  timeLeft = 600;
   interval;
   ItemToTake: any;
   gameOver = false;
@@ -96,7 +96,7 @@ export class MapScreenPage implements OnInit {
         this.timeLeft--;
       } else if (this.timeLeft === 0) {
         console.log('time is up ');
-        this.gameOver = true
+        this.gameOver = true;
         this.pauseTimer();
       }
       console.log(this.timeLeft);
@@ -370,7 +370,7 @@ export class MapScreenPage implements OnInit {
 
       if (this.inventoryItem.lobbyNaam === 'The Flash') {
         window.alert('Welcome to ' + this.inventoryItem.lobbyNaam + ' game. ' +
-          'The Goal is to get all items before the Ghost does. All within 180 seconds(3 minutes)!');
+          'The Goal is to get all items before the Ghost does. All within 600 seconds(10 minutes)!');
         window.alert('Go to the Green circle  on the map to get the Item. The time starts NOW!!');
         this.ghostHackerMarker = new google.maps.Marker({
           position: this.ghostHackerPos,

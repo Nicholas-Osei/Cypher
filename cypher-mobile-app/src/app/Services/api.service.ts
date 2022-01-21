@@ -22,6 +22,10 @@ export class ApiService {
 
   }
 
+  reloadPage() {
+    window.location.reload();
+  }
+
   getAllPlayers(): Observable<Player> {
 
     const httpHeaders = new HttpHeaders({

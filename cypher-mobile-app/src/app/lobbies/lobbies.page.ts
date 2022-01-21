@@ -8,7 +8,7 @@ import { ApiService } from '../Services/api.service';
 })
 export class LobbiesPage implements OnInit {
 
-  constructor(private router: Router, private lobbyName: ApiService) { }
+  constructor(private router: Router, public lobbyName: ApiService) { }
 
   ngOnInit() {
   }
