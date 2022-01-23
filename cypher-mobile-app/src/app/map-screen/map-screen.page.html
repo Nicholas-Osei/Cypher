@@ -59,7 +59,8 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Map (name of the Lobby)</ion-title>
+      <ion-title>{{inventoryItem.lobbyNaam}}</ion-title>
+      <span style="float: right; margin-right: 3%;" (click)="inventoryItem.reloadPage()">&#x21bb;</span>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -67,27 +68,43 @@
     <div id="map" #map>
       <span style="margin-left: 30%; margin-top: 50%; color: black;">Loading please wait ...</span>
     </div>
-  
-  
+
+
     <!-- <a class="menu">
       <span class="posMenu" (click)="openNav()">&#9776;</span>
     </a> -->
-  
+
     <!-- <ion-fab slot="fixed" vertical="top" horizontal="start">
       <ion-fab-button size="larger" color="light" (click)="openNav()">
         <ion-icon name="menu-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab> -->
-  
-    <!-- <a class="float"> -->
-    <!-- <span (click)="openCLI()">>_</span> -->
+
+    <a class="float" *ngIf="inventoryItem.lobbyNaam === 'The Flash'">
+      <span class="Timer">{{timeLeft}}</span>
+    </a>
+    <a class="PointsBorder" *ngIf="inventoryItem.lobbyNaam === 'The Flash'"
+      style="top: 10%; left: 70%;border-radius: 0%;">
+      <img src="./assets/icon/user.png" alt="" srcset="" height="50px">
+      <!-- <span class="Points">Player point </span> -->
+      <span class="Points">{{playerPoint}}</span>
+    </a>
+    <a class="PointsBorder" *ngIf="inventoryItem.lobbyNaam === 'The Flash'"
+      style="top: 17%; left: 70%;border-radius: 0%;">
+      <img src="./assets/icon/ghost.png" alt="" srcset="" height="50px" width="50px">
+      <!-- <span class="Points">Player point </span> -->
+      <span class="Points">{{ghostPoint}}</span>
+    </a>
+
     <!-- <input type="image" name="Name of image button" src="Path of the Image file? border=" Specfiy Image Border " alt="
         text"> -->
     <!-- <input type="image" src="../../assets/icon/person1.jpeg" height="50" width="30"
-        style="margin-top:20%; background-color: green;" (click)="openCLI()"> -->
-  
-        
-  
+        style="margin-top:20%; background-color: green;" (click)="openCLI()">-->
+
+
+    <!-- <div *ngIf="inventoryItem.lobbyNaam !== 'The Flash'"> -->
+
+
     <ion-fab horizontal="start" vertical="bottom" slot="fixed">
       <ion-fab-button color="light" size="larger">
         <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
@@ -108,13 +125,13 @@
       </ion-fab-list>
     </ion-fab>
 
-    <ion-fab *ngIf="getPlayerInArea;" slot="fixed" vertical="center" horizontal="center">
+    <ion-fab *ngIf="getPlayerInAnArea;" slot="fixed" vertical="end" horizontal="end">
       <ion-fab-button size="larger" color="light" (click)="goToGamescreen()">
         <ion-icon name="game-controller-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
     <!-- </a> -->
+    <!-- </div> -->
   </ion-content>
-  
-</div>
 
+</div>

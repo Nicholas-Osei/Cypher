@@ -30,6 +30,11 @@ namespace Cypher.Infrastructure.Repositories
             return await _repo.Entities.Where(i => i.Id == itemId).FirstOrDefaultAsync();
         }
 
+        public async Task<List<Item>> GetListAsync()
+        {
+            return await _repo.Entities.ToListAsync();
+        }
+
         public async Task<int> InsertAsync(Item item)
         {
             await _repo.AddAsync(item);

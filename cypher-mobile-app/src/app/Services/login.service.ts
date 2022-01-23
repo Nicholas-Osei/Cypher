@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
-import { PlayerService } from './player.service';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'

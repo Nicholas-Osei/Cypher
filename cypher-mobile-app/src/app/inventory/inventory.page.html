@@ -45,12 +45,13 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>Inventory</ion-title>
+      <span style="float: right; margin-right: 3%;" (click)="api.reloadPage()">&#x21bb;</span>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <!-- <h2 style="text-align: center;">Inventory</h2> -->
 
-    <div *ngFor="let all of inventory" class="Items">
+    <div *ngFor="let all of inventory.inventory" class="Items">
       <!-- <input type="radio" name="id">{{all.id}}</td> -->
       <button (click)="deleteItem(all.id)" style="float: right; margin-top: 1%;">&times;</button>
       <div style="text-align: center; margin-top: 30%; font-size: 20px;">

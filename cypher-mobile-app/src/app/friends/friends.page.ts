@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../Services/login.service';
-import { PlayerService } from '../Services/player.service';
+import { ApiService } from '../Services/api.service';
 
 @Component({
   selector: 'app-friends',
@@ -18,14 +18,14 @@ export class FriendsPage implements OnInit {
   playerbyId: any;
   id: number;
 
-  constructor(public speler: PlayerService, public loginservice: LoginService, public router: Router) { }
+  constructor(public api: ApiService, public loginservice: LoginService, public router: Router) { }
 
 
   ngOnInit() {
-    this.speler.getAllPlayers().subscribe(p => {
-      this.speler.players = p; console
+    this.api.getAllPlayers().subscribe(p => {
+      this.api.players = p; console
         .log('Got all players');
-      this.speler.players.data.forEach(m => {
+      this.api.players.data.forEach(m => {
         if (m.name === this.loginservice.displayName) {
           console.log(m.name);
           this.id = m.id;
@@ -36,7 +36,7 @@ export class FriendsPage implements OnInit {
   }
 
   deleteFriend(id: number) {
-    this.speler.deleteFriend(this.id, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
+    this.api.deleteFriend(this.id, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
   }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -45,7 +45,7 @@ export class FriendsPage implements OnInit {
     this.router.navigate([page]).then(() => window.location.reload());
   }
   getPlayerbyId(pId) {
-    this.speler.getPlayerById(pId).subscribe(
+    this.api.getPlayerById(pId).subscribe(
       u => {
         console.log('Got friends'); this.playerbyId = u;
         console.log(this.playerbyId.data.inventory);
@@ -60,7 +60,7 @@ export class FriendsPage implements OnInit {
       friendId: id
     };
     // eslint-disable-next-line max-len
-    this.speler.addToPlayerFriends(this.id, newFriend).subscribe(f => { console.log('Friend Added'); this.generateRandomNumber(); this.ngOnInit(); });
+    this.api.addToPlayerFriends(this.id, newFriend).subscribe(f => { console.log('Friend Added'); this.generateRandomNumber(); this.ngOnInit(); });
   }
 
   generateRandomNumber() {
@@ -74,7 +74,7 @@ export class FriendsPage implements OnInit {
   search(name?: any) {
     console.log(this.playername);
     // console.log(this.)
-    this.speler.searchForFriends(this.playername).
+    this.api.searchForFriends(this.playername).
       subscribe(s => { this.playerSearchResults = s.data; console.log(this.playerSearchResults); });
   }
 }

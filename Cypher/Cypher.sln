@@ -28,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cypher.Infrastructure.Shared", "Cypher.Infrastructure.Shared\Cypher.Infrastructure.Shared.csproj", "{7E62A300-1001-4F7D-9E25-C3CE55BFFBBF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DA8E4E00-D6BE-4466-BBB8-22014BA80F48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cypher.Test", "Cypher.Test\Cypher.Test.csproj", "{8CC73121-6C04-44AF-8CBD-D2AFDEC4B993}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +62,10 @@ Global
 		{7E62A300-1001-4F7D-9E25-C3CE55BFFBBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E62A300-1001-4F7D-9E25-C3CE55BFFBBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E62A300-1001-4F7D-9E25-C3CE55BFFBBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CC73121-6C04-44AF-8CBD-D2AFDEC4B993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CC73121-6C04-44AF-8CBD-D2AFDEC4B993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CC73121-6C04-44AF-8CBD-D2AFDEC4B993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CC73121-6C04-44AF-8CBD-D2AFDEC4B993}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,8 @@ Global
 		{04E175BB-45F3-4C79-8ACC-0BADBE07AC80} = {544A568D-F871-4182-9825-CEFB86A3F81F}
 		{2CB63A3A-822A-4B65-BD31-5950BF741D32} = {C7AA309A-117E-4B05-82DD-CFF73A83EC3C}
 		{7E62A300-1001-4F7D-9E25-C3CE55BFFBBF} = {C7AA309A-117E-4B05-82DD-CFF73A83EC3C}
+		{DA8E4E00-D6BE-4466-BBB8-22014BA80F48} = {267D29E0-F443-4639-B978-2C558F631685}
+		{8CC73121-6C04-44AF-8CBD-D2AFDEC4B993} = {DA8E4E00-D6BE-4466-BBB8-22014BA80F48}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5B792FBC-B8C2-415D-8EAE-05D242D43842}

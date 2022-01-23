@@ -46,11 +46,9 @@
   <ion-content>
   
     <ion-card disabled="false" class="outputcard">
-      <ion-card-content>
-        <ion-textarea readonly=true #commandoutput class="command-output" id="command-output" name="command-output">
-          <!--</ion-card-content>>ionScroll)="HandleScroll(*event)" scroll-events="true"-->
-          {{ cliOutput }}
-        </ion-textarea>
+      <ion-card-content id="cardcontent">
+        <!-- <ion-textarea readonly=true [(ngModel)]="cliOutput" class="command-output" id="command-output" name="command-output"></ion-textarea> -->
+        <textarea #cliOutput readonly=true id="cliOutput" rows="1" maxLength="500"  [(ngModel)]="Output"></textarea>
       </ion-card-content>
       
     </ion-card>
@@ -59,14 +57,19 @@
       <ion-card-content>
         <ion-item class="cliInput" lines="none">
           <div style="width:30px"></div>
-      <ion-input id="commandInput" name="commandInput" [(ngModel)]="commandInput" placeholder="Enter Input"
-      (keyup.enter)="CommandInput()"></ion-input>
+      <ion-input id="commandInput" name="commandInput" [(ngModel)]="commandInput" (keyup)="resize()" placeholder="Enter Input"
+      (keydown.enter)="CommandInput()"></ion-input>
       
-      <ion-select interface="popover">
-        <ion-select-option value="run">Launch item</ion-select-option>
-        <ion-select-option value="ls">List items</ion-select-option>
-        <ion-select-option value="rm">Remove item</ion-select-option>
-      </ion-select>
+      <!-- <ion-select interface="popover" (ngModelChange)='Excecute(value)'>
+        <ion-select-option value="run" (ngModelChange)="Excecute(run)" >Launch item</ion-select-option>
+        <ion-select-option value="list" (change)="Excecute(list)" >List items</ion-select-option>
+        <ion-select-option value="decrypt" (change)="Excecute(decrypt)" >Decrypt item</ion-select-option>
+        <ion-select-option value="clear" (change)="Excecute(clear)" >Clear cli</ion-select-option>
+      </ion-select> -->
+    <ion-select [ngModel]="selection" interface="popover" (ngModelChange)="onChange($event, selection)" >
+        <ion-select-option *ngFor="let option of options">{{option}}</ion-select-option>
+    </ion-select>
+
     </ion-item>
     </ion-card-content>
     </ion-card>
