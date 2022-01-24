@@ -8,63 +8,68 @@
         <img src="~/images/logo-transparent.png" style="display: block; margin-left: auto; margin-right: auto; width: 200px; height:200px;" />
     </div>
     <br />
-    <h2 class="text-center display-4">Hi There!</h2>
+    <h2 class="text-center display-4">Welcome</h2>
     <div class="row" style="justify-content:center; font-size:medium">
-        <div class="text-center">Here is your full-fledged ASP.NET Core 5.0 MVC and WebAPI Application. Powered by <a href="https://www.codewithmukesh.com">codewithmukesh</a> and <a href="https://www.codewithmukesh.com">aspnetcorehero</a>. </div>
+        <div class="text-center">Cypher is een framework voor puzzel gebaseerde stadspelen dat zich zou afspelen over een bepaalde tijd en over een groot gebied van een stad. </div>
         <br />
-        <div class="text-center">Support the project by leaving a star on the <a href="https://github.com/aspnetcorehero/Boilerplate">Github Repository </a> so that I keep adding more awesome features to this Boilerplate Template. </div>
+        <div class="text-center">Het spel zou op 1 dag gespeeld kunnen worden of zich over een paar maanden kunnen afspelen. </div>
         <br />
     </div>
     <div class="container z-depth-1" style=" margin-top: 30px;">
         <section class="p-md-3 mx-md-5">
             <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-12">
-                    <h2 class="mb-3">The Vision</h2>
+                    <h2 class="mb-3">Introductie</h2>
                     <p class="text-muted pt-3">
-                        An idea to bring together the best and essential practices / pacakges of ASP.NET Core 5.0 along with Clean Hexagonal Architecture that can be a right fit for small/mid and enterprise level solutions. How easy would it be if you are able to run a single line of CLI command on your Console and you get a complete implementation in no time? That's the exact vision I had while building this full fledged Boilerplate template.
+                        Cypher als project zou een framework bevatten waar een "game master" groepen kan inschrijven voor een city game. De "game master" kan dan uit een lijst van puzzels kiezen, kan kiezen wanneer deze puzzels moeten worden uitgevoerd en waar ze moeten worden uitgevoerd. Hier zijn natuurlijk ook spelregels aan gebonden, dit hoort dan bij de puzzel dat gekozen was. Zo kan er makkelijk een city game worden opgezet.
+                    </p>
+                    <p class="text-muted pt-3">
+                        Echter het framework zal enkel de barebone basis zijn. Het MVP is dan een framework, waarmee je een city game kunt opstellen en starten en een voorgeprogrammeerde city game om te spelen.
                     </p>
                 </div>
             </div>
+            <h2 class="mb-3">De puzzels</h2>
             <div class="row pt-3">
                 <div class="col-lg-3 col-md-6 mb-5">
                     <h5 class="mb-3">
-                        <i class="far fa-paper-plane indigo-text pr-2"></i> Clean Architecture
+                        <i class="far fa-paper-plane indigo-text pr-2"></i> Decryption
                     </h5>
                     <p class="text-muted mb-lg-0">
-                        Incorporating the best practices, this Solution Template offers you great flexibility in terms of features and scalability.
+                        Een idee is om een bericht te decrypteren waarin een locatie staat. De gebruiker moet dan naar de locatie gaan en daar iets oplossen.
                     </p>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-5">
                     <h5 class="mb-3">
-                        <i class="fas fa-pen-alt green-text pr-2"></i> Essential Packages
+                        <i class="fas fa-pen-alt green-text pr-2"></i> Hack The Server
                     </h5>
                     <p class="text-muted mb-lg-0">
-                        Logging, Mapping, Caching, Elegant Toast Notifications, API Versioning, Image Optimization - Everything is already taken care for you.
+                        Via een map krijg je een locatie, (soort radar) waarnaar de gebruiker zich moet wenden. Op deze locatie is er een zogezegde server waarin je moet hacken en een bericht moet loskrijgen.
                     </p>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-5">
                     <h5 class="mb-3">
-                        <i class="fas fa-user amber-text pr-2"></i> User Management
+                        <i class="fas fa-user amber-text pr-2"></i> The Ghost
                     </h5>
                     <p class="text-muted mb-md-0">
-                        A fully implemented User Management Module that includes Login , Registration, JWT Authenication (WebAPI), User Profiles, Permissions Management, Role Management and much more is available out of the box.
+                        Een "pacman ghost" dat door de gamemaster wordt gecontroleerd en in de buurt van spelers kan geplaatst worden. De spelers moeten deze ontwijken, dit op basis van locatie. Om de "ghost" te stoppen moet er een bepaalde puzzel opgelost worden.
                     </p>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-5">
                     <h5 class="mb-3">
-                        <i class="fas fa-rocket red-text pr-2"></i> CRUD Implementation
+                        <i class="fas fa-rocket red-text pr-2"></i> CLI
                     </h5>
                     <p class="text-muted mb-md-0">
-                        A Sample CRUD Implementation is included out of the box that loads blazing fast. Based on AJAX / View Rendering / jQueryTables / Cached Data. This gives you a Single Page Application Feel and Response times.
+                        Een tekst-based rpg puzzel, waarmee je met een prompt antwoorden moet ingeven. Dit bestaat dan uit een kort verhaaltje dat door de game master kan worden ingesteld, met gepaste antwoorden. Wij voorzien een template.
                     </p>
                 </div>
             </div>
-            <div class="row d-flex justify-content-between align-items-center">
+            @*<div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-12">
                     <h2 class="mb-3">Documentation</h2>
                     <p class="text-muted pt-3">
-                       Coming Soon. New Articles and Tutorials will be posted on my <a href="https://www.codewithmukesh.com">blog.</a>
-                    </p></div>
+                        Coming Soon. New Articles and Tutorials will be posted on my <a href="https://www.codewithmukesh.com">blog.</a>
+                    </p>
+                </div>
             </div>
             <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-12">
@@ -80,7 +85,7 @@
                     </ul>
                     <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="codewithmukesh" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
                 </div>
-            </div>
+            </div>*@
         </section>
     </div>
 </div>
