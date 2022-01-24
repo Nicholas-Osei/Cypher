@@ -20,7 +20,7 @@ namespace Cypher.Web.Areas.Cypher.Mappings
             CreateMap<UpdateLobbyCommand, LobbyViewModel>().ReverseMap();
             CreateMap<GetAllLobbiesResponse, LobbyViewModel>().ReverseMap();
             CreateMap<GetLobbyByIdResponse, LobbyViewModel>().ReverseMap();
-            //CreateMap<Lobby, LobbyViewModel>().ReverseMap();
+            CreateMap<Lobby, LobbyViewModel>().ReverseMap();
             CreateMap<GetLobbyByIdResponse, Lobby>().ReverseMap();
         }
     }

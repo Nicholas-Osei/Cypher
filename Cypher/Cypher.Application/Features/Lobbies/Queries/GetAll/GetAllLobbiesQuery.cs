@@ -42,7 +42,8 @@ namespace Cypher.Application.Features.Lobbies.Queries
                     Id = e.Id,
                     Name = e.Name,
                     LobbyAdmin = e.LobbyAdmin,
-                    Players = e.Players
+                    Players = e.Players,
+                    CreatedOn = e.CreatedOn
                 };
 
                 var paginatedList = await _repo.Lobbies
