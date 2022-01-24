@@ -48,7 +48,7 @@ namespace Cypher.Infrastructure.Repositories
 
         public async Task UpdateAsync(Lobby lobby)
         {
-            throw new NotImplementedException();
+            await _repo.UpdateAsync(lobby);
         }
     }
 }

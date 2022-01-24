@@ -36,7 +36,12 @@ namespace Cypher.Api.Controllers.v1
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, UpdateLobbyCommand command)
         {
-            throw new NotImplementedException();
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{id}")]

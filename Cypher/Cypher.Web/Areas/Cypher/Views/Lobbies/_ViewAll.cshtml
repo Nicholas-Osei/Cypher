@@ -42,7 +42,7 @@
                 }
             </td>
             @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Lobbies.Delete)).Result.Succeeded
-  || (AuthorizationService.AuthorizeAsync(User, Permissions.Lobbies.Edit)).Result.Succeeded)
+                || (AuthorizationService.AuthorizeAsync(User, Permissions.Lobbies.Edit)).Result.Succeeded)
             {
                 <td text-right">
                     <div class="btn-group">
