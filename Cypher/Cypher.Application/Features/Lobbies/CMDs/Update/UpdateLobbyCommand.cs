@@ -46,8 +46,9 @@ namespace Cypher.Application.Features.Lobbies.CMDs.Update
 
                     if (request.PlayerIds.Count != 0)
                     {
-                        if (lobby.Players == null)
-                            lobby.Players = new List<Player>();
+                        //if (lobby.Players == null)
+                        //    lobby.Players = new List<Player>();
+                        lobby.Players = new List<Player>();
 
                         foreach (var playerId in request.PlayerIds)
                         {
