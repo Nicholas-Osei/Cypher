@@ -22,5 +22,7 @@ namespace Cypher.Domain.Entities.Cypher
         [JsonIgnore]
         public virtual ICollection<Player> Players { get; set; }
         public virtual Inventory Inventory { get; set; }
+
+        public float Balance { get; set; }
     }
 }

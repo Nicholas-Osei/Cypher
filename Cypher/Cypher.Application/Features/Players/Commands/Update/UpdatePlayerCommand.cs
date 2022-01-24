@@ -16,7 +16,7 @@ namespace Cypher.Application.Features.Players.Commands.Update
         public int Id { get; set; }
         public string Name { get; set; }
         public bool IsAdmin { get; set; }
-        // TO DO: Update many to many relations or create seperate commands
+        public float Balance { get; set; }
 
         public virtual Inventory Inventory { get; set; }
 
@@ -42,9 +42,8 @@ namespace Cypher.Application.Features.Players.Commands.Update
                 else
                 {
                     player.Name = cmd.Name ?? player.Name;
-                    // For lobby admin: Needs to be added to list
-                    //player.IsAdmin = cmd.IsAdmin;
                     player.Inventory = cmd.Inventory ?? player.Inventory;
+                    player.Balance = cmd.Balance;
 
                     await _playerRepo.UpdateAsync(player);
                     await _unitOfWork.Commit(cancellationToken);
