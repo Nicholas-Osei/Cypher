@@ -15,7 +15,7 @@ namespace Cypher.Web.Areas.Cypher.Models
         public int LobbyAdminId { get; set; }
         public Player LobbyAdmin { get; set; }
 
-        public virtual ICollection<int> PlayersId { get; set; }
+        public virtual ICollection<int> PlayerIds { get; set; }
         public virtual ICollection<Player> Players { get; set; }
 
         public SelectList AllPlayers { get; set; }
