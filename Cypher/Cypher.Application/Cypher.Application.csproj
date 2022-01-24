@@ -51,7 +51,6 @@
     <None Remove="Features\Messages\Queries\GetById\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\Lobbies\CMDs\Delete\" />
     <Folder Include="Features\UserCredentials\" />
     <Folder Include="Features\UserCredentials\Commands\" />
     <Folder Include="Features\UserCredentials\Queries\" />

@@ -13,5 +13,6 @@ namespace Cypher.Application.Features.Lobbies.Queries
         public string Name { get; set; }
         public Player LobbyAdmin { get; set; }
         public ICollection<Player> Players{ get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

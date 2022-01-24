@@ -23,7 +23,7 @@ namespace Cypher.Infrastructure.Repositories
 
         public async Task DeleteAsync(Lobby lobby)
         {
-            throw new NotImplementedException();
+            await _repo.DeleteAsync(lobby);
         }
 
         public async Task<List<Lobby>> GetListAsync()
@@ -48,7 +48,7 @@ namespace Cypher.Infrastructure.Repositories
 
         public async Task UpdateAsync(Lobby lobby)
         {
-            throw new NotImplementedException();
+            await _repo.UpdateAsync(lobby);
         }
     }
 }

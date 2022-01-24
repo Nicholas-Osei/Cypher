@@ -13,7 +13,8 @@ namespace Cypher.Application.Mappings
     {
         public LobbyProfile()
         {
-            CreateMap<CreateLobbyCommand, Lobby>().ReverseMap();
+            CreateMap<CreateLobbyCommand, Lobby>()
+                .ReverseMap();
         }
     }
 }

@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using Cypher.Web.Areas.Cypher.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Cypher.Application.Features.Lobbies.CMDs.Create;
+using Cypher.Application.Features.Lobbies.CMDs.Delete;
+using Cypher.Application.Features.Lobbies.CMDs.Update;
 
 namespace Cypher.Web.Areas.Cypher.Controllers
 {
@@ -68,6 +70,7 @@ namespace Cypher.Web.Areas.Cypher.Controllers
 
         public async Task<JsonResult> OnPostCreateOrEdit(int id, LobbyViewModel lobby)
         {
+            // Create
             if (id == 0)
             {
                 var createLobbyCommand = _mapper.Map<CreateLobbyCommand>(lobby);
@@ -85,7 +88,12 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             else
             {
                 // Update with update command
-                //var updateLobbyCommmand = _mapper.Map<>
+                var updateLobbyCommmand = _mapper.Map<UpdateLobbyCommand>(lobby);
+                var result = await _mediator.Send(updateLobbyCommmand);
+                if (result.Succeeded)
+                {
+                    _notify.Information($"Lobby with ID { result.Data } has been updated.");
+                }
             }
 
             var response = await _mediator.Send(new GetAllLobbiesQuery(null, null));
@@ -102,72 +110,30 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             }
         }
 
-        // GET: LobbiesController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: LobbiesController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: LobbiesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<JsonResult> OnPostDelete(int id)
         {
-            try
+            var deleteCommand = await _mediator.Send(new DeleteLobbyCommand { Id = id });
+            if (deleteCommand.Succeeded)
             {
-                return RedirectToAction(nameof(Index));
+                _notify.Information($"Lobby with Id {id} Deleted.");
+                var response = await _mediator.Send(new GetAllLobbiesQuery(null, null));
+                if (response.Succeeded)
+                {
+                    var viewModel = _mapper.Map<List<LobbyViewModel>>(response.Data);
+                    var html = await _viewRenderer.RenderViewToStringAsync("_ViewAll", viewModel);
+                    return new JsonResult(new { isValid = true, html = html });
+                }
+                else
+                {
+                    _notify.Error(response.Message);
+                    return null;
+                }
             }
-            catch
+            else
             {
-                return View();
-            }
-        }
-
-        // GET: LobbiesController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: LobbiesController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LobbiesController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LobbiesController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                _notify.Error(deleteCommand.Message);
+                return null;
             }
         }
     }
