@@ -28,15 +28,15 @@ export class HomePage implements OnInit {
   constructor(public googlePlus: GooglePlus, private router: Router,
     public nav: NavController, public loginservice: LoginService, public apiservice: ApiService) {
 
-    // render({
-    //   id: '#myPaypalButtons',
-    //   currency: 'EUR',
-    //   value: this.moneyToPay.toString(),
-    //   onApprove: (details) => {
-    //     alert('Transaction succesfull');
-    //     this.mybalance += this.moneyToPay;
-    //   }
-    // });
+    render({
+      id: '#myPaypalButtons',
+      currency: 'EUR',
+      value: this.moneyToPay.toString(),
+      onApprove: (details) => {
+        alert('Transaction succesfull');
+        this.mybalance += this.moneyToPay;
+      }
+    });
 
   }
 
