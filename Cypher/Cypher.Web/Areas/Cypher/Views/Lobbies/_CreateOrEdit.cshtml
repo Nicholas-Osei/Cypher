@@ -43,7 +43,7 @@
                     <label class="col-md-3 col-form-label">Players</label>
                     <div class="col-md-9">
                         <div class="input-group">
-                            <select name="Players" class="form-control select2bs4" id="Players" asp-for="Players" asp-items="@Model.AllPlayers">
+                            <select name="PlayersId" class="form-control select2bs4" id="PlayersId" asp-for="PlayersId" asp-items="@Model.AllPlayers">
                             </select>
                         </div>
                         @*<span asp-validation-for="PlayerIds" class="text-danger"></span>*@
@@ -70,7 +70,7 @@
             return m;
         }
     });
-    $("#Players").select2({
+    $("#PlayersId").select2({
         placeholder: "Select Players",
         theme: "bootstrap4",
         escapeMarkup: function (m) {

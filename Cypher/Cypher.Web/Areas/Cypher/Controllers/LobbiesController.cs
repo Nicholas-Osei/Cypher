@@ -13,6 +13,7 @@ using Cypher.Web.Areas.Cypher.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Cypher.Application.Features.Lobbies.CMDs.Create;
 using Cypher.Application.Features.Lobbies.CMDs.Delete;
+using Cypher.Application.Features.Lobbies.CMDs.Update;
 
 namespace Cypher.Web.Areas.Cypher.Controllers
 {
@@ -69,6 +70,7 @@ namespace Cypher.Web.Areas.Cypher.Controllers
 
         public async Task<JsonResult> OnPostCreateOrEdit(int id, LobbyViewModel lobby)
         {
+            // Create
             if (id == 0)
             {
                 var createLobbyCommand = _mapper.Map<CreateLobbyCommand>(lobby);
@@ -86,7 +88,12 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             else
             {
                 // Update with update command
-                //var updateLobbyCommmand = _mapper.Map<>
+                var updateLobbyCommmand = _mapper.Map<UpdateLobbyCommand>(lobby);
+                var result = await _mediator.Send(updateLobbyCommmand);
+                if (result.Succeeded)
+                {
+                    _notify.Information($"Lobby with ID { result.Data } has been updated.");
+                }
             }
 
             var response = await _mediator.Send(new GetAllLobbiesQuery(null, null));

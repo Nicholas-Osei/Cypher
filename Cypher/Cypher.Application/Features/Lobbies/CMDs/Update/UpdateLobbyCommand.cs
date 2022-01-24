@@ -16,7 +16,7 @@ namespace Cypher.Application.Features.Lobbies.CMDs.Update
         public int Id { get; set; }
         public string Name { get; set; }
         public int LobbyAdminId { get; set; }
-        public ICollection<Player> Players { get; set; }
+        public ICollection<int> PlayerIds { get; set; }
 
         public class UpdateLobbyCommandHandler : IRequestHandler<UpdateLobbyCommand, Result<int>>
         {
@@ -44,14 +44,14 @@ namespace Cypher.Application.Features.Lobbies.CMDs.Update
                     lobby.Name = request.Name ?? lobby.Name;
                     lobby.LobbyAdminId = request.LobbyAdminId;
 
-                    if (request.Players.Count != 0)
+                    if (request.PlayerIds.Count != 0)
                     {
                         if (lobby.Players == null)
                             lobby.Players = new List<Player>();
 
-                        foreach (var rPlayer in request.Players)
+                        foreach (var playerId in request.PlayerIds)
                         {
-                            var player = await _playerRepository.GetByIdAsync(rPlayer.Id);
+                            var player = await _playerRepository.GetByIdAsync(playerId);
                             lobby.Players.Add(player);
                         }
                     }
