@@ -534,39 +534,39 @@ export class MapScreenPage implements OnInit {
       this.ghostHackerWarning = false;
     }
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerStealArea.center) <= this.playerStealArea.radius) {
-      if (!this.ghostHackerStoleSomething) {
-        this.randomNumber = localStorage.getItem('inventoryLength');
-        this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
-          window.alert("The hacker stole one of your items!");
-        });
-        console.log('again')
-        this.ghostHackerStoleSomething = true;
-        this.playerStoleItem = false;
-        // if (this.level === 2) {
-        //   this.level = 3;
-        //   console.log('level 3');
-        //   this.level3();
-        // }
-        // else {
-        //   this.level = 2;
-        //   this.level2();
-        // }
-        console.log(this.level)
-        if (this.playerPoint > 0) {
-          this.playerPoint -= 1;
-        }
-        else {
-          this.playerPoint = 0;
-        }
-        this.ghostPoint += 1;
-        console.log('stolen');
-        if (this.inventoryItem.lobbyNaam !== 'The Flash') {
-          setInterval(() => {
-            this.ghostHackerMarker.setMap(null);
-          }, 5000);
-        }
-
+      // if (!this.ghostHackerStoleSomething) {
+      this.randomNumber = localStorage.getItem('inventoryLength');
+      // this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
+      //   window.alert("The hacker stole one of your items!");
+      // });
+      console.log('again')
+      this.ghostHackerStoleSomething = true;
+      this.playerStoleItem = false;
+      // if (this.level === 2) {
+      //   this.level = 3;
+      //   console.log('level 3');
+      //   this.level3();
+      // }
+      // else {
+      //   this.level = 2;
+      //   this.level2();
+      // }
+      console.log(this.level)
+      if (this.playerPoint > 0) {
+        this.playerPoint -= 1;
       }
+      else {
+        this.playerPoint = 0;
+      }
+      this.ghostPoint += 1;
+      console.log('stolen');
+      if (this.inventoryItem.lobbyNaam !== 'The Flash') {
+        setInterval(() => {
+          this.ghostHackerMarker.setMap(null);
+        }, 5000);
+      }
+
+      //}
 
     }
   }
