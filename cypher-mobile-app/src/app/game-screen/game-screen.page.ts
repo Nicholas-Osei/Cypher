@@ -82,6 +82,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
         // this.id = m.id;
         this.api.playerId = m.id;
         console.log(m.name);
+        localStorage.setItem('Id', JSON.stringify(m.id));
         this.notViaGoogle = true;
       }
     });

@@ -100,6 +100,16 @@ export class ApiService {
     // eslint-disable-next-line max-len
     return this.http.post<Player>('https://cypher-web-app.azurewebsites.net/api/v1/player?pageSize=500', gegevens, { headers: httpHeaders });
   }
+  updatePlayer(gegevens, id: number): Observable<Player> {
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    // eslint-disable-next-line max-len
+    return this.http.put<Player>('https://cypher-web-app.azurewebsites.net/api/v1/player/' + id + '?pageSize=500', gegevens, { headers: httpHeaders });
+  }
   deleteInventoryItem(id: number) {
     const httpHeaders = new HttpHeaders({
       'content-type': 'application/json',
