@@ -4,9 +4,8 @@ import { Router, RouterLink } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { LoginService, RootObject, UserCredentials } from '../Services/login.service';
 import { Buffer } from 'buffer';
-import { render } from 'creditcardpayments/creditCardPayments';
 import { ApiService } from '../Services/api.service';
-import { ThisReceiver } from '@angular/compiler';
+
 
 
 @Component({
@@ -22,21 +21,21 @@ export class HomePage implements OnInit {
   toRegister = false;
   passwordcheck = '';
   teller = 0;
-  mybalance = 0;
-  moneyToPay = 10;
+  // mybalance = 0;
+  // moneyToPay = 10;
 
   constructor(public googlePlus: GooglePlus, private router: Router,
     public nav: NavController, public loginservice: LoginService, public apiservice: ApiService) {
 
-    render({
-      id: '#myPaypalButtons',
-      currency: 'EUR',
-      value: this.moneyToPay.toString(),
-      onApprove: (details) => {
-        alert('Transaction succesfull');
-        this.mybalance += this.moneyToPay;
-      }
-    });
+    // render({
+    //   id: '#myPaypalButtons',
+    //   currency: 'EUR',
+    //   value: this.moneyToPay.toString(),
+    //   onApprove: (details) => {
+    //     alert('Transaction succesfull');
+    //     this.mybalance += this.moneyToPay;
+    //   }
+    // });
 
   }
 
@@ -130,7 +129,8 @@ export class HomePage implements OnInit {
                 items: []
               },
               messages: [],
-              playerLobbies: []
+              playerLobbies: [],
+              balance: 0.0
 
             };
             this.apiservice.postPlayer(credentials).subscribe(a => console.log('Player Added'));

@@ -34,7 +34,6 @@ export class InventoryPage implements OnInit {
   getPlayerbyId(pId) {
     this.inventory.getPlayerbyId(pId);
   }
-  
   addItemToInventory(form) {
     this.inventory.addItemToInventory(form);
   }

@@ -6,27 +6,27 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item (click)="GoTo('game-screen','Home')">
+      <ion-item (click)="switchToPage('game-screen','Home')">
         <ion-icon name="people-circle-outline" slot="start"></ion-icon>
         <ion-label>Home</ion-label>
       </ion-item>
-      <ion-item (click)="GoTo('friends','Friends')">
+      <ion-item (click)="switchToPage('friends','Friends')">
         <ion-icon name="person-outline" slot="start"></ion-icon>
         <ion-label>Friends</ion-label>
       </ion-item>
-      <ion-item (click)="GoTo('teams','Teams')">
+      <ion-item (click)="switchToPage('teams','Teams')">
         <ion-icon name="people-outline" slot="start"></ion-icon>
         <ion-label>Teams</ion-label>
       </ion-item>
-      <ion-item (click)="GoTo('messages','Messages')">
+      <ion-item (click)="switchToPage('messages','Messages')">
         <ion-icon name="chatbubble-ellipses-outline" slot="start"></ion-icon>
         <ion-label>Messages</ion-label>
       </ion-item>
-      <ion-item (click)="GoTo('inventory','Inventory')">
+      <ion-item (click)="switchToPage('inventory','Inventory')">
         <ion-icon name="grid-outline" slot="start"></ion-icon>
         <ion-label>Inventory</ion-label>
       </ion-item>
-      <ion-item (click)="GoTo('settings','Settings')">
+      <ion-item (click)="switchToPage('settings','Settings')">
         <ion-icon name="settings-outline" slot="start"></ion-icon>
         <ion-label>Settings</ion-label>
       </ion-item>
@@ -48,42 +48,71 @@
   <ion-content>
 
     <ion-card>
+      <ion-button fill="clear" color="success" class="balance">
+        <p> BALANCE : €{{mybalance}} <ion-button fill="solid" color="primary" style="height: 30px
+        ; margin-top: -5%;" (click)="showInputField()">+</ion-button>
+        </p>
+      </ion-button>
+      <div id="games">
+        <ion-card-content>
+          <span style="position: absolute; top: 80%;">The cybercorn</span>
+          <ion-button fill="outline" (click)="GoTo('map-screen','The cybercorn')"> Players: 12 | join | €{{moneyToPay}}
+          </ion-button>
+        </ion-card-content>
 
-      <ion-card-content>
-        The cybercorn
-        <ion-button fill="outline" (click)="GoTo('map-screen','The cybercorn')"> Players: 12 | join</ion-button>
-      </ion-card-content>
+        <ion-card-content>
+          <span style="position: absolute; top: 80%;"> Omnicronologie</span>
+          <ion-button fill="outline" (click)="GoTo('map-screen','Omnicronologie')"> Players: 7 | join | €{{moneyToPay}}
+          </ion-button>
+        </ion-card-content>
 
-      <ion-card-content>
-        Omnicronologie
-        <ion-button fill="outline" (click)="GoTo('map-screen','Omnicronologie')"> Players: 7 | join</ion-button>
-      </ion-card-content>
+        <ion-card-content>
+          <span style="position: absolute; top: 80%;">Live wire</span>
+          <ion-button fill="outline" (click)="GoTo('map-screen','Live wire')"> Players: 4 | join | €{{moneyToPay}}
+          </ion-button>
+        </ion-card-content>
 
-      <ion-card-content>
-        Live wire
-        <ion-button fill="outline" (click)="GoTo('map-screen','Live wire')"> Players: 4 | join</ion-button>
-      </ion-card-content>
+        <ion-card-content>
+          <span style="position: absolute; top: 80%;">The Fifth State</span>
+          <ion-button fill="outline" (click)="GoTo('map-screen','The Fifth State')"> Players: 22 | join |
+            €{{moneyToPay}}</ion-button>
+        </ion-card-content>
 
-      <ion-card-content>
-        The Fifth State
-        <ion-button fill="outline" (click)="GoTo('map-screen','The Fifth State')"> Players: 22 | join</ion-button>
-      </ion-card-content>
-
-      <ion-card-content>
-        Hack the City
-        <ion-button fill="outline" (click)="GoTo('map-screen','Hack the City')">Players: 28 | join</ion-button>
-      </ion-card-content>
-      <ion-card-content>
-        The Flash
-        <ion-button fill="outline" (click)="GoTo('map-screen','The Flash')">Players: 28 | join</ion-button>
-      </ion-card-content>
-
+        <ion-card-content>
+          <span style="position: absolute; top: 80%;">Hack the City</span>
+          <ion-button fill="outline" (click)="GoTo('map-screen','Hack the City')">Players: 28 | join | €{{moneyToPay}}
+          </ion-button>
+        </ion-card-content>
+        <ion-card-content>
+          <span style="position: absolute; top: 80%;">The Flash</span>
+          <ion-button fill="outline" (click)="GoTo('map-screen','The Flash')">Players: 28 | join | €20</ion-button>
+        </ion-card-content>
+      </div>
     </ion-card>
 
     <ion-fab slot="fixed" vertical="bottom" horizontal="start">
-      <ion-fab-button size="larger" color="light" (click)="GoTo('game-screen','GamePage')">
+      <ion-fab-button size="larger" color="light" (click)="goBack('game-screen')">
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    <!-- <ion-input type="number" value="333"> -->
+    <div *ngIf="showInput">
+      <ion-button (click)="addMoneyToWallet(10)">
+        €10
+      </ion-button>
+      <ion-button (click)="addMoneyToWallet(30)">
+        €30
+      </ion-button>
+      <ion-button (click)="addMoneyToWallet(50)">
+        €50
+      </ion-button>
+    </div>
+    <div>
+      <div id="myPaypalButtons">
+      </div>
+      <!-- <p> BALANCE : {{mybalance}}€</p> -->
+    </div>
+
+
 
   </ion-content>

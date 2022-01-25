@@ -16,27 +16,32 @@ export class FriendsPage implements OnInit {
   playerSearchResults: any;
   friends: any;
   playerbyId: any;
-  id: number;
+  id: any;
 
   constructor(public api: ApiService, public loginservice: LoginService, public router: Router) { }
 
 
   ngOnInit() {
-    this.api.getAllPlayers().subscribe(p => {
-      this.api.players = p; console
-        .log('Got all players');
-      this.api.players.data.forEach(m => {
-        if (m.name === this.loginservice.displayName) {
-          console.log(m.name);
-          this.id = m.id;
-          this.getPlayerbyId(m.id);
-        }
-      });
-    });
+    // this.api.getAllPlayers().subscribe(p => {
+    //   this.api.players = p; console
+    //     .log('Got all players');
+    //   this.api.players.data.forEach(m => {
+    //     if (m.name === this.loginservice.displayName) {
+    //       console.log(m.name);
+    //       this.id = m.id;
+    //       this.getPlayerbyId(m.id);
+    //     }
+    //   });
+    // });
+    this.id = localStorage.getItem('Id');
+    this.getPlayerbyId(this.id);
   }
 
   deleteFriend(id: number) {
-    this.api.deleteFriend(this.id, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
+    const checkForDeleteConfiration = confirm('Are you sure you want delete this friend?');
+    if (checkForDeleteConfiration) {
+      this.api.deleteFriend(this.id, id).subscribe(d => { console.log('deleted'); this.ngOnInit(); });
+    };
   }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
