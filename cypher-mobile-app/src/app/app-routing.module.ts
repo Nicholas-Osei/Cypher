@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'friends',
     loadChildren: () => import('./friends/friends.module').then( m => m.FriendsPageModule)
   },
+  {
+    path: 'tourist',
+    loadChildren: () => import('./tourist/tourist.module').then( m => m.TouristPageModule)
+  },
 
 ];
 

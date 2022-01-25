@@ -4,10 +4,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
-import { markAsUntransferable } from 'worker_threads';
 import { MenuController } from '@ionic/angular';
 import { ApiService } from '../Services/api.service';
-import { getTranslationDeclStmts } from '@angular/compiler/src/render3/view/template';
 
 declare let google: any;
 
@@ -59,8 +57,12 @@ export class MapScreenPage implements OnInit {
   getBoolStealHacker: string;
   timeLeft = 600;
   interval;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   ItemToTake: any;
   gameOver = false;
+  kerk = false;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  TouristLocation: any;
 
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -401,6 +403,21 @@ export class MapScreenPage implements OnInit {
 
 
       }
+      else if (this.inventoryItem.lobbyNaam === 'Tourist') {
+        this.ghostHackerMarker.setMap(null);
+        this.TouristLocation = new google.maps.Circle({
+          strokeColor: '#00FF00',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#00FF00',
+          fillOpacity: 0.35,
+          map: this.map,
+          // center: { lat: 51.221814, lng: 4.413618 },
+          // center: { lat: 51.242570, lng: 4.444350 },
+          center: { lat: 51.242908, lng: 4.445740 },
+          radius: 70,
+        });
+      }
       else {
         if (!this.ghostHackerActivated && !this.ghostHackerStoleSomething) {
           setTimeout(() => {
@@ -443,19 +460,16 @@ export class MapScreenPage implements OnInit {
         this.playerStoleItem = true;
         this.playerPoint += 1;
         console.log(this.ItemToTake.center.lat);
-        // if (this.level === 2) {
-        //   this.level = 3;
-        //   console.log('level 3');
-        //   this.level3();
-        // }
-        // else {
-        //   this.level = 2;
-        //   this.level2();
-        // }
-        ///
         this.levelChanger();
         this.playerStoleItem = false;
       }
+    }
+    else if (this.inventoryItem.lobbyNaam === 'Tourist') {
+      if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(),
+        this.TouristLocation.center) <= this.TouristLocation.radius) {
+        console.log('you found me');
+      }
+
     }
     else {
       this.getPlayerInAnArea = false;

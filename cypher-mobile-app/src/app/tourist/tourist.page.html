@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>tourist</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card style="text-align: center; height: 250px; top: 30%;">
+    <div id="questionsDiv">
+      <H1> Question {{questionNumber+1}}{{questionTitle}}</H1>
+      <h4>{{churchQuestions[questionNumber].question}}</h4>
+      <div></div>
+      <ion-input #in1 style="background-color: aliceblue; width: 200px;  border-radius: 2%;  position: absolute;
+    left: 50%;
+    transform: translateX(-50%); color: black;" [(ngModel)]="searchValue">
+      </ion-input>
+    </div>
+    <div *ngIf="showResults">
+      <H1> Your score is {{score}}/{{churchQuestions.length}}</H1>
+    </div>
+    <ion-button style="margin-top: 13%;" (click)="nextQuestion(in1.value)">{{buttonName}}</ion-button>
+  </ion-card>
+
+
+
+</ion-content>
