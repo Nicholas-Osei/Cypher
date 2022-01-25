@@ -109,7 +109,7 @@ namespace Cypher.Web.Areas.Identity.Pages.Account
                     var mailRequest = new MailRequest
                     {
                         Body = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
-                        From = "info@codewithmukesh.com",
+                        //From = "info@codewithmukesh.com",
                         To = Input.Email,
                         Subject = "Confirm Registration"
                     };

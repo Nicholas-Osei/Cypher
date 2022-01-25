@@ -26,7 +26,7 @@ namespace Cypher.Infrastructure.Shared.Services
             try
             {
                 var email = new MimeMessage();
-                email.Sender = MailboxAddress.Parse(request.From ?? _mailSettings.From);
+                email.Sender = MailboxAddress.Parse(request.From ?? _mailSettings.Mail);
                 email.To.Add(MailboxAddress.Parse(request.To));
                 email.Subject = request.Subject;
                 var builder = new BodyBuilder();
@@ -34,7 +34,7 @@ namespace Cypher.Infrastructure.Shared.Services
                 email.Body = builder.ToMessageBody();
                 using var smtp = new SmtpClient();
                 smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-                smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
+                smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
                 await smtp.SendAsync(email);
                 smtp.Disconnect(true);
             }
