@@ -32,15 +32,11 @@ namespace Cypher.Web.Areas.Cypher.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMailService _emailSender;
 
-        private readonly ILogger<LobbiesController> _logger;
-
-
-        public LobbiesController(IAuthenticatedUserService userService, UserManager<ApplicationUser> userManager, IMailService emailSender, ILogger<LobbiesController> logger)
+        public LobbiesController(IAuthenticatedUserService userService, UserManager<ApplicationUser> userManager, IMailService emailSender)
         {
             _userService = userService;
             _userManager = userManager;
             _emailSender = emailSender;
-            _logger = logger;
         }
         // GET: LobbiesController
         public IActionResult Index()

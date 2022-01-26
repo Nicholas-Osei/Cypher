@@ -26,7 +26,7 @@ namespace Cypher.Infrastructure.CacheRepositories
 
         public async Task<Player> GetByIdAsync(int playerId)
         {
-            string cacheKey = BrandCacheKeys.GetKey(playerId);
+            string cacheKey = PlayerCacheKeys.GetKey(playerId);
             var player = await _distributedCache.GetAsync<Player>(cacheKey);
             if (player == null)
             {
