@@ -114,7 +114,7 @@ export class TouristPage implements OnInit {
     });
     console.log(this.chooseRightArray.length);
   }
-  nextQuestion(antwoord: string,) {
+  nextQuestion(antwoord: any) {
     console.log(this.radioValue);
     //this.switchArrayQuestions();
     this.radioValue = '';
