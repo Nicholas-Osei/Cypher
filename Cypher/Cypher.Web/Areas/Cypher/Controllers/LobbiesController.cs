@@ -141,13 +141,13 @@ namespace Cypher.Web.Areas.Cypher.Controllers
 
                     var mailRequest = new MailRequest
                     {
-                        Body = $"<b>You have been invited to a lobby.</b>",
+                        Body = $"<b>You have been invited to Lobby: {lobby.Name} by {playerUser.UserName}.<br></b>",
                         To = playerUser.Email,
-                        Subject = "Cypher Invitation"
+                        Subject = $"Cypher Invitation Lobby: {lobby.Name}"
                     };
 
-                    _logger.LogInformation("An invitation email has been sent.");
                     await _emailSender.SendAsync(mailRequest);
+                    _logger.LogInformation("An invitation email has been sent.");
                 }
             }
 
