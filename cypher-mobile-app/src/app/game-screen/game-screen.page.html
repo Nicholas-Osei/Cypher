@@ -76,7 +76,7 @@
     </p>
     <div *ngIf="loginservice.isLoggedIn">
 
-      <h1 style="color: black; text-align: center;">{{titel}}
+      <h1 style="color: black; text-align: center;"> Welcome {{loginservice.displayName }} 😊
       </h1>
       <p>
         <span *ngIf="loginservice.email">Email: {{loginservice.email}}</span><br />

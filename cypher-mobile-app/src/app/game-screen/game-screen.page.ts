@@ -37,7 +37,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   constructor(public loginservice: LoginService, public api: ApiService, public router: Router) {
     this.imageUrl = './assets/icon/person' + 1 + '.jpeg';
-    this.titel = 'Welcome, ' + loginservice.displayName + '!';
+    //this.titel = 'Welcome, ' + loginservice.displayName + '!';
   }
   ngOnInit(): void {
     this.api.getAllPlayers().subscribe(p => {

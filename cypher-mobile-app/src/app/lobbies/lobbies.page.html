@@ -53,39 +53,21 @@
         ; margin-top: -5%;" (click)="showInputField()">+</ion-button>
         </p>
       </ion-button>
+    </ion-card>
+    <ion-card>
       <div id="games">
-        <ion-card-content>
-          <span style="position: absolute; top: 80%;">The cybercorn</span>
-          <ion-button fill="outline" (click)="GoTo('map-screen','The cybercorn')"> Players: 12 | join | €{{moneyToPay}}
-          </ion-button>
-        </ion-card-content>
-
-        <ion-card-content>
-          <span style="position: absolute; top: 80%;"> Omnicronologie</span>
-          <ion-button fill="outline" (click)="GoTo('map-screen','Omnicronologie')"> Players: 7 | join | €{{moneyToPay}}
-          </ion-button>
-        </ion-card-content>
-
-        <ion-card-content>
-          <span style="position: absolute; top: 80%;">Live wire</span>
-          <ion-button fill="outline" (click)="GoTo('map-screen','Live wire')"> Players: 4 | join | €{{moneyToPay}}
-          </ion-button>
-        </ion-card-content>
-
-        <ion-card-content>
-          <span style="position: absolute; top: 80%;">Tourist</span>
-          <ion-button fill="outline" (click)="GoTo('map-screen','Tourist')"> Players: 22 | join |
-            €{{moneyToPay}}</ion-button>
-        </ion-card-content>
-
-        <ion-card-content>
-          <span style="position: absolute; top: 80%;">Hack the City</span>
-          <ion-button fill="outline" (click)="GoTo('map-screen','Hack the City')">Players: 28 | join | €{{moneyToPay}}
-          </ion-button>
-        </ion-card-content>
-        <ion-card-content>
-          <span style="position: absolute; top: 80%;">The Flash</span>
-          <ion-button fill="outline" (click)="GoTo('map-screen','The Flash')">Players: 28 | join | €20</ion-button>
+        <ion-card-content *ngFor="let all of lobbies">
+          <div *ngIf="all.name !== 'MadeBySuperAdmin' && all.players.length >=1">
+            <span style="position: absolute; top: 80%;">{{all.name}}</span>
+            <ion-button fill="outline" (click)="GoTo('map-screen',all.name)" *ngIf="all.name !=='The Flash'"> Players:
+              {{all.players.length}} |
+              €{{10}}
+            </ion-button>
+            <ion-button fill="outline" (click)="GoTo('map-screen',all.name)" *ngIf="all.name ==='The Flash'"> Players:
+              {{all.players.length}} |
+              €20
+            </ion-button>
+          </div>
         </ion-card-content>
       </div>
     </ion-card>

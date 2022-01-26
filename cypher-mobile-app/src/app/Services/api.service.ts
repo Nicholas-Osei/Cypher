@@ -50,6 +50,18 @@ export class ApiService {
       { headers: httpHeaders });
   }
 
+  getAllLobbies(): Observable<Question> {
+
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    return this.http.get<Question>('https://cypher-web-app.azurewebsites.net/api/v1/lobby?pageSize=500',
+      { headers: httpHeaders });
+  }
+
   getPlayerById(id): Observable<Player> {
     const httpHeaders = new HttpHeaders({
       'content-type': 'application/json',
