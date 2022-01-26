@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MapScreenPageRoutingModule } from './map-screen-routing.module';
 
 import { MapScreenPage } from './map-screen.page';
-import { TouristPage } from '../tourist/tourist.page';
+
 
 @NgModule({
   imports: [
@@ -16,6 +16,6 @@ import { TouristPage } from '../tourist/tourist.page';
     IonicModule,
     MapScreenPageRoutingModule
   ],
-  declarations: [MapScreenPage, TouristPage]
+  declarations: [MapScreenPage]
 })
 export class MapScreenPageModule { }
