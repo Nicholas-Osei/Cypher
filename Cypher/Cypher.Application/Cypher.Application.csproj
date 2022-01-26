@@ -49,6 +49,14 @@
     <None Remove="Features\Messages\Commands\Delete\" />
     <None Remove="Features\Messages\Commands\Update\" />
     <None Remove="Features\Messages\Queries\GetById\" />
+    <None Remove="Features\Questions\" />
+    <None Remove="Features\Questions\Commands\" />
+    <None Remove="Features\Questions\Commands\Create\" />
+    <None Remove="Features\Questions\Queries\" />
+    <None Remove="Features\Questions\Queries\GetAllQuestions\" />
+    <None Remove="Features\Questions\Commands\Delete\" />
+    <None Remove="Features\Questions\Commands\Update\" />
+    <None Remove="Features\Questions\Queries\GetById\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\UserCredentials\" />
@@ -72,5 +80,13 @@
     <Folder Include="Features\Messages\Commands\Delete\" />
     <Folder Include="Features\Messages\Commands\Update\" />
     <Folder Include="Features\Messages\Queries\GetById\" />
+    <Folder Include="Features\Questions\" />
+    <Folder Include="Features\Questions\Commands\" />
+    <Folder Include="Features\Questions\Commands\Create\" />
+    <Folder Include="Features\Questions\Queries\" />
+    <Folder Include="Features\Questions\Queries\GetAllQuestions\" />
+    <Folder Include="Features\Questions\Commands\Delete\" />
+    <Folder Include="Features\Questions\Commands\Update\" />
+    <Folder Include="Features\Questions\Queries\GetById\" />
   </ItemGroup>
 </Project>
