@@ -28,8 +28,8 @@ namespace Cypher.Web.Areas.Cypher.Pages
 
         public async Task OnGet()
         {
-            //var response = await _mediator.Send(new GetAllPlayersQuery(null, null, null, _userService.UserId));
-            var response = await _mediator.Send(new GetAllPlayersQuery(null, null, null));
+            var response = await _mediator.Send(new GetAllPlayersQuery(null, null, null, _userService.UserId));
+            //var response = await _mediator.Send(new GetAllPlayersQuery("APIUser", null, null));
             Players = response.Data;
         }
     }

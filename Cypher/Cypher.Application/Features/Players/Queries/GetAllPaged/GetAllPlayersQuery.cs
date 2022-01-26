@@ -56,7 +56,8 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                     Id = e.Id,
                     Name = e.Name,
                     //inventory = e.Inventory,
-                    CreatedOn = e.CreatedOn
+                    CreatedOn = e.CreatedOn,
+                    CreatedBy = e.CreatedBy
                     //IsAdmin = e.IsAdmin,
                     //check = e.Inventory.Items.Count,
                     //Items = e.Inventory.Items,
@@ -71,11 +72,11 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                 var playerList = _repo.Players
                     .Select(expression);
 
-                if (!string.IsNullOrWhiteSpace(request.UserId))
-                    playerList = playerList.Where(p => p.CreatedBy == request.UserId);
-
                 if (!string.IsNullOrWhiteSpace(request.NameQuery))
                     playerList = playerList.Where(p => p.Name == request.NameQuery);
+
+                if (!string.IsNullOrWhiteSpace(request.UserId))
+                    playerList = playerList.Where(p => p.CreatedBy == request.UserId);
 
                 var paginatedList = await playerList
                     .ToPaginatedListAsync(request.PageNumber, request.PageSize);
