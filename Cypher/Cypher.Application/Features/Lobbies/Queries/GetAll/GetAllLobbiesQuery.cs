@@ -17,8 +17,15 @@ namespace Cypher.Application.Features.Lobbies.Queries
     public class GetAllLobbiesQuery : IRequest<PaginatedResult<GetAllLobbiesResponse>>
     {
         public int PageNumber { get; set; }
-
         public int PageSize { get; set; }
+        public string UserId { get; set; }
+
+        public GetAllLobbiesQuery(int? pageNumber, int? pageSize, string userId)
+        {
+            PageNumber = pageNumber ?? 0;
+            PageSize = pageSize ?? 100;
+            UserId = userId;
+        }
 
         public GetAllLobbiesQuery(int? pageNumber, int? pageSize)
         {
@@ -43,13 +50,19 @@ namespace Cypher.Application.Features.Lobbies.Queries
                     Name = e.Name,
                     LobbyAdmin = e.LobbyAdmin,
                     Players = e.Players,
-                    CreatedOn = e.CreatedOn
+                    CreatedOn = e.CreatedOn,
+                    CreatedBy = e.CreatedBy
                 };
 
-                var paginatedList = await _repo.Lobbies
+                var lobbyList = _repo.Lobbies
                     .Include(l => l.LobbyAdmin)
                     .Include(l => l.Players)
-                    .Select(expression)
+                    .Select(expression);
+
+                if (!string.IsNullOrWhiteSpace(request.UserId))
+                    lobbyList = lobbyList.Where(l => l.CreatedBy == request.UserId);
+
+                var paginatedList = await lobbyList
                     .ToPaginatedListAsync(request.PageNumber, request.PageSize);
 
                 return paginatedList;

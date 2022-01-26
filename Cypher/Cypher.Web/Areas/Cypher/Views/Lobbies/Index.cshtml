@@ -15,9 +15,14 @@
             Create
         </a>
 
-        <a id="reload" class="btn btn-primary text-white">
-            <i class="fa fas fa-bolt"></i>
-            Reload
+        <a id="userLobbies" class="btn btn-primary text-white">
+            <i class="fa fas fa-user"></i>
+            My Lobbies
+        </a>
+
+        <a id="allLobbies" class="btn btn-primary text-white">
+            <i class="fa fas fa-users"></i>
+            All Lobbies
         </a>
     </div>
 
@@ -29,13 +34,19 @@
     <script>
         $(document).ready(function () {
             $("#lobbyTable").DataTable();
-            loadData();
-            $('#reload').on('click', function () {
+            loadUserLobbies();
+            $('#allLobbies').on('click', function () {
                 loadData();
+            });
+            $('#userLobbies').on('click', function () {
+                loadUserLobbies();
             });
         });
         function loadData() {
             $('#viewAll').load('/cypher/lobbies/LoadAll');
+        }
+        function loadUserLobbies() {
+            $('#viewAll').load('/cypher/lobbies/LoadAllFromUser');
         }
     </script>
 }

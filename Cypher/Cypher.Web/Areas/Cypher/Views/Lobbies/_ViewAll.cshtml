@@ -11,11 +11,7 @@
             <th>Lobby Admin</th>
             <th>Created on</th>
             <th>Players Joined</th>
-            @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Products.Delete)).Result.Succeeded
-              || (AuthorizationService.AuthorizeAsync(User, Permissions.Products.Edit)).Result.Succeeded)
-            {
-                <th>Actions</th>
-            }
+             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -41,23 +37,19 @@
                     @lobby.Players.Count
                 }
             </td>
-            @if ((AuthorizationService.AuthorizeAsync(User, Permissions.Lobbies.Delete)).Result.Succeeded
-                || (AuthorizationService.AuthorizeAsync(User, Permissions.Lobbies.Edit)).Result.Succeeded)
-            {
-                <td text-right">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action
-                        </button>
-                        <div class="dropdown-menu shadow animated--grow-in">
-                            <a onclick="jQueryModalGet('/cypher/lobbies/OnGetCreateOrEdit?id=@lobby.Id','Edit Lobby')" class="dropdown-item"><i class="fas fa-pencil-alt"></i>  Edit</a>
-                            <form id="form_delete_@lobby.Id" asp-area="Cypher" asp-controller="Lobbies" method="post" asp-action="OnPostDelete" asp-route-id="@lobby.Id" onsubmit="return jQueryModalDelete(this)">
-                                <a href="javascript:$('#form_delete_@lobby.Id').submit();" class="dropdown-item"><i class="fas fa-trash-alt"></i>  Delete</a>
-                            </form>
-                        </div>
+            <td text-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Action
+                    </button>
+                    <div class="dropdown-menu shadow animated--grow-in">
+                        <a onclick="jQueryModalGet('/cypher/lobbies/OnGetCreateOrEdit?id=@lobby.Id','Edit Lobby')" class="dropdown-item"><i class="fas fa-pencil-alt"></i>  Edit</a>
+                        <form id="form_delete_@lobby.Id" asp-area="Cypher" asp-controller="Lobbies" method="post" asp-action="OnPostDelete" asp-route-id="@lobby.Id" onsubmit="return jQueryModalDelete(this)">
+                            <a href="javascript:$('#form_delete_@lobby.Id').submit();" class="dropdown-item"><i class="fas fa-trash-alt"></i>  Delete</a>
+                        </form>
                     </div>
-                </td>
-            }
+                </div>
+            </td>
         </tr>
         }
     </tbody>

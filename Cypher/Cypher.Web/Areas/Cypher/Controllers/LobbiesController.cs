@@ -14,12 +14,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Cypher.Application.Features.Lobbies.CMDs.Create;
 using Cypher.Application.Features.Lobbies.CMDs.Delete;
 using Cypher.Application.Features.Lobbies.CMDs.Update;
+using Cypher.Application.Interfaces.Shared;
 
 namespace Cypher.Web.Areas.Cypher.Controllers
 {
     [Area("Cypher")]
     public class LobbiesController : BaseController<LobbiesController>
     {
+        private readonly IAuthenticatedUserService _userService;
+
+        public LobbiesController(IAuthenticatedUserService userService)
+        {
+            _userService = userService;
+        }
         // GET: LobbiesController
         public IActionResult Index()
         {
@@ -30,6 +37,17 @@ namespace Cypher.Web.Areas.Cypher.Controllers
         public async Task<IActionResult> LoadAll()
         {
             var response = await _mediator.Send(new GetAllLobbiesQuery(null, null));
+            if (response.Succeeded)
+            {
+                var mappedModel = _mapper.Map<List<LobbyViewModel>>(response.Data);
+                return PartialView("_ViewAll", mappedModel);
+            }
+            return null;
+        }
+
+        public async Task<IActionResult> LoadAllFromUser()
+        {
+            var response = await _mediator.Send(new GetAllLobbiesQuery(null, null, _userService.UserId));
             if (response.Succeeded)
             {
                 var mappedModel = _mapper.Map<List<LobbyViewModel>>(response.Data);
