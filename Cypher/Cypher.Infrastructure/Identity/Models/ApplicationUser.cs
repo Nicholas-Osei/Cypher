@@ -7,6 +7,6 @@ namespace Cypher.Infrastructure.Identity.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public byte[] ProfilePicture { get; set; }
-        public bool IsActive { get; set; } = false;
+        public bool IsActive { get; set; } = true;
     }
 }

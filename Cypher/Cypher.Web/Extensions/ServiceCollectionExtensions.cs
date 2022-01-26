@@ -94,7 +94,7 @@ namespace Cypher.Web.Extensions
             services.Configure<MailSettings>(configuration.GetSection("MailSettings"));
             services.Configure<CacheSettings>(configuration.GetSection("CacheSettings"));
             services.AddTransient<IDateTimeService, SystemDateTimeService>();
-            services.AddTransient<IMailService, SMTPMailService>();
+            services.AddTransient<IMailService, SendGridMailService>();
             services.AddTransient<IAuthenticatedUserService, AuthenticatedUserService>();
         }
     }
