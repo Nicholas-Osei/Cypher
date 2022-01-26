@@ -11,15 +11,14 @@ import { InventoryService } from '../Services/inventory.service';
 })
 export class InventoryPage implements OnInit {
 
-  // players: Player;
-  // pf: any;
-
   inInventory = true;
+
   constructor(public api: ApiService, public loginservice: LoginService, public router: Router, public inventory: InventoryService) { }
 
   ngOnInit() {
 
   }
+
   goToMapscreen() {
     this.router.navigate(['map-screen']);
     this.inInventory = false;
@@ -40,5 +39,4 @@ export class InventoryPage implements OnInit {
   deleteItem(id: any) {
     this.inventory.deleteItem(id);
   }
-
 }
