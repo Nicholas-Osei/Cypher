@@ -34,6 +34,7 @@ export class GameScreenPage implements OnInit, OnDestroy {
   notViaGoogle = false;
   randomNumber = 0;
   imageUrl = '';
+  inLobby = 0;
 
   constructor(public loginservice: LoginService, public api: ApiService, public router: Router) {
     this.imageUrl = './assets/icon/person' + 1 + '.jpeg';
@@ -52,11 +53,27 @@ export class GameScreenPage implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       this.time = new Date();
     }, 1000);
+    this.api.getAllLobbies().subscribe(l => {
+      this.lobbies = l.data;
+      console.log('Got all lobbies');
+      this.aantalLobbies();
+    });
   }
+
   ngOnDestroy() {
     clearInterval(this.intervalId);
   }
 
+  aantalLobbies() {
+    this.lobbies.forEach(element => {
+      element.players.forEach(p => {
+        if (this.loginservice.displayName === p.name) {
+          this.inLobby++;
+        }
+      });
+    });
+    console.log(this.inLobby);
+  }
   goToMap() {
     this.router.navigate(['map-screen'],
     ).then(() => { window.location.reload(); });

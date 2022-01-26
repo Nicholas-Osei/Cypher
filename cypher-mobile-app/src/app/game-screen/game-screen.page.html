@@ -95,12 +95,14 @@
         <div *ngIf="!showPage">
           <div *ngIf="friends">
             <div *ngIf="friends.length===1">
-              <p style="color: black; font-size: 25px;  text-align: center;">You have just {{friends.length}} FRIEND so
+              <p style="color: black; font-size: 25px;  text-align: center;">You have just <span
+                  style="color: blue;">{{friends.length}} </span> FRIEND so
                 far </p>
               <ion-button style="margin-left: 25%" (click)="GoTo('friends')">ADD MORE FRIENDS</ion-button>
             </div>
             <div *ngIf="friends.length>1">
-              <p style="color: black; font-size: 25px; text-align: center;">You have {{friends.length}} FRIENDS so far
+              <p style="color: black; font-size: 25px; text-align: center;">You have <span
+                  style="color: blue;">{{friends.length}} </span> FRIENDS so far
               </p>
             </div>
             <div *ngIf="friends.length<1">
@@ -111,7 +113,7 @@
             <p style="color: black; font-size: 25px;  text-align: center;"> You have <span style="color: red;">0</span>
               Messages</p>
             <p style="color: black; font-size: 25px;  text-align: center;"> You are in <span
-                style="color: red;">0</span>
+                style="color: blue;">{{inLobby}}</span>
               Lobby's</p>
             <p style="color: black; font-size: 25px;  text-align: center;"> There is currently <span
                 style="color: red;">no</span> Teams to join</p>

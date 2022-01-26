@@ -21,6 +21,8 @@ export class HomePage implements OnInit {
   toRegister = false;
   passwordcheck = '';
   teller = 0;
+  lobbies: any;
+
   // mybalance = 0;
   // moneyToPay = 10;
 
@@ -41,7 +43,10 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.getToken();
+
   }
+
+
 
   async getToken() {
     const newtoken =
