@@ -10,7 +10,7 @@ import { LoginService } from '../Services/login.service';
 })
 export class LobbiesPage implements OnInit {
   mybalance = 0;
-  moneyToPay: any;
+  moneyToPay = 10;
   checkbalance = false;
   gamePrice = 10;
   checkPage = '';
@@ -102,8 +102,9 @@ export class LobbiesPage implements OnInit {
               this.moneyToPay = this.gamePrice - this.mybalance;
             }
             else {
-              // this.moneyToPay = 10;
+
               this.gamePrice = 10;
+              this.moneyToPay = this.gamePrice - this.mybalance;
             }
             if (this.mybalance >= this.gamePrice) {
               console.log(this.gamePrice);
@@ -132,15 +133,16 @@ export class LobbiesPage implements OnInit {
                     onApprove: (details) => {
                       alert('Transaction succesfull');
                       this.mybalance += this.moneyToPay;
+                      this.mybalance -= this.gamePrice;
                       this.lobbyName.updatePlayer(
                         {
                           id: this.id,
                           balance: this.mybalance
                         }, this.id
-                      ).subscribe(() => { this.ngOnInit(); console.log('money updated'); });
+                      ).subscribe(() => { this.ngOnInit(); console.log('money updated'); this.router.navigate([page]); });
                       this.games.style.display = 'block';
                       document.getElementById('myPaypalButtons').style.display = 'none';
-                      this.router.navigate([page]);
+
                     }
                   });
                 } else {
