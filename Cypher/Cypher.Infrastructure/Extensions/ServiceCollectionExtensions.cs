@@ -23,10 +23,6 @@ namespace Cypher.Infrastructure.Extensions {
             services.AddTransient<IUserCredentialsRepository, UserCredentialRepository> ();
             services.AddTransient<IPlayerRepository, PlayerRepository> ();
             services.AddTransient<IPlayerCacheRepository, PlayerCacheRepository> ();
-            services.AddTransient<IProductRepository, ProductRepository> ();
-            services.AddTransient<IProductCacheRepository, ProductCacheRepository> ();
-            services.AddTransient<IBrandRepository, BrandRepository> ();
-            services.AddTransient<IBrandCacheRepository, BrandCacheRepository> ();
             services.AddTransient<ILogRepository, LogRepository> ();
             services.AddTransient<IUnitOfWork, UnitOfWork> ();
             services.AddTransient<IItemRepository, ItemRepository> ();

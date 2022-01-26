@@ -55,15 +55,15 @@ namespace Cypher.Infrastructure.Repositories
         public async Task<int> InsertAsync(Player player)
         {
             await _repo.AddAsync(player);
-            await _distributedCache.RemoveAsync(CacheKeys.BrandCacheKeys.ListKey);
+            await _distributedCache.RemoveAsync(CacheKeys.PlayerCacheKeys.ListKey);
             return player.Id;
         }
 
         public async Task UpdateAsync(Player player)
         {
             await _repo.UpdateAsync(player);
-            await _distributedCache.RemoveAsync(CacheKeys.BrandCacheKeys.ListKey);
-            await _distributedCache.RemoveAsync(CacheKeys.BrandCacheKeys.GetKey(player.Id));
+            await _distributedCache.RemoveAsync(CacheKeys.PlayerCacheKeys.ListKey);
+            await _distributedCache.RemoveAsync(CacheKeys.PlayerCacheKeys.GetKey(player.Id));
         }
 
         public Task RemoveFriendAsync(Player player, Player friend)
