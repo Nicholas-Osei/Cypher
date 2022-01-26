@@ -28,16 +28,7 @@ namespace Cypher.Infrastructure.Shared.Services
                 var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
                 var client = new SendGridClient(apiKey);
 
-                //var email = new MimeMessage();
-                //email.Sender = MailboxAddress.Parse(request.From ?? _mailSettings.Mail);
-                //email.To.Add(MailboxAddress.Parse(request.To));
-                //email.Subject = request.Subject;
-                //var builder = new BodyBuilder();
-                //builder.HtmlBody = request.Body;
-                //email.Body = builder.ToMessageBody();
-
-
-                var from = new EmailAddress(request.From ?? "devtester.devin@gmail.com", "Cypher Admin");
+                var from = new EmailAddress("devtester.devin@gmail.com", "Cypher Admin");
                 var subject = request.Subject;
                 var to = new EmailAddress(request.To);
                 var plainTextContent = "";

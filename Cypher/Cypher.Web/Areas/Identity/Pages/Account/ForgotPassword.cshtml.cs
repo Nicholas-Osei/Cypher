@@ -1,4 +1,6 @@
-﻿using Cypher.Infrastructure.Identity.Models;
+﻿using Cypher.Application.DTOs.Mail;
+using Cypher.Application.Interfaces.Shared;
+using Cypher.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -16,9 +18,16 @@ namespace Cypher.Web.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _emailSenderDepr;
+        private readonly IMailService _emailSender;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        //public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender _emailSenderDepr)
+        //{
+        //    _userManager = userManager;
+        //    _emailSenderDepr = emailSender;
+        //}
+
+        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IMailService emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -55,10 +64,19 @@ namespace Cypher.Web.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                //await _emailSender.SendEmailAsync(
+                //    Input.Email,
+                //    "Reset Password",
+                //    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                var mailRequest = new MailRequest
+                {
+                    Body = $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                    To = Input.Email,
+                    Subject = "Reset Password"
+                };
+
+                await _emailSender.SendAsync(mailRequest);
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
