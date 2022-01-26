@@ -23,7 +23,16 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
         public string NameQuery { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
-       
+        public string UserId { get; set; }
+
+        public GetAllPlayersQuery(string playerName, int? pageNr, int? pageSize, string userId)
+        {
+            NameQuery = playerName;
+            PageNumber = pageNr ?? 0;
+            PageSize = pageSize ?? 10;
+            UserId = userId;
+        }
+
         public GetAllPlayersQuery(string playerName, int? pageNr, int? pageSize)
         {
             NameQuery = playerName;
@@ -47,7 +56,7 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                     Id = e.Id,
                     Name = e.Name,
                     //inventory = e.Inventory,
-
+                    CreatedOn = e.CreatedOn
                     //IsAdmin = e.IsAdmin,
                     //check = e.Inventory.Items.Count,
                     //Items = e.Inventory.Items,
@@ -62,6 +71,8 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
                 var playerList = _repo.Players
                     .Select(expression);
 
+                if (!string.IsNullOrWhiteSpace(request.UserId))
+                    playerList = playerList.Where(p => p.CreatedBy == request.UserId);
 
                 if (!string.IsNullOrWhiteSpace(request.NameQuery))
                     playerList = playerList.Where(p => p.Name == request.NameQuery);

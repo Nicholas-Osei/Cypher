@@ -1,0 +1,54 @@
+﻿@page
+@model Cypher.Web.Areas.Cypher.Pages.MyPlayersModel
+
+@{
+    ViewData["Title"] = localizer["My Players"];
+    ViewData["Caption"] = localizer["View players you created here."];
+}
+<div class="card">
+    <div id="viewAll" class="card-body table-responsive">
+        <table class="table table-striped" id="logTable">
+            <thead>
+                <tr>
+                    <th>
+                        @localizer["Id"]
+                    </th>
+                    <th>
+                        @localizer["Name"]
+                    </th>
+                    <th>
+                        @localizer["Created On"]
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var player in Model.Players)
+                {
+                    <tr>
+                        <td>
+                            @player.Id
+                        </td>
+                        <td>
+                            @player.Name
+                        </td>
+                        <td>
+                            @player.CreatedOn
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts
+{
+    <script src="~/js/site.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#logTable").DataTable({
+
+                "order": [[0, "desc"]]
+            });
+        });
+    </script>
+}
