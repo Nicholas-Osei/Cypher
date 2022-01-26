@@ -15,9 +15,14 @@
             Create
         </a>
 
-        <a id="reload" class="btn btn-primary text-white">
-            <i class="fa fas fa-bolt"></i>
-            Reload
+        <a id="userPlayers" class="btn btn-primary text-white">
+            <i class="fa fas fa-user"></i>
+            My Players
+        </a>
+
+        <a id="allPlayers" class="btn btn-primary text-white">
+            <i class="fa fas fa-users"></i>
+            All Players
         </a>
     </div>
 
@@ -29,13 +34,19 @@
     <script>
         $(document).ready(function () {
             $("#playerTable").DataTable();
-            loadData();
-            $('#reload').on('click', function () {
+            loadUserPlayers();
+            $('#allPlayers').on('click', function () {
                 loadData();
+            });
+            $('#userPlayers').on('click', function () {
+                loadUserPlayers();
             });
         });
         function loadData() {
             $('#viewAll').load('/cypher/players/LoadAll');
+        }
+        function loadUserPlayers() {
+            $('#viewAll').load('/cypher/players/LoadAllFromUser');
         }
     </script>
 }

@@ -27,10 +27,25 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             return View();
         }
 
-        public async Task<IActionResult> LoadAll()
+        public async Task<IActionResult> LoadAllFromUser()
         {
             var response = await _mediator.Send(new GetAllPlayersQuery(null, null, null, _userService.UserId));
             
+            //Players = response.Data;
+
+            if (response.Succeeded)
+            {
+                var mappedModel = _mapper.Map<List<PlayerViewModel>>(response.Data);
+                return PartialView("_ViewAll", mappedModel);
+            }
+            //return null;
+            return null;
+        }
+
+        public async Task<IActionResult> LoadAll()
+        {
+            var response = await _mediator.Send(new GetAllPlayersQuery(null, null, null));
+
             //Players = response.Data;
 
             if (response.Succeeded)
