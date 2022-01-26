@@ -12,6 +12,7 @@ namespace Cypher.Application.Features.Players.Queries.GetById
 
         public virtual Inventory Inventory { get; set; }
         public float Balance { get; set; }
+        public string CreatedBy { get; set; }
 
     }
 }

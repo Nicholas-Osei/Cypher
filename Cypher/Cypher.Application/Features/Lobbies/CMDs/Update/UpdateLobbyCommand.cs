@@ -24,6 +24,8 @@ namespace Cypher.Application.Features.Lobbies.CMDs.Update
             private readonly IPlayerRepository _playerRepository;
             private readonly IUnitOfWork _unitOfWork;
 
+            //private readonly UserManager<ApplicationUser> _userManager;
+
             public UpdateLobbyCommandHandler(ILobbyRepository lobbyRepository, IUnitOfWork unitOfWork, IPlayerRepository playerRepository)
             {
                 _lobbyRepository = lobbyRepository;
@@ -54,6 +56,10 @@ namespace Cypher.Application.Features.Lobbies.CMDs.Update
                         {
                             var player = await _playerRepository.GetByIdAsync(playerId);
                             lobby.Players.Add(player);
+
+                            //// Send email to all players with invite link to join lobby
+                            //string userId = player.CreatedBy;
+                            //var allUsersExceptCurrentUser = await _userManager.Users.Where(a => a.Id != currentUser.Id).ToListAsync();
                         }
                     }
                     //lobby.Players = request.Players;

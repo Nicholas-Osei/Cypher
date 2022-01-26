@@ -15,6 +15,12 @@ using Cypher.Application.Features.Lobbies.CMDs.Create;
 using Cypher.Application.Features.Lobbies.CMDs.Delete;
 using Cypher.Application.Features.Lobbies.CMDs.Update;
 using Cypher.Application.Interfaces.Shared;
+using Cypher.Application.Features.Players.Queries.GetById;
+using Cypher.Infrastructure.Identity.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Cypher.Application.DTOs.Mail;
+using Microsoft.Extensions.Logging;
 
 namespace Cypher.Web.Areas.Cypher.Controllers
 {
@@ -23,9 +29,18 @@ namespace Cypher.Web.Areas.Cypher.Controllers
     {
         private readonly IAuthenticatedUserService _userService;
 
-        public LobbiesController(IAuthenticatedUserService userService)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMailService _emailSender;
+
+        private readonly ILogger<LobbiesController> _logger;
+
+
+        public LobbiesController(IAuthenticatedUserService userService, UserManager<ApplicationUser> userManager, IMailService emailSender, ILogger<LobbiesController> logger)
         {
             _userService = userService;
+            _userManager = userManager;
+            _emailSender = emailSender;
+            _logger = logger;
         }
         // GET: LobbiesController
         public IActionResult Index()
@@ -112,6 +127,27 @@ namespace Cypher.Web.Areas.Cypher.Controllers
                 if (result.Succeeded)
                 {
                     _notify.Information($"Lobby with ID { result.Data } has been updated.");
+                }
+
+                // Send email to all players with invite link to join lobby
+
+                //if (lobby.PlayerIds.Count == 0)
+                    
+                foreach (var playerId in lobby.PlayerIds)
+                {
+                    var playerResponse = await _mediator.Send(new GetPlayerByIdQuery() { Id = playerId });
+                    var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                    var playerUser = await _userManager.Users.Where(u => u.Id == playerResponse.Data.CreatedBy).FirstOrDefaultAsync();
+
+                    var mailRequest = new MailRequest
+                    {
+                        Body = $"<b>You have been invited to a lobby.</b>",
+                        To = playerUser.Email,
+                        Subject = "Cypher Invitation"
+                    };
+
+                    _logger.LogInformation("An invitation email has been sent.");
+                    await _emailSender.SendAsync(mailRequest);
                 }
             }
 
