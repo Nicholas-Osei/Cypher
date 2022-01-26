@@ -17,14 +17,14 @@ namespace Cypher.Application.Features.UserCredentials.Commands.Create
         public string Base64Credential { get; set; }
   
     }
-    public class CreatePlayerCommandHandler : IRequestHandler<CreateUserCredentialsCommand, Result<int>>
+    public class CreateUserCredentialsCommandHandler : IRequestHandler<CreateUserCredentialsCommand, Result<int>>
     {
         private readonly IUserCredentialsRepository usercredentialsRepo;
         private readonly IMapper _mapper;
 
         private IUnitOfWork _unitOfWork { get; set; }
 
-        public CreatePlayerCommandHandler(IUserCredentialsRepository usercredentialsRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CreateUserCredentialsCommandHandler(IUserCredentialsRepository usercredentialsRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             usercredentialsRepo = usercredentialsRepository;
             _mapper = mapper;

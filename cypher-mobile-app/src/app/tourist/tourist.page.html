@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Tourist Game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card style="text-align: center; height: 300px; top: 30%;">
+    <div id="questionsDiv" *ngIf="checkLocation === chooseRightArray[questionNumber].location">
+      <H1> Question {{questionNumber+1}}{{questionTitle}}</H1>
+      <h4>{{chooseRightArray[questionNumber].question}}
+      </h4>
+      <div *ngIf="chooseRightArray[questionNumber].type ==='input'">
+        <ion-input #in1 style="background-color: aliceblue; width: 200px;  border-radius: 2%;  position: absolute;
+        left: 50%;
+        transform: translateX(-50%); color: black;" [(ngModel)]="searchValue">
+        </ion-input>
+        <ion-button style="margin-top: 13%;" (click)="nextQuestion(in1.value)">{{buttonName}}</ion-button>
+      </div>
+      <div *ngIf="chooseRightArray[questionNumber].type ==='radio'">
+        <ion-radio-group value="grape" [(ngModel)]="radioValue">
+          <ion-item>
+            <ion-label>{{chooseRightArray[questionNumber].option1}}</ion-label>
+            <ion-radio slot="start" color="success" value="{{chooseRightArray[questionNumber].option1}}"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{chooseRightArray[questionNumber].option2}}</ion-label>
+            <ion-radio slot="start" color="tertiary" value="{{chooseRightArray[questionNumber].option2}}"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <ion-button style="margin-top: 10%;" (click)="nextQuestion(radioValue)">{{buttonName}}</ion-button>
+      </div>
+    </div>
+    <div *ngIf="showResults">
+      <H1> Your score is {{score}}/{{chooseRightArray.length}}</H1>
+      <ion-button style="margin-top: 13%;" (click)="goTo()">{{buttonName}}</ion-button>
+    </div>
+  </ion-card>
+
+</ion-content>

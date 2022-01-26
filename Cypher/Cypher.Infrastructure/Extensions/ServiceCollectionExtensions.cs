@@ -33,6 +33,7 @@ namespace Cypher.Infrastructure.Extensions {
             services.AddTransient<IInventoryRepository, InventoryRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<ILobbyRepository, LobbyRepository>();
+            services.AddTransient<IQuestionRepository, QuestionRepository>();
             #endregion Repositories
         }
     }

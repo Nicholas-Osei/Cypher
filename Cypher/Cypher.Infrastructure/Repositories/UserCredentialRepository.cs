@@ -25,9 +25,9 @@ namespace Cypher.Infrastructure.Repositories
             await _repo.DeleteAsync(usercredential);
         }
 
-        public async Task<UserCredential> GetByIdAsync(int productId)
+        public async Task<UserCredential> GetByIdAsync(int usercredentialId)
         {
-            return await _repo.Entities.Where(p => p.Id == productId).FirstOrDefaultAsync();
+            return await _repo.Entities.Where(p => p.Id == usercredentialId).FirstOrDefaultAsync();
         }
 
         public async Task<List<UserCredential>> GetListAsync()

@@ -4,10 +4,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
-import { markAsUntransferable } from 'worker_threads';
 import { MenuController } from '@ionic/angular';
 import { ApiService } from '../Services/api.service';
-import { getTranslationDeclStmts } from '@angular/compiler/src/render3/view/template';
 
 declare let google: any;
 
@@ -34,13 +32,16 @@ export class MapScreenPage implements OnInit {
   playerPoint = 0;
   ghostPoint = 0;
   //Antwerpen: Rooseveltplein
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   ghostHackerPosLat: number = 51.219783;
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   ghostHackerPosLng: number = 4.416215;
   //Coords for testing
   // ghostHackerPosLat: number = 51.3275;
   // ghostHackerPosLng: number = 4.9297;
   // ghostHackerPosLat: number = 51.2174;
   // ghostHackerPosLng: number = 3.7484;
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   moveCoord: number = 0.0002;
   ghostHackerActivated = false;
   ghostHackerWarning = false;
@@ -59,8 +60,16 @@ export class MapScreenPage implements OnInit {
   getBoolStealHacker: string;
   timeLeft = 600;
   interval;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   ItemToTake: any;
   gameOver = false;
+  kerk = false;
+  askCounter = 0;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  KerkLocation: any;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  StreetLocation: any;
+
 
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -84,6 +93,7 @@ export class MapScreenPage implements OnInit {
 
   }
 
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   GetInventoryId() {
     this.inventoryItem.getPlayerById(localStorage.getItem('playerId')).subscribe(i => {
       this.playerId = i;
@@ -362,7 +372,7 @@ export class MapScreenPage implements OnInit {
           }
 
         }
-      }, 1000)
+      }, 1000);
 
 
 
@@ -375,7 +385,7 @@ export class MapScreenPage implements OnInit {
         this.ghostHackerMarker = new google.maps.Marker({
           position: this.ghostHackerPos,
           icon: image,
-        })
+        });
         this.startTimer();
         this.ItemToTake = new google.maps.Circle({
           strokeColor: '#00FF00',
@@ -400,6 +410,30 @@ export class MapScreenPage implements OnInit {
 
 
 
+      }
+      else if (this.inventoryItem.lobbyNaam === 'Tourist') {
+        this.ghostHackerMarker.setMap(null);
+        this.KerkLocation = new google.maps.Circle({
+          strokeColor: '#00FF00',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#00FF00',
+          fillOpacity: 0.35,
+          map: this.map,
+          center: { lat: 51.242908, lng: 4.445740 },
+          radius: 70,
+        });
+        this.StreetLocation = new google.maps.Circle({
+          strokeColor: '#00FF00',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#00FF00',
+          fillOpacity: 0.35,
+          map: this.map,
+          // center: { lat: 51.242908, lng: 4.445740 },
+          center: { lat: 51.242149, lng: 4.441660 },
+          radius: 70,
+        });
       }
       else {
         if (!this.ghostHackerActivated && !this.ghostHackerStoleSomething) {
@@ -434,7 +468,7 @@ export class MapScreenPage implements OnInit {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   SearchRegionAreasForPlayer() {
     // this.getPlayerInAnArea = false;
-    console.log(this.ItemToTake.center);
+    // console.log(this.ItemToTake.center);
 
     if ((this.inventoryItem.lobbyNaam === 'The Flash')) {
       // eslint-disable-next-line max-len
@@ -443,19 +477,36 @@ export class MapScreenPage implements OnInit {
         this.playerStoleItem = true;
         this.playerPoint += 1;
         console.log(this.ItemToTake.center.lat);
-        // if (this.level === 2) {
-        //   this.level = 3;
-        //   console.log('level 3');
-        //   this.level3();
-        // }
-        // else {
-        //   this.level = 2;
-        //   this.level2();
-        // }
-        ///
         this.levelChanger();
         this.playerStoleItem = false;
       }
+    }
+    else if (this.inventoryItem.lobbyNaam === 'Tourist') {
+      if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(),
+        this.KerkLocation.center) <= this.KerkLocation.radius) {
+        console.log('you found me');
+        this.askCounter++;
+        if (this.askCounter === 1 || this.askCounter === 20) {
+          const askUserToPlay = confirm('You are at the Kerk. Do you want to play the Tourist?');
+          if (askUserToPlay) {
+            localStorage.setItem('streets', 'Kerk');
+            this.router.navigate(['tourist']).then(() => window.location.reload());
+          }
+        }
+      }
+      if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(),
+        this.StreetLocation.center) <= this.StreetLocation.radius) {
+        console.log('you found me');
+        this.askCounter++;
+        if (this.askCounter === 1 || this.askCounter === 20) {
+          const askUserToPlay = confirm('You are at the Gemeentehuis Area. Do you want to play the Tourist?');
+          if (askUserToPlay) {
+            localStorage.setItem('streets', 'Gemeentehuis');
+            this.router.navigate(['tourist']).then(() => window.location.reload());
+          }
+        }
+      }
+
     }
     else {
       this.getPlayerInAnArea = false;
@@ -524,50 +575,47 @@ export class MapScreenPage implements OnInit {
       radius: 70,
     });
   }
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   CheckHackerInRangeOfPlayer() {
-    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerWarningArea.center) <= this.playerWarningArea.radius) {
-      if (!this.ghostHackerWarning && !this.ghostHackerStoleSomething) {
-        window.alert("WARNING: The hacker is very close! Be careful, he might sabotage you!")
-        this.ghostHackerWarning = true;
-      }
-    } else {
-      this.ghostHackerWarning = false;
-    }
-    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.playerStealArea.center) <= this.playerStealArea.radius) {
-      // if (!this.ghostHackerStoleSomething) {
-      this.randomNumber = localStorage.getItem('inventoryLength');
-      // this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
-      //   window.alert("The hacker stole one of your items!");
-      // });
-      console.log('again')
-      this.ghostHackerStoleSomething = true;
-      this.playerStoleItem = false;
-      // if (this.level === 2) {
-      //   this.level = 3;
-      //   console.log('level 3');
-      //   this.level3();
-      // }
-      // else {
-      //   this.level = 2;
-      //   this.level2();
-      // }
-      console.log(this.level)
-      if (this.playerPoint > 0) {
-        this.playerPoint -= 1;
-      }
-      else {
-        this.playerPoint = 0;
-      }
-      this.ghostPoint += 1;
-      console.log('stolen');
-      if (this.inventoryItem.lobbyNaam !== 'The Flash') {
-        setInterval(() => {
-          this.ghostHackerMarker.setMap(null);
-        }, 5000);
-      }
+    if (this.inventoryItem.lobbyNaam !== 'Tourist') {
 
-      //}
+      if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(),
+        this.playerWarningArea.center) <= this.playerWarningArea.radius) {
+        if (!this.ghostHackerWarning && !this.ghostHackerStoleSomething) {
+          window.alert('WARNING: The hacker is very close! Be careful, he might sabotage you!');
+          this.ghostHackerWarning = true;
+        }
+      } else {
+        this.ghostHackerWarning = false;
+      }
+      if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(),
+        this.playerStealArea.center) <= this.playerStealArea.radius) {
+        if (!this.ghostHackerStoleSomething) {
+          this.randomNumber = localStorage.getItem('inventoryLength');
+          this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
+            window.alert('The hacker stole one of your items!');
+          });
+          console.log('again');
+          this.ghostHackerStoleSomething = true;
+          this.playerStoleItem = false;
+          console.log(this.level);
+          if (this.playerPoint > 0) {
+            this.playerPoint -= 1;
+          }
+          else {
+            this.playerPoint = 0;
+          }
+          this.ghostPoint += 1;
+          console.log('stolen');
+          if (this.inventoryItem.lobbyNaam !== 'The Flash') {
+            setInterval(() => {
+              this.ghostHackerMarker.setMap(null);
+            }, 5000);
+          }
 
+        }
+
+      }
     }
   }
   levelChanger() {
@@ -597,8 +645,10 @@ export class MapScreenPage implements OnInit {
     }
 
   }
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   CheckHackerInRangeOfLocation() {
-    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(), this.ItemToTake.center) <= this.ItemToTake.radius) {
+    if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(),
+      this.ItemToTake.center) <= this.ItemToTake.radius) {
       if (this.playerStoleItem) {
         //Ghost goes and steal points from player
         this.moveGhostToPlayer();
@@ -620,6 +670,7 @@ export class MapScreenPage implements OnInit {
   }
 
 
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   GenerateIdForHacker(min, max) {
     return (Math.floor(Math.random() * (max - min + 1) + min));
   }
