@@ -38,6 +38,18 @@ export class ApiService {
       { headers: httpHeaders });
   }
 
+  getAllQuestions(): Observable<Question> {
+
+    const httpHeaders = new HttpHeaders({
+      'content-type': 'application/json',
+      // eslint-disable-next-line quote-props
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'Authorization': `Bearer ${this.loginservice.authToken}`
+    });
+    return this.http.get<Question>('https://cypher-web-app.azurewebsites.net/api/v1/question?pageSize=500',
+      { headers: httpHeaders });
+  }
+
   getPlayerById(id): Observable<Player> {
     const httpHeaders = new HttpHeaders({
       'content-type': 'application/json',
@@ -151,6 +163,26 @@ export interface Speler {
 }
 export interface Player {
   data: Speler[];
+  page: number;
+  totalPages: number;
+  totalCount: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  failed: boolean;
+  message?: any;
+  succeeded: boolean;
+}
+export interface Questions {
+  id: number;
+  question: string;
+  answer: string;
+  type: string;
+  location: string;
+  option1?: any;
+  option2?: any;
+}
+export interface Question {
+  data: Questions[];
   page: number;
   totalPages: number;
   totalCount: number;

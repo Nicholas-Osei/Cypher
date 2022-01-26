@@ -20,96 +20,41 @@ export class TouristPage implements OnInit {
   radioValue: any;
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  Questions = [{
-    question: 'Wat is de straat naam van deze kerk ?',
-    answer: 'Bredabaan',
-    type: 'input',
-    location: 'Kerk'
-  },
-  {
-    question: 'Is er een tramhalte voor de kerk?',
-    answer: 'JA',
-    type: 'radio',
-    option1: 'JA',
-    option2: 'NEE',
-    location: 'Kerk'
-  },
-  {
-    question: 'Wat is de  naam van dit kerk ?',
-    answer: 'Sint-Bartholomeuskerk',
-    type: 'input',
-    location: 'Kerk'
-  },
-  {
-    question: 'Hoe heet de school naast dit kerk ?',
-    answer: 'Sint Eduardus',
-    type: 'input',
-    location: 'Kerk'
-  },
-  {
-    question: 'Wat is de naam van het restaurant aan de rechterkant van de kerk?',
-    answer: 'Mila Palace',
-    type: 'radio',
-    option1: 'Kebab King',
-    option2: 'Mila Palace',
-    location: 'Kerk'
-  },
-  {
-    question: 'Heeft deze Districthuis een gehandicapte parkeerplaats?',
-    answer: 'JA',
-    type: 'radio',
-    option1: 'JA',
-    option2: 'NEE',
-    location: 'Gemeentehuis'
-  },
-  {
-    question: 'Hoe noemt de tramhalte voor dit Districthuis',
-    answer: 'Burgermmeesternolf',
-    type: 'input',
-    location: 'Gemeentehuis'
-  },
-  {
-    question: 'Is er een politie kantoor naast dit Districthuis?',
-    answer: 'JA',
-    type: 'radio',
-    option1: 'JA',
-    option2: 'NEE',
-    location: 'Gemeentehuis'
-  },
-  {
-    question: 'Wat is het nummer van de Medisch Huis ?',
-    type: 'radio',
-    answer: '03 644 00 24',
-    option1: '03 644 00 12',
-    option2: '03 644 00 24',
-    location: 'Gemeentehuis'
-  },
-  {
-    question: 'Kan je hier in de buurt een corona test doen ?',
-    answer: 'JA',
-    type: 'radio',
-    option1: 'NEE',
-    option2: 'JA',
-    location: 'Gemeentehuis'
-  }
-  ];
+  Questions = [];
+
+
 
   constructor(public router: Router, public apiService: ApiService) {
     this.checkLocation = localStorage.getItem('streets');
     this.chooseRightArray = [];
     console.log(this.checkLocation);
-    this.switchArrayQuestions();
+
   }
 
   ngOnInit() {
+    // this.apiService.getAllQuestions().subscribe(q => {
+    //   this.Questions = q.data;
+    //   console.log('Got Questions');
+    //   console.log(this.Questions[0]);
+    //   this.switchArrayQuestions();
+
+    // });
+    this.getQuestions();
 
   }
 
+  async getQuestions() {
+    const retrieveData = await this.apiService.getAllQuestions().toPromise();
+    this.Questions = retrieveData.data;
+    this.switchArrayQuestions();
+  }
   switchArrayQuestions() {
+    console.log('2');
     this.Questions.forEach(element => {
+      console.log(element);
       if (this.checkLocation === element.location) {
         this.chooseRightArray.push(element);
-        console.log(this.chooseRightArray[1]);
+        console.log(this.chooseRightArray[0].location);
       }
     });
     console.log(this.chooseRightArray.length);

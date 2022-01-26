@@ -4,13 +4,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="chooseRightArray.length>0">
 
   <ion-card style="text-align: center; height: 300px; top: 30%;">
-    <div id="questionsDiv" *ngIf="checkLocation === chooseRightArray[questionNumber].location">
+    <div id="questionsDiv">
       <H1> Question {{questionNumber+1}}{{questionTitle}}</H1>
-      <h4>{{chooseRightArray[questionNumber].question}}
-      </h4>
+      <h4>{{chooseRightArray[questionNumber].question}}</h4>
       <div *ngIf="chooseRightArray[questionNumber].type ==='input'">
         <ion-input #in1 style="background-color: aliceblue; width: 200px;  border-radius: 2%;  position: absolute;
         left: 50%;
@@ -29,7 +28,7 @@
             <ion-radio slot="start" color="tertiary" value="{{chooseRightArray[questionNumber].option2}}"></ion-radio>
           </ion-item>
         </ion-radio-group>
-        <ion-button style="margin-top: 10%;" (click)="nextQuestion(radioValue)">{{buttonName}}</ion-button>
+        <ion-button style="margin-top: 13%;" (click)="nextQuestion(radioValue)">{{buttonName}}</ion-button>
       </div>
     </div>
     <div *ngIf="showResults">
