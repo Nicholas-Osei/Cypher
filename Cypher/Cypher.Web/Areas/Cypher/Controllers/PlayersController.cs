@@ -1,4 +1,5 @@
 ﻿using Cypher.Application.Features.Players.Commands.Create;
+using Cypher.Application.Features.Players.Commands.Delete;
 using Cypher.Application.Features.Players.Commands.Update;
 using Cypher.Application.Features.Players.Queries.GetAllPaged;
 using Cypher.Application.Features.Players.Queries.GetById;
@@ -98,6 +99,33 @@ namespace Cypher.Web.Areas.Cypher.Controllers
             else
             {
                 _notify.Error(response.Message);
+                return null;
+            }
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> OnPostDelete(int id)
+        {
+            var deleteCommand = await _mediator.Send(new DeletePlayerCommand { Id = id });
+            if (deleteCommand.Succeeded)
+            {
+                _notify.Information($"Lobby with Id {id} Deleted.");
+                var response = await _mediator.Send(new GetAllPlayersQuery(null, null, null, _userService.UserId));
+                if (response.Succeeded)
+                {
+                    var viewModel = _mapper.Map<List<PlayerViewModel>>(response.Data);
+                    var html = await _viewRenderer.RenderViewToStringAsync("_ViewAll", viewModel);
+                    return new JsonResult(new { isValid = true, html = html });
+                }
+                else
+                {
+                    _notify.Error(response.Message);
+                    return null;
+                }
+            }
+            else
+            {
+                _notify.Error(deleteCommand.Message);
                 return null;
             }
         }
