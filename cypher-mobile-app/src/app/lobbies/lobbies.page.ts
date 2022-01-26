@@ -20,6 +20,7 @@ export class LobbiesPage implements OnInit {
   lobbies = [];
   teller = 0;
   alertCounter = 0;
+  // inLobby = 0;
 
 
   playerbyId: any;
