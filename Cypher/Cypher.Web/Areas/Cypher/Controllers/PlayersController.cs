@@ -1,6 +1,8 @@
 ﻿using Cypher.Application.Features.Players.Queries.GetAllPaged;
+using Cypher.Application.Features.Players.Queries.GetById;
 using Cypher.Application.Interfaces.Shared;
 using Cypher.Web.Abstractions;
+using Cypher.Web.Areas.Cypher.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -30,11 +32,30 @@ namespace Cypher.Web.Areas.Cypher.Controllers
 
             if (response.Succeeded)
             {
-                var mappedModel = _mapper.Map<List<GetAllPlayersResponse>>(response.Data);
+                var mappedModel = _mapper.Map<List<PlayerViewModel>>(response.Data);
                 return PartialView("_ViewAll", mappedModel);
             }
             //return null;
             return null;
+        }
+
+        public async Task<JsonResult> OnGetCreateOrEdit(int id = 0)
+        {
+            if (id == 0)
+            {
+                var playerViewModel = new PlayerViewModel();
+                return new JsonResult(new { isValid = true, html = await _viewRenderer.RenderViewToStringAsync("_CreateOrEdit", playerViewModel) });
+            }
+            else
+            {
+                var response = await _mediator.Send(new GetPlayerByIdQuery() { Id = id });
+                if (response.Succeeded)
+                {
+                    var playerViewModel = _mapper.Map<PlayerViewModel>(response.Data);
+                    return new JsonResult(new { IsValid = true, html = await _viewRenderer.RenderViewToStringAsync("_CreateOrEdit", playerViewModel) });
+                }
+                return null;
+            }
         }
     }
 }

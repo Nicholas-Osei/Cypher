@@ -1,8 +1,8 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@using Cypher.Application.Features.Players.Queries.GetAllPaged;
-@model IEnumerable<GetAllPlayersResponse>;
+@using Cypher.Web.Areas.Cypher.Models;
+@model IEnumerable<PlayerViewModel>;
 
 <table id="playersTable" class="table table-striped" width="100%" cellspacing="0">
     <thead>

@@ -3,9 +3,9 @@
 *@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
 @using Cypher.Web.Areas.Cypher.Models
-@model LobbyViewModel
+@model PlayerViewModel
 
-<form id="create-form" method="post" asp-controller="Lobbies" asp-action="OnPostCreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryModalPost(this);" enctype="multipart/form-data">
+<form id="create-form" method="post" asp-controller="Players" asp-action="OnPostCreateOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryModalPost(this);" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
@@ -20,41 +20,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label">Lobby Admin</label>
-                <div class="col-md-9">
-                    <div class="input-group">
-                        <select name="LobbyAdminId" class="form-control select2bs4" id="LobbyAdminId" asp-for="LobbyAdminId" asp-items="@Model.AllPlayers">
-                        </select>
-                    </div>
-                    @*<span asp-validation-for="LobbyAdminId" class="text-danger"></span>*@
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                </div>
-            </div>
-        </div>
-        @if (Model.Id != 0)
-        {
-            <div class="col-md-6">
-                <div class="form-group row">
-                    <label class="col-md-3 col-form-label">Players</label>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <select name="PlayerIds" class="form-control select2bs4" id="PlayerIds" asp-for="PlayerIds" asp-items="@Model.AllPlayers">
-                            </select>
-                        </div>
-                        @*<span asp-validation-for="PlayerIds" class="text-danger"></span>*@
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">  
-                    </div>
-                </div>
-            </div>
-        }
     </div>
 
     <div class="form-group justify-content-between" style="margin-bottom: 0px !important">
@@ -63,18 +28,18 @@
     </div>
 </form>
 <script>
-    $("#LobbyAdminId").select2({
-        placeholder: "Select Admin",
-        theme: "bootstrap4",
-        escapeMarkup: function (m) {
-            return m;
-        }
-    });
-    $("#PlayerIds").select2({
-        placeholder: "Select Players",
-        theme: "bootstrap4",
-        escapeMarkup: function (m) {
-            return m;
-        }
-    });
+    //$("#LobbyAdminId").select2({
+    //    placeholder: "Select Admin",
+    //    theme: "bootstrap4",
+    //    escapeMarkup: function (m) {
+    //        return m;
+    //    }
+    //});
+    //$("#PlayerIds").select2({
+    //    placeholder: "Select Players",
+    //    theme: "bootstrap4",
+    //    escapeMarkup: function (m) {
+    //        return m;
+    //    }
+    //});
 </script>
