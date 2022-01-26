@@ -40,6 +40,7 @@ namespace Cypher.Web.Areas.Cypher.Controllers
 
         public async Task<JsonResult> OnGetCreateOrEdit(int id = 0)
         {
+            // TO DO: Only show players created by logged in user, but only for selecting lobby admin
             var playersResponse = await _mediator.Send(new GetAllPlayersQuery(null, null, null));
             if (id == 0)
             {

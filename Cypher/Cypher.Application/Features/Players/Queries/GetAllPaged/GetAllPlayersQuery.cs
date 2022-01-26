@@ -29,7 +29,7 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
         {
             NameQuery = playerName;
             PageNumber = pageNr ?? 0;
-            PageSize = pageSize ?? 10;
+            PageSize = pageSize ?? 100;
             UserId = userId;
         }
 
@@ -37,7 +37,7 @@ namespace Cypher.Application.Features.Players.Queries.GetAllPaged
         {
             NameQuery = playerName;
             PageNumber = pageNr ?? 0;
-            PageSize = pageSize ?? 10;
+            PageSize = pageSize ?? 100;
         }
 
 
