@@ -42,21 +42,42 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.getToken();
+    // this.getToken();
 
   }
 
 
 
-  async getToken() {
-    const newtoken =
+  async getToken(form: { value: { email: any; password: any } }) {
+    this.loginservice.authToken = "";
+    const tokenRequest =
     {
-      email: 'superadmin@gmail.com',
-      password: '123Pa$$word!'
+      email: form.value.email,
+      password: form.value.password
     };
-    await this.loginservice.getToken(newtoken).then(t => { console.log('Got it', this.loginservice.authToken = t.data.jwToken); });
+    
+    try {
+      await this.loginservice.getToken(tokenRequest).then(response => { console.log('Got it', this.loginservice.authToken = response.data.jwToken); });
+    } catch (error) {
+      console.log(error);
+      console.log(error.message);
+    }
+    if (this.loginservice.authToken.length > 0 ) {
+      console.log("LOGGED IN");
+      console.log(this.loginservice.authToken);
+      this.loginservice.isLoggedIn = true;
+      this.loginservice.displayName = form.value.email;
+      localStorage.setItem('token', this.loginservice.authToken);
+      localStorage.setItem('Isloggedin', JSON.stringify(this.loginservice.isLoggedIn));
+      localStorage.setItem('Displayname', JSON.stringify(this.loginservice.displayName));
+      this.router.navigate(['game-screen']);
+    }
+    else {
+      console.log("REJECT");
+    }
+
     // eslint-disable-next-line max-len
-    return this.loginservice.allCredentials().subscribe(c => { this.loginservice.gebruikerCredentials = c; console.log('Got all credentials'); });
+    // return this.loginservice.allCredentials().subscribe(c => { this.loginservice.gebruikerCredentials = c; console.log('Got all credentials'); });
   }
   registerBoolean(): void {
     // this.toRegister = true;
@@ -72,7 +93,6 @@ export class HomePage implements OnInit {
   login(): void {
     this.loginservice.login();
   }
-
 
   checkUserCredential(form: { value: { email: any; password: any } }) {
     console.log(form.value.email);
@@ -99,6 +119,34 @@ export class HomePage implements OnInit {
     this.loginservice.allCredentials().subscribe(c => { this.loginservice.gebruikerCredentials = c; });
 
   }
+
+
+  // checkUserCredential(form: { value: { email: any; password: any } }) {
+  //   console.log(form.value.email);
+  //   // this.loginservice.allCredentials().subscribe(c => { this.gebruikerCredentials = c; console.log('Refresh'); });
+  //   const toBAseAuthentication = Buffer.from(form.value.email + form.value.password).toString('base64');
+  //   console.log(toBAseAuthentication);
+  //   console.log(this.loginservice.gebruikerCredentials);
+  //   for (const x of this.loginservice.gebruikerCredentials.data) {
+  //     console.log(x.base64Credential, toBAseAuthentication);
+  //     if (x.base64Credential === toBAseAuthentication) {
+  //       this.loginservice.isLoggedIn = true;
+  //       console.log('check this', x.base64Credential);
+  //       console.log(toBAseAuthentication);
+  //       this.loginservice.displayName = form.value.email;
+  //       localStorage.setItem('token', this.loginservice.authToken);
+  //       localStorage.setItem('Isloggedin', JSON.stringify(this.loginservice.isLoggedIn));
+  //       localStorage.setItem('Displayname', JSON.stringify(this.loginservice.displayName));
+  //       this.router.navigate(['game-screen']);
+
+  //     }
+  //     console.log('doesnt exist');
+
+  //   }
+  //   this.loginservice.allCredentials().subscribe(c => { this.loginservice.gebruikerCredentials = c; });
+
+  // }
+
   registerUser(form: { value: { email: any; password: any; confirmpassword: any } }) {
     console.log(this.loginservice.gebruikerCredentials.data);
     if (form.value.confirmpassword === form.value.password) {

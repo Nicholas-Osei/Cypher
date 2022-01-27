@@ -12,7 +12,7 @@
     <ion-text color="dark">
       <h2 style="text-align: center;">SIGN IN</h2>
     </ion-text>
-    <form #UserLogin="ngForm" (submit)="checkUserCredential(UserLogin)">
+    <form #UserLogin="ngForm" (submit)="getToken(UserLogin)">
       <h3>Email:</h3>
       <ion-item>
         <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
