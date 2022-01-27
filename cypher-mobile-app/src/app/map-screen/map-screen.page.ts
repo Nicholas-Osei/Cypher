@@ -85,8 +85,8 @@ export class MapScreenPage implements OnInit {
   ngOnInit() {
     this.inventoryItem.lobbyNaam = localStorage.getItem('LobbyName');
     if (this.inventoryItem.lobbyNaam === 'The Flash') {
-      this.ghostHackerPosLat = 51.244740;
-      this.ghostHackerPosLng = 4.445240;
+      this.ghostHackerPosLat = 51.23080570155349;
+      this.ghostHackerPosLng = 4.425015768864978;
       this.moveCoord = 0.00002;
     }
 
@@ -339,19 +339,19 @@ export class MapScreenPage implements OnInit {
               if (this.level === 1) {
                 // this.ghostToLocation(51.221814, 4.413618);
                 this.moveCoord = 0.00002;
-                this.ghostToLocation(51.242430, 4.442860);
+                this.ghostToLocation(51.230217, 4.416559);
                 console.log('going to location 1');
 
               }
               else if (this.level === 2) {
                 this.moveCoord = 0.00004;
-                this.ghostToLocation(51.247760, 4.456310);
+                this.ghostToLocation(51.230522, 4.413747);
                 console.log('going to location 2');
 
               }
               else if (this.level === 3) {
                 this.moveCoord = 0.00006;
-                this.ghostToLocation(51.244740, 4.445240);
+                this.ghostToLocation(51.229963, 4.414709);
                 console.log('going to location 3');
               }
               else if (this.level === 4) {
@@ -396,8 +396,9 @@ export class MapScreenPage implements OnInit {
           map: this.map,
           // center: { lat: 51.221814, lng: 4.413618 },
           // center: { lat: 51.242570, lng: 4.444350 },
-          center: { lat: 51.242430, lng: 4.442860 },
-          radius: 70,
+          // // center: { lat: 51.242430, lng: 4.442860 },
+          center: { lat: 51.230217, lng: 4.416559 },
+          radius: 15,
         });
 
         if (!this.ghostHackerActivated) {
@@ -539,9 +540,10 @@ export class MapScreenPage implements OnInit {
       fillColor: '#00FF00',
       fillOpacity: 0.35,
       map: this.map,
-      center: { lat: 51.247760, lng: 4.456310 },
+      // // center: { lat: 51.247760, lng: 4.456310 },
+      center: { lat: 51.230522, lng: 4.413747 },
       // center: { lat: 51.242570, lng: 4.444350 },
-      radius: 70,
+      radius: 15,
     });
   }
   level3() {
@@ -556,8 +558,9 @@ export class MapScreenPage implements OnInit {
       fillOpacity: 0.35,
       map: this.map,
       // center: { lat: 51.257780, lng: 4.452110 },
-      center: { lat: 51.244740, lng: 4.445240 },
-      radius: 70,
+      // // center: { lat: 51.244740, lng: 4.445240 },
+      center: { lat: 51.229963, lng: 4.414709 },
+      radius: 15,
     });
   }
   level4() {
