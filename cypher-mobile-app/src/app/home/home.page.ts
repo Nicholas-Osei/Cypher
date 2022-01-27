@@ -70,6 +70,8 @@ export class HomePage implements OnInit {
       localStorage.setItem('token', this.loginservice.authToken);
       localStorage.setItem('Isloggedin', JSON.stringify(this.loginservice.isLoggedIn));
       localStorage.setItem('Displayname', JSON.stringify(this.loginservice.displayName));
+
+      
       this.router.navigate(['game-screen']);
     }
     else {

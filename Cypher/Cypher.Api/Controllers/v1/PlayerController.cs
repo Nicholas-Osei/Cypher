@@ -16,9 +16,9 @@ namespace Cypher.Api.Controllers.v1
     public class PlayerController : BaseApiController<PlayerController>
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll(string playerName, int? pageNumber, int? pageSize)
+        public async Task<IActionResult> GetAll(string playerName, int? pageNumber, int? pageSize, string userId)
         {
-            var players = await _mediator.Send(new GetAllPlayersQuery(playerName, pageNumber, pageSize));
+            var players = await _mediator.Send(new GetAllPlayersQuery(playerName, pageNumber, pageSize, userId));
             return Ok(players);
         }
 

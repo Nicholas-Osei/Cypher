@@ -85,6 +85,10 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   async getUserItems() {
     console.log(this.loginservice.displayName);
+
+
+    // Wat is dit
+    
     this.api.players.data.forEach(m => {
       this.teller++;
       // console.log(this.loginservice.displayName);
@@ -101,6 +105,9 @@ export class GameScreenPage implements OnInit, OnDestroy {
         this.notViaGoogle = true;
       }
     });
+
+
+
     console.log(this.notViaGoogle);
     if (!this.notViaGoogle) {
       console.log(this.notViaGoogle);
