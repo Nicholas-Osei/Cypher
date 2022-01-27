@@ -46,7 +46,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
         .log('Got all players');
       console.log(this.api.players.data[0].name);
       this.getUserItems();
-      // this.getPlayerbyId();
       console.log(this.api.inventory);
     });
 
@@ -89,14 +88,8 @@ export class GameScreenPage implements OnInit, OnDestroy {
     console.log(this.loginservice.displayName);
     this.api.players.data.forEach(m => {
       this.teller++;
-      // console.log(this.loginservice.displayName);
       console.log(this.api.players.data.length, this.teller);
       if (m.name === this.loginservice.displayName) {
-        //
-        // this.speler.inventory = m.inventory.items;
-        // this.messages = m.messages;
-        // this.lobbies = m.playerLobbies;
-        // this.id = m.id;
         this.api.playerId = m.id;
         console.log(m.name);
         localStorage.setItem('Id', JSON.stringify(m.id));
@@ -129,9 +122,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
         console.log(this.playerbyId.data.friends);
         this.friends = this.playerbyId.data.friends;
         this.api.inventory = this.playerbyId.data.inventory;
-        // this.speler.friends = this.playerbyId.data.friends;
-        // this.speler.messages = m.messages;
-        // this.lobbies = m.playerLobbies;
       });
 
   }
@@ -142,7 +132,6 @@ export class GameScreenPage implements OnInit, OnDestroy {
 
   search(name?: any) {
     console.log(this.playername);
-    // console.log(this.)
     this.api.searchForFriends(this.playername).
       subscribe(s => { this.playerSearchResults = s.data; console.log(this.playerSearchResults); });
   }
