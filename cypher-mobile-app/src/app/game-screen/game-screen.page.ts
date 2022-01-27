@@ -14,6 +14,8 @@ import { Inventory, Player, ApiService } from '../Services/api.service';
 })
 export class GameScreenPage implements OnInit, OnDestroy {
 
+  // players: Player;
+  // inventory: any;
   showPage: any;
   lobbies: any;
   friends: any;
@@ -123,8 +125,13 @@ export class GameScreenPage implements OnInit, OnDestroy {
   getPlayerbyId() {
     this.api.getPlayerById(this.api.playerId).subscribe(
       u => {
+        console.log('Got friends'); this.playerbyId = u;
+        console.log(this.playerbyId.data.friends);
         this.friends = this.playerbyId.data.friends;
         this.api.inventory = this.playerbyId.data.inventory;
+        // this.speler.friends = this.playerbyId.data.friends;
+        // this.speler.messages = m.messages;
+        // this.lobbies = m.playerLobbies;
       });
 
   }

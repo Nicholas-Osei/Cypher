@@ -1,9 +1,11 @@
+/* eslint-disable no-var */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+/* eslint-disable guard-for-in */
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { MenuController } from '@ionic/angular';
 import { ApiService } from '../Services/api.service';
-import { InventoryService } from '../Services/inventory.service';
 
 declare let google: any;
 
@@ -12,7 +14,6 @@ declare let google: any;
   templateUrl: './map-screen.page.html',
   styleUrls: ['./map-screen.page.scss'],
 })
-
 export class MapScreenPage implements OnInit {
 
   map: any;
@@ -30,14 +31,17 @@ export class MapScreenPage implements OnInit {
   playerStoleItem = false;
   playerPoint = 0;
   ghostPoint = 0;
-    //Antwerpen: Rooseveltplein
+  //Antwerpen: Rooseveltplein
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   ghostHackerPosLat: number = 51.219783;
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   ghostHackerPosLng: number = 4.416215;
-    //Coords for testing
+  //Coords for testing
   // ghostHackerPosLat: number = 51.3275;
   // ghostHackerPosLng: number = 4.9297;
   // ghostHackerPosLat: number = 51.2174;
   // ghostHackerPosLng: number = 3.7484;
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   moveCoord: number = 0.0002;
   ghostHackerActivated = false;
   ghostHackerWarning = false;
@@ -56,18 +60,26 @@ export class MapScreenPage implements OnInit {
   getBoolStealHacker: string;
   timeLeft = 600;
   interval;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   ItemToTake: any;
   gameOver = false;
   kerk = false;
   askCounter = 0;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   KerkLocation: any;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   StreetLocation: any;
 
+
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
   constructor(public router: Router, private menu: MenuController, public inventoryItem: ApiService) {
     this.inventoryItemToDelete = localStorage.getItem('inventoryItems');
     this.GetInventoryId();
+
+
   }
 
   ngOnInit() {
@@ -77,24 +89,34 @@ export class MapScreenPage implements OnInit {
       this.ghostHackerPosLng = 4.445240;
       this.moveCoord = 0.00002;
     }
+
+
   }
 
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   GetInventoryId() {
     this.inventoryItem.getPlayerById(localStorage.getItem('playerId')).subscribe(i => {
       this.playerId = i;
-      this.inventory = this.playerId.data.inventory;
+      this.inventory = this.playerId.data.inventory.items;
     });
   }
-
   startTimer() {
     this.interval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else if (this.timeLeft === 0) {
+        console.log('time is up ');
         this.gameOver = true;
         this.pauseTimer();
       }
+      console.log(this.timeLeft);
+      if (this.timeLeft === 3) {
+        console.log('It is 3');
+        console.log(location);
+        // this.ItemToTake.setMap(null);
+      }
     }, 1000);
+
   }
 
   pauseTimer() {
@@ -128,7 +150,7 @@ export class MapScreenPage implements OnInit {
     this.router.navigate(['game-screen']).then(() => window.location.reload());
     this.inMapScreen = false;
   }
-
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   GoTo(page: string) {
     console.log('Called open ' + page);
     this.router.navigate([page]).then(() => window.location.reload());
@@ -152,8 +174,8 @@ export class MapScreenPage implements OnInit {
       this.ghostHackerMarker.setPosition(ghostHackerMarkerLatLng);
     }
   }
-
   moveGhostToPlayer() {
+
     if (this.ghostHackerActivated) {
       if (this.ghostHackerPosLat > this.playerPosLat) {
         this.ghostHackerPosLat -= this.moveCoord;
@@ -174,6 +196,7 @@ export class MapScreenPage implements OnInit {
   ghostToLocation(lat: any, lon: any) {
     // { lat: 51.242570, lng: 4.444350 }
     if (this.ghostHackerPosLat > lat) {
+      // console.log('i am at the location');
       this.ghostHackerPosLat -= this.moveCoord;
     } else {
       this.ghostHackerPosLat += this.moveCoord;
@@ -186,7 +209,9 @@ export class MapScreenPage implements OnInit {
     }
     var ghostHackerMarkerLatLng = new google.maps.LatLng(this.ghostHackerPosLat, this.ghostHackerPosLng);
     this.ghostHackerMarker.setPosition(ghostHackerMarkerLatLng);
+
   }
+
 
   async showMap() {
     if (!this.coords) {
@@ -240,7 +265,7 @@ export class MapScreenPage implements OnInit {
       strokeOpacity: 0,
       strokeWeight: 0,
       fillColor: "#FF0000",
-      fillOpacity: 0,
+      fillOpacity: 1,
       map: this.map,
       center: location,
       radius: 30,
@@ -259,7 +284,7 @@ export class MapScreenPage implements OnInit {
 
           this.map.setCenter(pos);
           this.userMarker.setPosition(pos);
-
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           navigator.geolocation.watchPosition(position => {
             pos = {
               lat: position.coords.latitude,
@@ -287,15 +312,18 @@ export class MapScreenPage implements OnInit {
 
       setInterval(() => {
         if (this.gameOver) {
+          // alert('Game over !');
           if (this.playerPoint > this.ghostPoint) {
             window.alert('Congratulations! you won');
           }
           else {
             window.alert('Sorry you got beaten by the GHOST');
+            // window.confirm('Sorry you got beaten by the GHOST');
           }
           const confirm = window.confirm('Game over!  Play again ?');
           if (confirm) {
             window.location.reload();
+            console.log('yes');
             this.gameOver = false;
           } else {
             this.gameOver = false;
@@ -428,25 +456,24 @@ export class MapScreenPage implements OnInit {
             radius: cityregions[region].radius,
           });
         }
-        for (const region in itemCircles) {
-          const regionCircle = new google.maps.Circle({
-            strokeColor: itemCircles[region].strokeColor,
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: itemCircles[region].fillColor,
-            fillOpacity: 0.35,
-            map: this.map,
-            center: itemCircles[region].center,
-            radius: itemCircles[region].radius,
-          });
-        }
       }
+
     }
+
+
+
   }
 
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   SearchRegionAreasForPlayer() {
+    // this.getPlayerInAnArea = false;
+    // console.log(this.ItemToTake.center);
+
     if ((this.inventoryItem.lobbyNaam === 'The Flash')) {
+      // eslint-disable-next-line max-len
       if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), this.ItemToTake.center) <= this.ItemToTake.radius) {
+        console.log('i am here');
         this.playerStoleItem = true;
         this.playerPoint += 1;
         console.log(this.ItemToTake.center.lat);
@@ -479,46 +506,26 @@ export class MapScreenPage implements OnInit {
           }
         }
       }
+
     }
     else {
       this.getPlayerInAnArea = false;
-      for (const region in itemCircles) {
-        if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), itemCircles[region].center) <= itemCircles[region].radius) {
-          this.getPlayerInAnArea = itemCircles[region].playerInArea;
-          if (itemCircles[region].isGameStartable) {
-            itemCircles[region].isGameStartable = false;
-            itemCircles[region].playerInArea = true;
-
-            const item = [];
-            let newItems: any = [];
-            for (let index = 0; index < this.inventory.items.length; index++) {
-              item.push(
-                {
-                  name: this.inventory.items[index].name,
-                  itemType: this.inventory.items[index].itemType
-                },
-              );
-            }
-        
-            item.push(
-              {
-                name: "Collectable",
-                itemType: "Collectable"
-              }
-            );
-
-            newItems = {
-              id: this.inventory.id,
-              items: item
-            };
-
-            this.inventoryItem.updateInventoryItems(this.inventory.id, newItems).subscribe(d => { console.log('added');});
-
-            //itemCircles[region].setMap(null);
+      for (const region in cityregions) {
+        // eslint-disable-next-line max-len
+        if (google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.getPosition(), cityregions[region].center) <= cityregions[region].radius) {
+          this.getPlayerInAnArea = cityregions[region].playerInArea;
+          console.log(cityregions[region].playerInArea);
+          if (cityregions[region].isGameStartable) {
+            cityregions[region].isGameStartable = false;
+            cityregions[region].playerInArea = true;
+            cityregions[region].playGame();
           }
         }
       }
     }
+
+
+
   }
 
   level2() {
@@ -568,9 +575,10 @@ export class MapScreenPage implements OnInit {
       radius: 70,
     });
   }
-  
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   CheckHackerInRangeOfPlayer() {
     if (this.inventoryItem.lobbyNaam !== 'Tourist') {
+
       if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(),
         this.playerWarningArea.center) <= this.playerWarningArea.radius) {
         if (!this.ghostHackerWarning && !this.ghostHackerStoleSomething) {
@@ -584,11 +592,13 @@ export class MapScreenPage implements OnInit {
         this.playerStealArea.center) <= this.playerStealArea.radius) {
         if (!this.ghostHackerStoleSomething) {
           this.randomNumber = localStorage.getItem('inventoryLength');
-          this.inventoryItem.deleteInventoryItem(this.inventory.items[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
+          this.inventoryItem.deleteInventoryItem(this.inventory[this.GenerateIdForHacker(0, (this.randomNumber - 1))].id).subscribe(d => {
             window.alert('The hacker stole one of your items!');
           });
+          console.log('again');
           this.ghostHackerStoleSomething = true;
           this.playerStoleItem = false;
+          console.log(this.level);
           if (this.playerPoint > 0) {
             this.playerPoint -= 1;
           }
@@ -596,22 +606,26 @@ export class MapScreenPage implements OnInit {
             this.playerPoint = 0;
           }
           this.ghostPoint += 1;
+          console.log('stolen');
           if (this.inventoryItem.lobbyNaam !== 'The Flash') {
             setInterval(() => {
               this.ghostHackerMarker.setMap(null);
             }, 5000);
           }
+
         }
+
       }
     }
   }
-
   levelChanger() {
+
     if (this.level === 1) {
       this.level = 2;
       console.log('level 2');
       this.level2();
     }
+
     else if (this.level === 2) {
       this.level = 3;
       this.level3();
@@ -625,10 +639,13 @@ export class MapScreenPage implements OnInit {
     }
     else if (this.level === 5) {
       this.gameOver = true;
+      console.log('game over');
       this.level = 0;
+
     }
+
   }
-  
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   CheckHackerInRangeOfLocation() {
     if (google.maps.geometry.spherical.computeDistanceBetween(this.ghostHackerMarker.getPosition(),
       this.ItemToTake.center) <= this.ItemToTake.radius) {
@@ -638,17 +655,28 @@ export class MapScreenPage implements OnInit {
       }
       else {
         //Ghost goes to location to take point
+        console.log('i am at the location');
+
         this.levelChanger();
       }
+      // else {
+      //   this.level = 2;
+      //   this.level2();
+      // }
+
       this.ghostPoint += 1;
+      // this.moveGhostHacker();
     }
   }
 
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   GenerateIdForHacker(min, max) {
     return (Math.floor(Math.random() * (max - min + 1) + min));
   }
 
   openNav() {
+
     document.getElementById('mySidenav').style.width = '250px';
     console.log('side nav opened');
   }
@@ -699,34 +727,7 @@ interface CityRegion {
   isGameStartable?: boolean;
   playerInArea: boolean;
 
-  //playGame(): void;
-}
-
-var itemCircles: Record<string, CityRegion> = {
-  aphogeschool1: {
-    center: { lat: 51.230217, lng: 4.416559 },
-    radius: 15,
-    strokeColor: '#04FF00',
-    fillColor: '#04FF00',
-    isGameStartable: true,
-    playerInArea: false,
-  },
-  aphogeschool2: {
-    center: { lat: 51.230522, lng: 4.413747 },
-    radius: 15,
-    strokeColor: '#04FF00',
-    fillColor: '#04FF00',
-    isGameStartable: true,
-    playerInArea: false,
-  },
-  aphogeschool3: {
-    center: { lat: 51.229963, lng: 4.414709 },
-    radius: 15,
-    strokeColor: '#04FF00',
-    fillColor: '#04FF00',
-    isGameStartable: true,
-    playerInArea: false,
-  },
+  playGame(): void;
 }
 
 const cityregions: Record<string, CityRegion> = {
@@ -737,9 +738,10 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#FF0000',
     isGameStartable: true,
     playerInArea: false,
-    // playGame() {
-    //   console.log('Start Game 1');
-    // },
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    playGame() {
+      console.log('Start Game 1');
+    },
   },
   eilandje: {
     center: { lat: 51.233345, lng: 4.411115 },
@@ -748,9 +750,10 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#FFF300',
     isGameStartable: true,
     playerInArea: false,
-    // playGame() {
-    //   console.log('Start Game 2');
-    // },
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    playGame() {
+      console.log('Start Game 2');
+    },
   },
   meir: {
     center: { lat: 51.218094, lng: 4.408774 },
@@ -759,9 +762,9 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#27FF00',
     isGameStartable: true,
     playerInArea: false,
-    // playGame() {
-    //   console.log('Start Game 3');
-    // },
+    playGame() {
+      console.log('Start Game 3');
+    },
   },
   test: {
     center: { lat: 51.216392, lng: 4.404195 },
@@ -770,9 +773,42 @@ const cityregions: Record<string, CityRegion> = {
     fillColor: '#7E00FF',
     isGameStartable: true,
     playerInArea: false,
-    // playGame() {
-    //   console.log('Start Game 4');
-    // },
+    playGame() {
+      console.log('Start Game 4');
+    },
+  },
+  aphogeschool: {
+    center: { lat: 51.229853, lng: 4.415807 },
+    radius: 150,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+    isGameStartable: true,
+    playerInArea: false,
+    playGame() {
+      console.log('Start Game 5');
+    },
+  },
+  test2: {
+    center: { lat: 51.231731, lng: 4.431389 },
+    radius: 200,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+    isGameStartable: true,
+    playerInArea: false,
+    playGame() {
+      console.log('Start Game 6');
+    },
+  },
+  test3: {
+    center: { lat: 51.229367, lng: 4.420595 },
+    radius: 100,
+    strokeColor: '#FF8000',
+    fillColor: '#FF8000',
+    isGameStartable: true,
+    playerInArea: false,
+    playGame() {
+      console.log('Start Game 7');
+    },
   },
 };
 
